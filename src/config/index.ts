@@ -6,7 +6,7 @@ export const SITE_CONFIG: SiteConfig = {
   description:
     "Systems Administrator with over 10 years of experience in infrastructure management, automation, cloud systems, and IT operations. Focused on building reliable, secure, and efficient technology solutions.",
   lang: "en",
-  siteLogo: "/alejandro-small.jpg",
+  siteLogo: "/emilio-small.jpg",
   navLinks: [
     { text: "Experience", href: "#experience" },
     { text: "Projects", href: "#projects" },
@@ -81,7 +81,7 @@ export const SITE_CONTENT: SiteContent = {
       I specialize in infrastructure management, automation, cloud systems, security, and ensuring reliable operations across complex environments.
       I take pride in building and maintaining systems that are stable, efficient, and secure.
     `,
-    image: "/alejandro-big.jpg",
+    image: "/emilio-small.jpg",
   },
 };
 
