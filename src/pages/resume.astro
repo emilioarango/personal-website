@@ -1,1 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
 
+<Layout title="Resume | Emilio Arango">
+  <div class="max-w-3xl mx-auto px-6 py-12 print:px-8 print:py-6 font-sans">
+    <!-- Header -->
+    <header class="border-b border-[var(--accent)] pb-6 mb-8 text-center print:text-left">
+      <h1 class="text-4xl font-bold tracking-tight">Emilio Arango</h1>
+      <p class="text-2xl text-[var(--accent)] mt-1">Systems Administrator</p>
+      <div class="flex flex-wrap justify-center gap-x-6 gap-y-1 mt-4 text-sm print:justify-start">
+        <span>Irvine, CA</span>
+        <a href="mailto:emilioearango@gmail.com" class="hover:underline">emilioearango@gmail.com</a>
+        <a href="https://www.linkedin.com/in/emilio-arango-b7a55722" target="_blank" class="hover:underline">linkedin.com/in/emilio-arango-b7a55722</a>
+      </div>
+    </header>
+
+    <!-- Experience -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold border-b pb-2 mb-6">Experience</h2>
+      
+      <div class="space-y-9">
+        <!-- Restaurant365 -->
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-medium text-lg">Systems Administrator</h3>
+            <span class="text-sm text-gray-500">Restaurant365 • Irvine, CA</span>
+          </div>
+          <p class="text-sm text-gray-500">2025 — Present</p>
+          <ul class="mt-3 space-y-2 text-[15px] leading-relaxed">
+            <li>▸ Manage and maintain critical cloud infrastructure supporting restaurant accounting, inventory, workforce management, and payroll platforms.</li>
+            <li>▸ Handle system integrations, automation workflows, and performance monitoring to ensure high availability and operational efficiency.</li>
+            <li>▸ Provide advanced troubleshooting, security management, and user access administration.</li>
+          </ul>
+        </div>
+
+        <!-- Happy Money -->
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-medium text-lg">IT Support Specialist</h3>
+            <span class="text-sm text-gray-500">Happy Money • Irvine, CA</span>
+          </div>
+          <p class="text-sm text-gray-500">2019 — 2024</p>
+          <ul class="mt-3 space-y-2 text-[15px] leading-relaxed">
+            <li>▸ Delivered technical support and systems maintenance in a fast-paced financial services environment.</li>
+            <li>▸ Managed endpoint devices, user access, troubleshooting, and security best practices.</li>
+            <li>▸ Supported infrastructure stability and assisted with automation initiatives.</li>
+          </ul>
+        </div>
+
+        <!-- Taco Bell -->
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-medium text-lg">Service Desk Analyst</h3>
+            <span class="text-sm text-gray-500">Taco Bell • Irvine, CA</span>
+          </div>
+          <p class="text-sm text-gray-500">2018 — 2020</p>
+          <ul class="mt-3 space-y-2 text-[15px] leading-relaxed">
+            <li>▸ Provided hands-on IT support for restaurant locations and back-office systems.</li>
+            <li>▸ Managed hardware troubleshooting, network issues, and point-of-sale system maintenance.</li>
+            <li>▸ Assisted with software deployments and user training.</li>
+          </ul>
+        </div>
+
+        <!-- Apple -->
+        <div>
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-medium text-lg">Genius Bar Technician</h3>
+            <span class="text-sm text-gray-500">Apple Store • Irvine, CA</span>
+          </div>
+          <p class="text-sm text-gray-500">2015 — 2018</p>
+          <ul class="mt-3 space-y-2 text-[15px] leading-relaxed">
+            <li>▸ Delivered technical support and repairs for Apple hardware and software.</li>
+            <li>▸ Diagnosed and resolved complex customer issues while maintaining high customer satisfaction.</li>
+            <li>▸ Worked with advanced diagnostic tools and performed hardware repairs.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold border-b pb-2 mb-6">Education</h2>
+      <div>
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-medium">California State University, Fullerton</h3>
+          <span class="text-sm text-gray-500">Irvine, CA</span>
+        </div>
+        <p class="text-sm text-gray-500">B.A. in Business Administration</p>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold border-b pb-2 mb-6">Skills</h2>
+      <div class="grid grid-cols-2 gap-x-8 gap-y-2 text-[15px]">
+        <ul class="space-y-1">
+          <li>• Cloud Infrastructure (AWS, Azure)</li>
+          <li>• Automation &amp; Scripting</li>
+          <li>• Systems Monitoring &amp; Alerting</li>
+          <li>• Security &amp; Access Management</li>
+        </ul>
+        <ul class="space-y-1">
+          <li>• IT Support &amp; Troubleshooting</li>
+          <li>• Network &amp; Endpoint Management</li>
+          <li>• Hardware/Software Deployment</li>
+          <li>• Google IT Support Certified</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section>
+      <h2 class="text-2xl font-semibold border-b pb-2 mb-6">Certifications</h2>
+      <ul class="space-y-3 text-[15px]">
+        <li class="flex justify-between">
+          <span>Google IT Support Professional Certificate</span>
+          <span class="text-sm text-gray-500">Coursera • 2022</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <style>
+    @media print {
+      .max-w-3xl { max-width: 100% !important; }
+      a { text-decoration: none !important; color: #000 !important; }
+    }
+  </style>
+</Layout>
