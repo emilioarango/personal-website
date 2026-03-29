@@ -4,7 +4,7 @@ export const SITE_CONFIG: SiteConfig = {
   title: "Emilio Arango - Systems Administrator",
   author: "Emilio Arango",
   description:
-    "Software Engineer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
+    "Systems Administrator with over 10 years of experience in infrastructure management, automation, cloud systems, and IT operations. Focused on building reliable, secure, and efficient technology solutions.",
   lang: "en",
   siteLogo: "/alejandro-small.jpg",
   navLinks: [
@@ -25,10 +25,10 @@ export const SITE_CONFIG: SiteConfig = {
 
 export const SITE_CONTENT: SiteContent = {
   hero: {
-    name: "Alejandro Múnez",
-    specialty: "Mobile & Web Developer",
+    name: "Emilio Arango",
+    specialty: "Systems Administrator",
     summary:
-      "Developer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
+      "Systems Administrator specializing in infrastructure, automation, cloud technologies, and keeping complex IT environments running smoothly and securely.",
     email: "example@email.com",
   },
   experience: [
@@ -87,9 +87,10 @@ export const SITE_CONTENT: SiteContent = {
   ],
   about: {
     description: `
-      Hi, I’m Alejandro Múnez, a passionate Mobile and Web Developer with a knack for crafting seamless digital experiences. With a strong background in both Android and iOS development, as well as front-end web technologies, I thrive in the intersection where creativity meets technology.
+    Hey, I'm Emilio Arango, a Systems Administrator with more than 10 years of experience in IT. 
+    I specialize in infrastructure management, automation, cloud systems, security, and ensuring reliable operations across complex environments.
 
-      Over the years, I’ve honed my skills in building robust, user-friendly applications that not only meet the needs of users but also push the boundaries of what’s possible. My projects range from innovative mobile applications to responsive web designs, all with a focus on performance, security, and scalability.
+    I take pride in building and maintaining systems that are stable, efficient, and secure.
     `,
     image: "/alejandro-big.jpg",
   },
