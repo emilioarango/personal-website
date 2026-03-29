@@ -13,7 +13,7 @@ export const SITE_CONFIG: SiteConfig = {
   ],
   socialLinks: [
     { text: "LinkedIn", href: "https://www.linkedin.com/in/emilio-arango-b7a55722" },
-    { text: "GitHub", href: "https://github.com/emilioarango" },   // ← CHANGE TO YOUR ACTUAL GITHUB USERNAME
+    { text: "GitHub", href: "https://github.com/emilioarango" },   // ← Update with your actual GitHub username
   ],
   socialImage: "/zen-og.png",
   canonicalURL: "https://emilioarango.com",
@@ -25,7 +25,7 @@ export const SITE_CONTENT: SiteContent = {
     specialty: "Systems Administrator",
     summary:
       "Systems Administrator specializing in infrastructure, automation, cloud technologies, and keeping complex IT environments running smoothly and securely.",
-    email: "emilioearango@gmail.com",   // update once you set up professional email
+    email: "emilioearango@gmail.com",   // ← Update this once you have professional email
   },
   experience: [
     {
@@ -42,7 +42,7 @@ export const SITE_CONTENT: SiteContent = {
     {
       company: "Happy Money",
       position: "IT Support Specialist",
-      startDate: "2021",
+      startDate: "2019",
       endDate: "2024",
       summary: [
         "Delivered technical support and systems maintenance in a fast-paced financial services environment.",
@@ -56,7 +56,7 @@ export const SITE_CONTENT: SiteContent = {
       startDate: "2018",
       endDate: "2020",
       summary: [
-        "Provided on-call IT support for restaurant locations and back-office systems.",
+        "Provided hands-on IT support for restaurant locations and back-office systems.",
         "Managed hardware troubleshooting, network issues, and point-of-sale system maintenance.",
         "Assisted with software deployments and user training.",
       ],
@@ -73,7 +73,7 @@ export const SITE_CONTENT: SiteContent = {
       ],
     },
   ],
-  projects: [],   // empty array - removes the projects section from the site
+  projects: [],   // keeps the section hidden
   about: {
     description: `
       Hey, I'm Emilio Arango, a Systems Administrator with more than 10 years of experience in IT.
