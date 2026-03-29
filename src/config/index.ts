@@ -1,7 +1,7 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Emilio Arango - Systems Administrator",
+  title: "Emilio Arango — Systems Administrator",
   author: "Emilio Arango",
   description:
     "Systems Administrator with over 10 years of experience in infrastructure management, automation, cloud systems, and IT operations. Focused on building reliable, secure, and efficient technology solutions.",
@@ -9,7 +9,6 @@ export const SITE_CONFIG: SiteConfig = {
   siteLogo: "/emilio-small.jpg",
   navLinks: [
     { text: "Experience", href: "#experience" },
-    { text: "Projects", href: "#projects" },
     { text: "About", href: "#about" },
   ],
   socialLinks: [
@@ -17,7 +16,7 @@ export const SITE_CONFIG: SiteConfig = {
     { text: "GitHub", href: "https://github.com/emilioarango" },   // ← CHANGE TO YOUR ACTUAL GITHUB USERNAME
   ],
   socialImage: "/zen-og.png",
-  canonicalURL: "https://personal-site-nu-coral.vercel.app",
+  canonicalURL: "https://emilioarango.com",
 };
 
 export const SITE_CONTENT: SiteContent = {
@@ -26,7 +25,7 @@ export const SITE_CONTENT: SiteContent = {
     specialty: "Systems Administrator",
     summary:
       "Systems Administrator specializing in infrastructure, automation, cloud technologies, and keeping complex IT environments running smoothly and securely.",
-    email: "emilioearango@gmail.com",
+    email: "emilioearango@gmail.com",   // update once you set up professional email
   },
   experience: [
     {
@@ -35,9 +34,9 @@ export const SITE_CONTENT: SiteContent = {
       startDate: "2025",
       endDate: "Present",
       summary: [
-        "Manage infrastructure, cloud systems, automation, and integrations to support accounting, inventory, workforce management, and payroll platforms.",
-        "Ensure high availability, security, and reliable operations across multi-location restaurant environments.",
-        "Provide advanced troubleshooting, security management, and user access administration while continuously improving system reliability and scalability.",
+        "Manage and maintain critical cloud infrastructure supporting restaurant accounting, inventory, workforce management, and payroll platforms.",
+        "Handle system integrations, automation workflows, and performance monitoring to ensure high availability and operational efficiency.",
+        "Provide advanced troubleshooting, security management, and user access administration.",
       ],
     },
     {
@@ -46,18 +45,18 @@ export const SITE_CONTENT: SiteContent = {
       startDate: "2021",
       endDate: "2024",
       summary: [
-        "Provided end-to-end technical support for users and systems in a fast-paced financial environment.",
-        "Managed endpoint devices, troubleshooting, and user access while maintaining security standards.",
-        "Assisted with infrastructure maintenance, software deployments, and process automation initiatives.",
+        "Delivered technical support and systems maintenance in a fast-paced financial services environment.",
+        "Managed endpoint devices, user access, troubleshooting, and security best practices.",
+        "Supported infrastructure stability and assisted with automation initiatives.",
       ],
     },
-  {
+    {
       company: "Taco Bell",
-      position: "IT Support",
+      position: "Service Desk Analyst",
       startDate: "2018",
-      endDate: "2019",
+      endDate: "2020",
       summary: [
-        "Provided hands-on IT support for restaurant locations and back-office systems.",
+        "Provided on-call IT support for restaurant locations and back-office systems.",
         "Managed hardware troubleshooting, network issues, and point-of-sale system maintenance.",
         "Assisted with software deployments and user training.",
       ],
@@ -65,7 +64,7 @@ export const SITE_CONTENT: SiteContent = {
     {
       company: "Apple Store",
       position: "Genius Bar Technician",
-      startDate: "2016",
+      startDate: "2015",
       endDate: "2018",
       summary: [
         "Delivered technical support and repairs for Apple hardware and software.",
@@ -74,6 +73,7 @@ export const SITE_CONTENT: SiteContent = {
       ],
     },
   ],
+  projects: [],   // empty array - removes the projects section from the site
   about: {
     description: `
       Hey, I'm Emilio Arango, a Systems Administrator with more than 10 years of experience in IT.
@@ -83,5 +83,3 @@ export const SITE_CONTENT: SiteContent = {
     image: "/emilio-small.jpg",
   },
 };
-
-// #5755ff
