@@ -26,7 +26,7 @@ export const SITE_CONTENT: SiteContent = {
     specialty: "Systems Administrator",
     summary:
       "Systems Administrator specializing in infrastructure, automation, cloud technologies, and keeping complex IT environments running smoothly and securely.",
-    email: "example@email.com",
+    email: "emilioearango@gmail.com",
   },
   experience: [
     {
@@ -51,28 +51,27 @@ export const SITE_CONTENT: SiteContent = {
         "Assisted with infrastructure maintenance, software deployments, and process automation initiatives.",
       ],
     },
-  ],
-  projects: [
-    {
-      name: "Spotifu Music",
-      summary: "A music streaming app that emulates Spotify's core features.",
-      linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/spotifu.png",
+  {
+      company: "Taco Bell",
+      position: "IT Support",
+      startDate: "2018",
+      endDate: "2019",
+      summary: [
+        "Provided hands-on IT support for restaurant locations and back-office systems.",
+        "Managed hardware troubleshooting, network issues, and point-of-sale system maintenance.",
+        "Assisted with software deployments and user training.",
+      ],
     },
     {
-      name: "Shopp App",
-      summary: "An e-commerce platform that replicates Shopify's key features.",
-      linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/shopify-clon.png",
-    },
-    {
-      name: "ClonTagram",
-      summary: "A social network that replicates the features of Instagram",
-      linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/clone-ig.png",
+      company: "Apple Store",
+      position: "Genius Bar Technician",
+      startDate: "2016",
+      endDate: "2018",
+      summary: [
+        "Delivered technical support and repairs for Apple hardware and software.",
+        "Diagnosed and resolved complex customer issues while maintaining high customer satisfaction.",
+        "Worked with advanced diagnostic tools and performed hardware repairs.",
+      ],
     },
   ],
   about: {
