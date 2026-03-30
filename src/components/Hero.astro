@@ -1,27 +1,103 @@
 ---
+import { SITE_MOTTO } from "@config";
 import type { HeroProps } from "@types";
-type Props = HeroProps;
 
+type Props = HeroProps;
 const { name, specialty, summary, email } = Astro.props;
+
+// Split name into two lines for the stacked display
+const [firstName, ...rest] = name.split(" ");
+const lastName = rest.join(" ");
 ---
 
-<section class="py-24 md:py-32" id="#hero">
-  <h1
-    class="mb-1.5 font-serif text-7xl font-bold tracking-tightest text-white sm:text-8xl md:mb-0 md:text-9xl"
-  >
-    {name}
-  </h1>
+<section class="py-24 md:py-32" id="hero">
+
+  <!-- Eyebrow -->
   <p
-    class="mb-9 font-serif text-4xl leading-[46px] font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl"
+    class="mb-6 label-roman"
+    style="color: var(--color-stone-700);"
+  >
+    Systems Administrator · Amateur Developer
+  </p>
+
+  <!-- Name — stacked, large Cinzel display -->
+  <h1
+    class="mb-3 leading-none tracking-tightest"
+    style="
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 10vw, 6.5rem);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      letter-spacing: var(--tracking-roman);
+      line-height: 1.05;
+    "
+  >
+    {firstName}<br />{lastName}
+  </h1>
+
+  <!-- Specialty subtitle -->
+  <p
+    class="mb-8 label-roman"
+    style="
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.18em;
+    "
   >
     {specialty}
   </p>
-  <p class="mb-16 text-base font-normal text-neutral md:text-lg">
+
+  <!-- Latin motto -->
+  <p
+    class="latin mb-1"
+    style="font-size: 1.35rem; color: var(--color-stone-800);"
+  >
+    {SITE_MOTTO.latin}
+  </p>
+  <p
+    class="mb-10"
+    style="
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: var(--color-text-faint);
+    "
+  >
+    {SITE_MOTTO.translation}
+  </p>
+
+  <!-- Summary -->
+  <p
+    class="mb-12 max-w-xl"
+    style="
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.75;
+      color: var(--color-stone-700);
+    "
+  >
     {summary}
   </p>
 
+  <!-- CTA -->
   <a
-    class="inline-block rounded-full bg-primary px-8 py-5 text-sm leading-5 font-medium text-[#fff]"
-    href={`mailto:${email}`}>Get in Touch</a
+    href={`mailto:${email}`}
+    style="
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.8rem 2rem;
+      border: 1px solid var(--color-stone-700);
+      color: var(--color-stone-800);
+      background: transparent;
+      text-decoration: none;
+      transition: background 200ms ease, color 200ms ease;
+    "
+    onmouseover="this.style.background='var(--color-stone-300)'"
+    onmouseout="this.style.background='transparent'"
   >
+    Get in Touch
+  </a>
+
 </section>
