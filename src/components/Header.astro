@@ -1,47 +1,70 @@
 ---
 import Menu from "@icons/Menu.astro";
-import { Image } from "astro:assets";
 import type { HeaderProps } from "@types";
 
 type Props = HeaderProps;
-
-const { siteLogo, navLinks } = Astro.props;
+const { navLinks } = Astro.props;
 ---
 
 <header
-  class="sticky top-0 z-50 mx-auto flex max-w-5xl animate-slide-in justify-between bg-black px-5 py-6"
+  class="sticky top-0 z-50 mx-auto flex max-w-5xl animate-slide-in items-center justify-between px-6 py-4"
+  style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"
 >
-  <a href="/" aria-label="Home link">
-    <Image
-      class="rounded-full"
-      src={siteLogo}
-      width="45"
-      height="45"
-      alt="website logo"
-    />
+
+  <!-- Monogram logo -->
+  <a
+    href="/"
+    aria-label="Home"
+    class="monogram"
+    style="
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      color: var(--color-stone-800);
+      text-decoration: none;
+      transition: color 150ms ease;
+    "
+  >
+    E · A
   </a>
 
+  <!-- Mobile menu toggle -->
   <button
     type="button"
     id="menu-button"
-    class="px-1.5 text-neutral sm:hidden"
+    class="px-1.5 sm:hidden"
+    style="color: var(--color-text-muted);"
     aria-expanded="false"
     aria-controls="main-menu"
   >
     <Menu />
   </button>
 
+  <!-- Nav -->
   <nav
-    class="absolute top-20 right-5 hidden rounded-xl border border-neutral/40 bg-black px-4 py-5 text-neutral sm:static sm:block sm:border-0 sm:bg-transparent sm:p-0"
     id="main-menu"
+    class="absolute top-[61px] right-5 hidden rounded-sm px-4 py-5 sm:static sm:block sm:p-0"
+    style="
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      sm:border: none;
+    "
   >
-    <ul class="gap-2 sm:flex">
+    <ul class="gap-1 sm:flex">
       {
         navLinks.map((link) => (
           <li class="relative">
             <a
-              class={`nav-item relative block p-2 text-sm font-medium transition-all duration-500 after:absolute after:bottom-0 after:left-2/4 after:h-2 after:w-1 after:-translate-x-2/4 after:text-primary after:opacity-0 after:content-['•'] hover:text-white`}
               href={link.href}
+              class="nav-item relative block px-3 py-2 transition-colors duration-300 after:absolute after:bottom-0 after:left-1/2 after:h-2 after:w-1 after:-translate-x-1/2 after:opacity-0 after:content-['·'] hover:after:opacity-100"
+              style="
+                font-family: var(--font-display);
+                font-size: 0.7rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--color-text-muted);
+                text-decoration: none;
+              "
             >
               {link.text}
             </a>
@@ -53,33 +76,29 @@ const { siteLogo, navLinks } = Astro.props;
 </header>
 
 <script>
-  // Toggle mobile menu
   const button = document.querySelector("#menu-button");
-  const menu = document.querySelector("#main-menu");
+  const menu   = document.querySelector("#main-menu");
   const navItems = document.querySelectorAll("#main-menu > ul > li > a");
 
+  // Mobile toggle
   const toggleMenu = () => {
     menu?.classList.toggle("hidden");
     const isHidden = menu?.classList.contains("hidden");
     button?.setAttribute("aria-expanded", `${!isHidden}`);
   };
-
   button?.addEventListener("click", toggleMenu);
-  navItems.forEach((item) => {
-    item?.addEventListener("click", toggleMenu);
-  });
+  navItems.forEach((item) => item?.addEventListener("click", toggleMenu));
 
-  // Update navigation based on scroll position with Intersection Observer
+  // Active nav highlight on scroll
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           navItems.forEach((item) => {
-            if (item.getAttribute("href") === `#${entry.target.id}`) {
-              item.classList.add("text-white", "md:after:opacity-100");
-            } else {
-              item.classList.remove("text-white", "md:after:opacity-100");
-            }
+            const isActive = item.getAttribute("href") === `#${entry.target.id}`;
+            (item as HTMLElement).style.color = isActive
+              ? "var(--color-stone-800)"
+              : "var(--color-text-muted)";
           });
         }
       });
@@ -87,18 +106,13 @@ const { siteLogo, navLinks } = Astro.props;
     { threshold: 0.5 },
   );
 
-  document.querySelectorAll("section").forEach((section) => {
-    observer.observe(section);
-  });
+  document.querySelectorAll("section").forEach((s) => observer.observe(s));
 
-  // Cleanup observer
   document.onvisibilitychange = () => {
     if (document.visibilityState === "hidden") {
       observer.disconnect();
     } else {
-      document.querySelectorAll("section").forEach((section) => {
-        observer.observe(section);
-      });
+      document.querySelectorAll("section").forEach((s) => observer.observe(s));
     }
   };
 </script>
@@ -107,5 +121,24 @@ const { siteLogo, navLinks } = Astro.props;
   header {
     animation-timeline: scroll();
     animation-range: 0 650px;
+  }
+
+  /* Mobile menu: override border on sm+ */
+  @media (min-width: 640px) {
+    #main-menu {
+      border: none !important;
+      background-color: transparent !important;
+    }
+  }
+
+  /* Monogram hover */
+  .monogram:hover {
+    color: var(--color-stone-950) !important;
+  }
+
+  /* Nav item active state */
+  .nav-item.active,
+  .nav-item:hover {
+    color: var(--color-stone-800) !important;
   }
 </style>
