@@ -1,59 +1,210 @@
 ---
 import Section from "./Section.astro";
 import { Image } from "astro:assets";
-import type { ProjectProps } from "@types";
+
+// Updated project shape to match the new index.ts
+interface Project {
+  title:       string;
+  description: string;
+  image?:      string;
+  url?:        string;
+  tags?:       string[];
+}
 
 interface Props {
-  projects: ProjectProps[];
+  projects: Project[];
 }
 
 const { projects } = Astro.props;
+
+// Roman numeral helper
+function toRoman(n: number): string {
+  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  const syms = ["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"];
+  let r = "";
+  for (let i = 0; i < vals.length; i++) {
+    while (n >= vals[i]) { r += syms[i]; n -= vals[i]; }
+  }
+  return r;
+}
 ---
 
-<Section text="Featured Projects" href="projects">
-  {
-    projects.map(({ name, summary, image, linkPreview, linkSource }, index) => {
-      const top = 98 + index * 40;
-      return (
-        <div
-          style={`top: ${top}px;`}
-          class="sticky mb-12 rounded-2xl border border-neutral/20 bg-black"
-        >
-          <div class="bg-difu relative z-[1] grid h-[580px] w-full grid-rows-2 rounded-2xl bg-[#1c232d]/85 before:absolute before:inset-0 before:z-[-1] before:rounded-2xl before:bg-[url(/raja.png)] before:bg-[length:128px] before:bg-repeat before:opacity-[5%] before:content-[''] sm:grid-cols-2 sm:grid-rows-1 md:h-96">
-            <div class="px-6 pt-12">
-              <h3 class="mb-5 font-serif text-3xl font-medium text-primary">
-                {name}
-              </h3>
-              <p class="text-base text-neutral">{summary}</p>
-              <div class="flex gap-5 pt-10 text-white">
-                <a
-                  href={linkSource}
-                  target="_blank"
-                  class="after:relative after:bottom-[-5px] after:content-[url(/external.svg)] hover:underline"
-                >
-                  Source
-                </a>
-                <a
-                  href={linkPreview}
-                  target="_blank"
-                  class="after:relative after:bottom-[-5px] after:content-[url(/external.svg)] hover:underline"
-                >
-                  Preview
-                </a>
+<Section text="Works & Endeavors" href="projects">
+  <div class="flex flex-col gap-6">
+    {
+      projects.map(({ title, description, image, url, tags }, index) => {
+        const top = 98 + index * 40;
+        return (
+          <div
+            style={`top: ${top}px;`}
+            class="sticky mb-6"
+          >
+            <div
+              class="relative overflow-hidden"
+              style="
+                background-color: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 4px;
+                transition: border-color 200ms ease;
+              "
+              onmouseover="this.style.borderColor='var(--color-stone-600)'"
+              onmouseout="this.style.borderColor='var(--color-border)'"
+            >
+              <!-- Subtle texture overlay -->
+              <div
+                aria-hidden="true"
+                style="
+                  position: absolute;
+                  inset: 0;
+                  background-image: url(/raja.png);
+                  background-size: 128px;
+                  background-repeat: repeat;
+                  opacity: 0.025;
+                  pointer-events: none;
+                  z-index: 0;
+                "
+              />
+
+              <div class="relative z-10 grid sm:grid-cols-2" style="min-height: 280px;">
+
+                <!-- Left: text content -->
+                <div class="flex flex-col justify-between px-8 py-10">
+                  <div>
+                    <!-- Roman numeral -->
+                    <p class="numeral mb-3" style="color: var(--color-border);">
+                      {toRoman(index + 1)}
+                    </p>
+
+                    <!-- Title -->
+                    <h3
+                      class="mb-4"
+                      style="
+                        font-family: var(--font-display);
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                        letter-spacing: var(--tracking-roman);
+                        color: var(--color-text-primary);
+                      "
+                    >
+                      {title}
+                    </h3>
+
+                    <!-- Description -->
+                    <p
+                      style="
+                        font-size: var(--text-sm);
+                        line-height: 1.7;
+                        color: var(--color-stone-600);
+                      "
+                    >
+                      {description}
+                    </p>
+                  </div>
+
+                  <!-- Tags + link -->
+                  <div class="mt-8">
+                    {tags && tags.length > 0 && (
+                      <div class="mb-5 flex flex-wrap gap-2">
+                        {tags.map((tag) => (
+                          <span
+                            style="
+                              font-family: var(--font-display);
+                              font-size: 0.6rem;
+                              letter-spacing: 0.15em;
+                              text-transform: uppercase;
+                              padding: 3px 10px;
+                              border: 1px solid var(--color-border);
+                              color: var(--color-text-muted);
+                              border-radius: 2px;
+                            "
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {url && (
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="
+                          display: inline-flex;
+                          align-items: center;
+                          gap: 5px;
+                          font-family: var(--font-display);
+                          font-size: 0.62rem;
+                          letter-spacing: 0.16em;
+                          text-transform: uppercase;
+                          color: var(--color-stone-700);
+                          text-decoration: none;
+                          transition: color 150ms ease;
+                        "
+                        onmouseover="this.style.color='var(--color-stone-950)'"
+                        onmouseout="this.style.color='var(--color-stone-700)'"
+                      >
+                        View Project
+                        <img
+                          src="/external.svg"
+                          alt=""
+                          aria-hidden="true"
+                          width="10"
+                          height="10"
+                          style="opacity: 0.6; position: relative; top: 1px;"
+                        />
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                <!-- Right: image (optional) -->
+                {image && (
+                  <div class="flex items-end justify-end overflow-hidden">
+                    <Image
+                      src={image}
+                      alt={title}
+                      width="736"
+                      height="483"
+                      class="h-full w-[95%] object-cover object-left-top sm:h-[85%] sm:w-full"
+                      style="
+                        border-top-left-radius: 2px;
+                        border-bottom-right-radius: 4px;
+                        opacity: 0.85;
+                        filter: sepia(20%) contrast(95%);
+                      "
+                    />
+                  </div>
+                )}
+
+                <!-- Placeholder if no image -->
+                {!image && (
+                  <div
+                    class="hidden sm:flex items-center justify-center"
+                    style="
+                      border-left: 1px solid var(--color-border-soft);
+                      color: var(--color-border);
+                    "
+                  >
+                    <span
+                      style="
+                        font-family: var(--font-display);
+                        font-size: 4rem;
+                        letter-spacing: 0.1em;
+                        opacity: 0.3;
+                      "
+                      aria-hidden="true"
+                    >
+                      {toRoman(index + 1)}
+                    </span>
+                  </div>
+                )}
+
               </div>
             </div>
-            <div class="flex items-end justify-end overflow-hidden">
-              <Image
-                class="h-full w-[95%] rounded-ss-xl rounded-ee-2xl object-none object-left-top sm:h-[85%] sm:w-full"
-                src={image}
-                alt={name}
-                width="736"
-                height="483"
-              />
-            </div>
           </div>
-        </div>
-      );
-    })
-  }
+        );
+      })
+    }
+  </div>
 </Section>
