@@ -2,32 +2,81 @@
 import type { SiteConfig } from "@types";
 
 type Props = Pick<SiteConfig, "author" | "socialLinks">;
-
 const { author, socialLinks } = Astro.props;
-const currentYear = new Date().getFullYear();
+
+// Convert year to Roman numerals
+function toRoman(num: number): string {
+  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  const syms = ["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"];
+  let result = "";
+  for (let i = 0; i < vals.length; i++) {
+    while (num >= vals[i]) {
+      result += syms[i];
+      num    -= vals[i];
+    }
+  }
+  return result;
+}
+
+const currentYear       = new Date().getFullYear();
+const currentYearRoman  = toRoman(currentYear);
 ---
 
 <footer
-  class="w-full border-t border-neutral/20 px-5 pt-5 pb-8 text-center text-white"
+  class="w-full px-6 pt-6 pb-10 text-center"
+  style="
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+  "
 >
-  <ul class="mb-5 flex flex-wrap justify-center gap-x-5 text-xs">
+  <!-- Ornamental divider -->
+  <p class="ornament mb-6" aria-hidden="true">· · ✦ · ·</p>
+
+  <!-- Social links -->
+  <ul class="mb-6 flex flex-wrap justify-center gap-x-6">
     {
       socialLinks.map(({ text, href }) => (
         <li>
           <a
             href={href}
             target="_blank"
-            class="inline-block px-4 py-3 after:relative after:bottom-[-4px] after:content-[url(/external.svg)] hover:text-primary"
+            rel="noopener noreferrer"
+            style="
+              font-family: var(--font-display);
+              font-size: 0.65rem;
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              color: var(--color-text-muted);
+              text-decoration: none;
+              display: inline-flex;
+              align-items: center;
+              gap: 4px;
+              padding: 6px 4px;
+              transition: color 150ms ease;
+            "
+            onmouseover="this.style.color='var(--color-stone-800)'"
+            onmouseout="this.style.color='var(--color-text-muted)'"
           >
             {text}
+            <img
+              src="/external.svg"
+              alt=""
+              aria-hidden="true"
+              width="10"
+              height="10"
+              style="opacity: 0.5; position: relative; top: 1px;"
+            />
           </a>
         </li>
       ))
     }
   </ul>
-  <p class="text-xs">
-    {author} © {currentYear}. <span class="text-neutral"
-      >Designed & Developed by</span
-    > Moisés Machuca
+
+  <!-- Copyright -->
+  <p
+    class="numeral"
+    style="color: var(--color-text-faint);"
+  >
+    {author} © {currentYearRoman}
   </p>
 </footer>
