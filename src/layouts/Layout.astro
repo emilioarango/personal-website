@@ -1,9 +1,10 @@
 ---
 import Header from "@components/Header.astro";
-import "@fontsource/be-vietnam-pro";
-import "@fontsource-variable/gabarito";
-import { SITE_CONFIG } from "@config";
 import Footer from "@components/Footer.astro";
+import { SITE_CONFIG } from "@config";
+
+// Fontsource imports removed — Cinzel & EB Garamond are loaded
+// via Google Fonts in global.css with @import
 
 const {
   title,
@@ -26,27 +27,56 @@ const ogImgUrl = canonicalURL + socialImage;
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="author" content={author} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Astro generator -->
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Page title -->
     <title>{title}</title>
 
-    <meta property="og:title" content={title} />
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={ogImgUrl} />
+    <meta property="og:url"         content={canonicalURL} />
+    <meta property="og:image"       content={ogImgUrl} />
 
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImgUrl} />
+    <!-- Twitter / X card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:url"         content={canonicalURL} />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImgUrl} />
+
+    <!-- Preconnect to Google Fonts (loaded in global.css) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
-  <body class="bg-black font-sans">
+
+  <!--
+    bg-[var(--color-background)]  → travertine limestone #d6cfc4
+    font-sans                     → EB Garamond (set in @theme)
+    text-[var(--color-text-secondary)] → warm dark brown body copy
+  -->
+  <body
+    class="
+      min-h-dvh
+      bg-[var(--color-background)]
+      font-sans
+      text-[var(--color-text-secondary)]
+      antialiased
+    "
+  >
     <Header siteLogo={siteLogo} navLinks={navLinks} />
-    <main class="mx-auto max-w-3xl px-5">
+
+    <main class="mx-auto max-w-3xl px-5 py-8">
       <slot />
     </main>
+
     <Footer author={author} socialLinks={socialLinks} />
   </body>
 </html>
