@@ -1,6 +1,5 @@
 ---
 import Section from "./Section.astro";
-import { Image } from "astro:assets";
 
 // Updated project shape to match the new index.ts
 interface Project {
@@ -161,7 +160,7 @@ function toRoman(n: number): string {
                 <!-- Right: image (optional) -->
                 {image && (
                   <div class="flex items-end justify-end overflow-hidden">
-                    <Image
+                    <img
                       src={image}
                       alt={title}
                       width="736"
