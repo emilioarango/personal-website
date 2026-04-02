@@ -14,7 +14,6 @@ export const SITE_CONFIG: SiteConfig = {
   siteLogo: "/emilio-small.jpg",
   navLinks: [
     { text: "Experience", href: "#experience" },
-    { text: "Resume", href: "/emilio_arango_resume.pdf" },
     { text: "About", href: "#about" },
   ],
   socialLinks: [
