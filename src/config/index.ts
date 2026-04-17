@@ -36,7 +36,7 @@ export const SITE_CONTENT: SiteContent = {
     {
       company: "Restaurant365",
       position: "Systems Administrator",
-      startDate: "2025",
+      startDate: "2024",
       endDate: "Present",
       summary: [
         "Manage and maintain critical cloud infrastructure supporting restaurant accounting, inventory, workforce management, and payroll platforms.",
