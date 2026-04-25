@@ -7,78 +7,81 @@ const { navLinks } = Astro.props;
 ---
 
 <header
-  class="sticky top-0 z-50 mx-auto flex max-w-5xl animate-slide-in items-center justify-between px-6 py-4"
-  style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"
+  id="site-header"
+  class="sticky top-0 z-50 w-full transition-all duration-300"
+  style="border-bottom: 1px solid transparent;"
 >
+  <div class="mx-auto flex max-w-3xl items-center justify-between px-5 py-4">
 
-  <!-- Monogram logo -->
-  <a
-    href="/"
-    aria-label="Home"
-    class="monogram"
-    style="
-      font-family: var(--font-display);
-      font-size: 1rem;
-      letter-spacing: 0.15em;
-      color: var(--color-stone-800);
-      text-decoration: none;
-      transition: color 150ms ease;
-    "
-  >
-    E · A
-  </a>
+    <!-- Logo -->
+    <a
+      href="/"
+      aria-label="Home"
+      class="logo font-mono text-sm font-medium tracking-tight transition-colors duration-150"
+      style="color: var(--color-text-primary);"
+    >
+      EA
+    </a>
 
-  <!-- Mobile menu toggle -->
-  <button
-    type="button"
-    id="menu-button"
-    class="px-1.5 sm:hidden"
-    style="color: var(--color-text-muted);"
-    aria-expanded="false"
-    aria-controls="main-menu"
-  >
-    <Menu />
-  </button>
+    <!-- Mobile menu toggle -->
+    <button
+      type="button"
+      id="menu-button"
+      class="px-1.5 sm:hidden"
+      style="color: var(--color-text-muted);"
+      aria-expanded="false"
+      aria-controls="main-menu"
+    >
+      <Menu />
+    </button>
 
-  <!-- Nav -->
-  <nav
-    id="main-menu"
-    class="absolute top-[61px] right-5 hidden rounded-sm px-4 py-5 sm:static sm:block sm:p-0"
-    style="
-      background-color: var(--color-surface);
-      border: 1px solid var(--color-border);
-      sm:border: none;
-    "
-  >
-    <ul class="gap-1 sm:flex">
-      {
-        navLinks.map((link) => (
-          <li class="relative">
-            <a
-              href={link.href}
-              class="nav-item relative block px-3 py-2 transition-colors duration-300 after:absolute after:bottom-0 after:left-1/2 after:h-2 after:w-1 after:-translate-x-1/2 after:opacity-0 after:content-['·'] hover:after:opacity-100"
-              style="
-                font-family: var(--font-display);
-                font-size: 0.7rem;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: var(--color-text-muted);
-                text-decoration: none;
-              "
-            >
-              {link.text}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
+    <!-- Nav -->
+    <nav
+      id="main-menu"
+      class="absolute top-[57px] right-4 hidden rounded-lg px-2 py-2 sm:static sm:block sm:p-0"
+      style="
+        background-color: var(--color-surface-2);
+        border: 1px solid var(--color-border);
+      "
+    >
+      <ul class="gap-1 sm:flex">
+        {
+          navLinks.map((link: { text: string; href: string }) => (
+            <li>
+              <a
+                href={link.href}
+                class="nav-item block rounded px-3 py-1.5 text-sm font-medium transition-colors duration-150"
+                style="color: var(--color-text-faint);"
+              >
+                {link.text}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <script>
-  const button = document.querySelector("#menu-button");
-  const menu   = document.querySelector("#main-menu");
-  const navItems = document.querySelectorAll("#main-menu > ul > li > a");
+  const header  = document.querySelector("#site-header") as HTMLElement;
+  const button  = document.querySelector("#menu-button");
+  const menu    = document.querySelector("#main-menu");
+  const navItems = document.querySelectorAll("#main-menu .nav-item");
+
+  // Scroll-based header background
+  window.addEventListener("scroll", () => {
+    const scrolled = window.scrollY > 10;
+    if (header) {
+      header.style.backgroundColor = scrolled
+        ? "rgba(10,10,10,0.85)"
+        : "transparent";
+      header.style.backdropFilter = scrolled ? "blur(12px)" : "none";
+      header.style.borderBottomColor = scrolled
+        ? "var(--color-border)"
+        : "transparent";
+    }
+  }, { passive: true });
 
   // Mobile toggle
   const toggleMenu = () => {
@@ -87,7 +90,7 @@ const { navLinks } = Astro.props;
     button?.setAttribute("aria-expanded", `${!isHidden}`);
   };
   button?.addEventListener("click", toggleMenu);
-  navItems.forEach((item) => item?.addEventListener("click", toggleMenu));
+  navItems.forEach((item) => item.addEventListener("click", toggleMenu));
 
   // Active nav highlight on scroll
   const observer = new IntersectionObserver(
@@ -97,8 +100,8 @@ const { navLinks } = Astro.props;
           navItems.forEach((item) => {
             const isActive = item.getAttribute("href") === `#${entry.target.id}`;
             (item as HTMLElement).style.color = isActive
-              ? "var(--color-stone-800)"
-              : "var(--color-text-muted)";
+              ? "var(--color-text-primary)"
+              : "var(--color-text-faint)";
           });
         }
       });
@@ -118,12 +121,7 @@ const { navLinks } = Astro.props;
 </script>
 
 <style>
-  header {
-    animation-timeline: scroll();
-    animation-range: 0 650px;
-  }
-
-  /* Mobile menu: override border on sm+ */
+  /* Mobile menu: remove card styling on sm+ */
   @media (min-width: 640px) {
     #main-menu {
       border: none !important;
@@ -131,14 +129,11 @@ const { navLinks } = Astro.props;
     }
   }
 
-  /* Monogram hover */
-  .monogram:hover {
-    color: var(--color-stone-950) !important;
+  .logo:hover {
+    color: var(--color-accent) !important;
   }
 
-  /* Nav item active state */
-  .nav-item.active,
   .nav-item:hover {
-    color: var(--color-stone-800) !important;
+    color: var(--color-text-primary) !important;
   }
 </style>

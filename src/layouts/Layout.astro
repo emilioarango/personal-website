@@ -3,9 +3,6 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import { SITE_CONFIG } from "@config";
 
-// Fontsource imports removed — Cinzel & EB Garamond are loaded
-// via Google Fonts in global.css with @import
-
 const {
   title,
   description,
@@ -57,19 +54,9 @@ const ogImgUrl = canonicalURL + socialImage;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
 
-  <!--
-    bg-[var(--color-background)]  → travertine limestone #d6cfc4
-    font-sans                     → EB Garamond (set in @theme)
-    text-[var(--color-text-secondary)] → warm dark brown body copy
-  -->
   <body
-    class="
-      min-h-dvh
-      bg-[var(--color-background)]
-      font-sans
-      text-[var(--color-text-secondary)]
-      antialiased
-    "
+    class="min-h-dvh font-sans antialiased"
+    style="background-color: var(--color-background); color: var(--color-text-muted);"
   >
     <Header siteLogo={siteLogo} navLinks={navLinks} />
 

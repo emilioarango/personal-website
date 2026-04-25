@@ -1,6 +1,5 @@
 ---
 import Section from "./Section.astro";
-import { Image } from "astro:assets";
 import type { AboutProps, HeroProps } from "@types";
 
 type Props = AboutProps & Pick<HeroProps, "name">;
@@ -8,19 +7,36 @@ type Props = AboutProps & Pick<HeroProps, "name">;
 const { description, image, name } = Astro.props;
 ---
 
-<Section text="About Me" href="about">
-  <div class="flex flex-col items-center gap-12 md:flex-row md:gap-8">
-    <p class="w-auto text-base text-neutral md:pr-5">{description}</p>
-    <div
-      class="h-80 w-64 flex-shrink-0 rotate-[5deg] bg-white p-4 md:rotate-[7deg]"
+<Section text="About" href="about">
+  <div class="flex flex-col gap-10 md:flex-row md:items-start md:gap-12">
+
+    <!-- Text -->
+    <p
+      class="flex-1 text-sm leading-relaxed md:text-base"
+      style="color: var(--color-text-muted);"
     >
-      <Image
-        class="object-cover"
+      {description}
+    </p>
+
+    <!-- Photo -->
+    <div
+      class="mx-auto flex-shrink-0 overflow-hidden rounded-xl md:mx-0"
+      style="
+        width: 200px;
+        height: 200px;
+        border: 1px solid var(--color-border);
+      "
+    >
+      <img
+        class="h-full w-full object-cover"
         src={image}
-        width="260"
-        height="260"
+        width="200"
+        height="200"
         alt={name}
+        loading="lazy"
+        decoding="async"
       />
     </div>
+
   </div>
 </Section>

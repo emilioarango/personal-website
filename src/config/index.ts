@@ -1,10 +1,5 @@
 import type { SiteConfig, SiteContent } from "../types";
 
-export const SITE_MOTTO = {
-  latin: "Festina lente.",
-  translation: "Make haste slowly.",
-};
-
 export const SITE_CONFIG: SiteConfig = {
   title: "Emilio Arango — Systems Administrator",
   author: "Emilio Arango",
