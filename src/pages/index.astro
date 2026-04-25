@@ -1,17 +1,148 @@
 ---
 import { SITE_CONTENT } from "@config";
-import Hero from "@components/Hero.astro";
 import Layout from "@layouts/Layout.astro";
 import Experience from "@components/Experience.astro";
-import Projects from "@components/Projects.astro";
 import About from "@components/About.astro";
-
 import "../styles/global.css";
 ---
-
 <Layout>
-  <Hero {...SITE_CONTENT.hero} />
   <Experience experience={SITE_CONTENT.experience} />
-  <Projects projects={SITE_CONTENT.projects} />
   <About {...SITE_CONTENT.about} name={SITE_CONTENT.hero.name} />
 </Layout>
+ENDFILEcat > src/layouts/Layout.astro << 'ENDFILE'
+---
+import Footer from "@components/Footer.astro";
+import { SITE_CONFIG, SITE_CONTENT, SITE_MOTTO } from "@config";
+import "../styles/global.css";
+const { title, description, author, navLinks, socialLinks, lang, socialImage, canonicalURL = new URL(Astro.url.pathname, Astro.site).href } = SITE_CONFIG;
+const { hero } = SITE_CONTENT;
+const ogImgUrl = canonicalURL + socialImage;
+const [firstName, ...rest] = hero.name.split(" ");
+const lastName = rest.join(" ");
+---
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="author" content={author} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImgUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImgUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <header class="mobile-bar">
+      <a href="/" class="monogram">E · A</a>
+      <nav class="mobile-nav">
+        {navLinks.map((link) => (<a href={link.href} class="mobile-nav-link">{link.text}</a>))}
+      </nav>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <a href="/" class="sidebar-monogram">E · A</a>
+          <div class="sidebar-identity">
+            <h1 class="sidebar-name">{firstName}<br />{lastName}</h1>
+            <p class="sidebar-role">{hero.specialty}</p>
+            <p class="sidebar-sub">Amateur Developer</p>
+          </div>
+          <p class="sidebar-summary">{hero.summary}</p>
+          <a href={`mailto:${hero.email}`} class="sidebar-cta">Get in Touch</a>
+          <nav class="sidebar-nav" aria-label="Main navigation">
+            {navLinks.map((link) => (<a href={link.href} class="sidebar-nav-link">{link.text}</a>))}
+          </nav>
+          <div class="sidebar-social">
+            {socialLinks.map((link) => (
+              <a href={link.href} target="_blank" rel="noopener noreferrer" class="sidebar-social-link">
+                {link.text} <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+          <div class="sidebar-motto">
+            <p class="latin">{SITE_MOTTO.latin}</p>
+            <p class="motto-translation">{SITE_MOTTO.translation}</p>
+          </div>
+        </div>
+      </aside>
+      <main class="main-content">
+        <div class="mobile-identity">
+          <p class="mobile-eyebrow">{hero.specialty} · Amateur Developer</p>
+          <h1 class="mobile-name">{firstName}<br />{lastName}</h1>
+          <p class="mobile-summary">{hero.summary}</p>
+          <a href={`mailto:${hero.email}`} class="mobile-cta">Get in Touch</a>
+        </div>
+        <slot />
+        <Footer author={author} socialLinks={socialLinks} />
+      </main>
+    </div>
+    <script>
+      const sidebarLinks = document.querySelectorAll(".sidebar-nav-link");
+      const mobileLinks = document.querySelectorAll(".mobile-nav-link");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            sidebarLinks.forEach((a) => { a.classList.toggle("active", a.getAttribute("href") === "#" + id); });
+            mobileLinks.forEach((a) => { a.classList.toggle("active", a.getAttribute("href") === "#" + id); });
+          }
+        });
+      }, { threshold: 0.4 });
+      document.querySelectorAll("section[id]").forEach((s) => observer.observe(s));
+    </script>
+  </body>
+</html>
+<style>
+.mobile-bar { display: flex; align-items: center; justify-content: space-between; padding: 1.125rem 1.5rem; background: var(--color-sidebar-bg); border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 50; }
+.monogram { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.22em; color: var(--color-text-muted); text-decoration: none; transition: color 150ms; }
+.monogram:hover { color: var(--color-accent); }
+.mobile-nav { display: flex; gap: 1.5rem; }
+.mobile-nav-link { font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); text-decoration: none; transition: color 150ms; }
+.mobile-nav-link:hover, .mobile-nav-link.active { color: var(--color-accent); }
+.layout { display: flex; min-height: 100dvh; }
+.sidebar { display: none; width: 300px; flex-shrink: 0; position: sticky; top: 0; height: 100dvh; overflow-y: auto; }
+.sidebar-inner { display: flex; flex-direction: column; gap: 2rem; padding: 2.5rem 2rem; min-height: 100%; border-right: 1px solid var(--color-border); background: var(--color-sidebar-bg); }
+.sidebar-monogram { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.22em; color: var(--color-text-muted); text-decoration: none; transition: color 150ms; }
+.sidebar-monogram:hover { color: var(--color-accent); }
+.sidebar-identity { flex: 1; }
+.sidebar-name { font-family: var(--font-display); font-size: clamp(2.25rem, 3vw, 3.25rem); font-weight: 600; color: var(--color-text-primary); letter-spacing: 0.06em; line-height: 1.0; margin-bottom: 1rem; }
+.sidebar-role { font-family: var(--font-display); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.3rem; }
+.sidebar-sub { font-family: var(--font-display); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-text-muted); }
+.sidebar-summary { font-family: var(--font-sans); font-size: 0.9rem; line-height: 1.65; color: var(--color-text-secondary); }
+.sidebar-cta { display: inline-block; align-self: flex-start; font-family: var(--font-display); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; padding: 0.7rem 1.4rem; border: 1px solid var(--color-accent); color: var(--color-accent); text-decoration: none; transition: background 200ms ease, color 200ms ease; }
+.sidebar-cta:hover { background: var(--color-accent); color: var(--color-bg); }
+.sidebar-nav { display: flex; flex-direction: column; gap: 0.35rem; }
+.sidebar-nav-link { font-family: var(--font-display); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-muted); text-decoration: none; padding: 0.4rem 0 0.4rem 0.875rem; border-left: 2px solid transparent; transition: color 150ms, border-color 150ms; }
+.sidebar-nav-link:hover, .sidebar-nav-link.active { color: var(--color-text-primary); border-left-color: var(--color-accent); }
+.sidebar-social { display: flex; flex-direction: column; gap: 0.5rem; }
+.sidebar-social-link { font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-text-muted); text-decoration: none; transition: color 150ms; }
+.sidebar-social-link:hover { color: var(--color-accent); }
+.sidebar-motto { margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+.latin { font-family: var(--font-serif); font-style: italic; font-size: 1rem; color: var(--color-text-secondary); margin-bottom: 0.3rem; }
+.motto-translation { font-family: var(--font-display); font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-faint); }
+.main-content { flex: 1; min-width: 0; padding: 3.5rem 1.5rem 4rem; max-width: 760px; }
+.mobile-identity { padding-bottom: 3rem; border-bottom: 1px solid var(--color-border); margin-bottom: 1rem; }
+.mobile-eyebrow { font-family: var(--font-display); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1rem; }
+.mobile-name { font-family: var(--font-display); font-size: clamp(3rem, 12vw, 5.5rem); font-weight: 600; color: var(--color-text-primary); letter-spacing: 0.04em; line-height: 0.95; margin-bottom: 1.5rem; }
+.mobile-summary { font-family: var(--font-sans); font-size: 1rem; line-height: 1.7; color: var(--color-text-secondary); max-width: 52ch; margin-bottom: 1.75rem; }
+.mobile-cta { display: inline-block; font-family: var(--font-display); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; padding: 0.75rem 1.5rem; border: 1px solid var(--color-accent); color: var(--color-accent); text-decoration: none; transition: background 200ms, color 200ms; }
+.mobile-cta:hover { background: var(--color-accent); color: var(--color-bg); }
+@media (min-width: 1024px) {
+  .mobile-bar { display: none; }
+  .mobile-identity { display: none; }
+  .sidebar { display: block; }
+  .main-content { padding: 5rem 4rem 5rem; }
+}
+@media (min-width: 1280px) { .sidebar { width: 340px; } }
+</style>

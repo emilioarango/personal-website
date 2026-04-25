@@ -2,25 +2,27 @@
 import Section from "./Section.astro";
 import { Image } from "astro:assets";
 import type { AboutProps, HeroProps } from "@types";
-
 type Props = AboutProps & Pick<HeroProps, "name">;
-
 const { description, image, name } = Astro.props;
 ---
-
 <Section text="About Me" href="about">
-  <div class="flex flex-col items-center gap-12 md:flex-row md:gap-8">
-    <p class="w-auto text-base text-neutral md:pr-5">{description}</p>
-    <div
-      class="h-80 w-64 flex-shrink-0 rotate-[5deg] bg-white p-4 md:rotate-[7deg]"
-    >
-      <Image
-        class="object-cover"
-        src={image}
-        width="260"
-        height="260"
-        alt={name}
-      />
+  <div class="about-inner">
+    <p class="about-text">{description.trim()}</p>
+    <div class="photo-wrap">
+      <div class="photo-frame">
+        <Image src={image} width={240} height={280} alt={name} class="photo-img" />
+      </div>
     </div>
   </div>
 </Section>
+<style>
+.about-inner { display: flex; flex-direction: column; gap: 2.5rem; align-items: flex-start; }
+.about-text { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.8; color: var(--color-text-secondary); max-width: 60ch; }
+.photo-wrap { flex-shrink: 0; }
+.photo-frame { border: 2px solid var(--color-accent); padding: 5px; display: inline-block; }
+.photo-img { display: block; width: 200px; height: auto; object-fit: cover; filter: grayscale(20%) contrast(1.05); }
+@media (min-width: 640px) {
+  .about-inner { flex-direction: row; align-items: flex-start; gap: 3.5rem; }
+  .photo-img { width: 220px; }
+}
+</style>

@@ -1,245 +1,91 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");
 @import "tailwindcss";
 
 @theme {
+  --font-display: "Cinzel", "Times New Roman", Georgia, serif;
+  --font-sans:    "EB Garamond", "Times New Roman", Georgia, serif;
+  --font-mono:    "JetBrains Mono", "Fira Code", "Courier New", monospace;
+  --font-serif:   "EB Garamond", "Times New Roman", Georgia, serif;
 
-  /* â”€â”€ TYPOGRAPHY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-  /* Display / headings â€” Cinzel evokes Roman stone inscriptions */
-  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
-
-  /* Body â€” EB Garamond for warm, classical readability */
-  --font-sans: "EB Garamond", "Palatino Linotype", Georgia, serif;
-
-  /* Monospace â€” kept for code snippets */
-  --font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
-
-  /* Keep serif alias pointing to Garamond as well */
-  --font-serif: "EB Garamond", Georgia, serif;
-
-  /* â”€â”€ MARBLE STONE COLOR PALETTE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-  /* Backgrounds â€” travertine limestone tones */
-  --color-stone-50:  #f5f2ee;   /* near-white marble */
-  --color-stone-100: #ede8e0;   /* light travertine  */
-  --color-stone-200: #ddd7cc;   /* warm limestone    */
-  --color-stone-300: #cec6ba;   /* card surface      */
-  --color-stone-400: #bdb3a4;   /* mid stone         */
-  --color-stone-500: #a89e90;   /* muted border      */
-  --color-stone-600: #8a7e70;   /* secondary text    */
-  --color-stone-700: #6e5e4a;   /* accent umber      */
-  --color-stone-800: #4a3f30;   /* deep brown        */
-  --color-stone-900: #2c2620;   /* near-black        */
-  --color-stone-950: #1e1a14;   /* inscription black */
-
-  /* Semantic aliases used throughout components */
-  --color-primary:     #6e5e4a;   /* umber â€” CTAs, links, highlights */
-  --color-accent:      #4a3f30;   /* deep brown â€” hover states        */
-  --color-neutral:     #a89e90;   /* muted stone â€” secondary text     */
-  --color-white:       #f5f2ee;   /* marble white                     */
-  --color-black:       #1e1a14;   /* inscription near-black           */
-  --color-background:  #d6cfc4;   /* main page background             */
-  --color-surface:     #cec6ba;   /* card / nav surface               */
-  --color-border:      #b8ae9e;   /* default border                   */
-  --color-border-soft: #cbc3b6;   /* subtle dividers                  */
-
-  /* Text hierarchy */
-  --color-text-primary:   #1e1a14;   /* headings & strong text */
-  --color-text-secondary: #4a3f30;   /* body copy              */
-  --color-text-muted:     #8a7e70;   /* captions, meta         */
-  --color-text-faint:     #a89e90;   /* placeholders, hints    */
-
-  /* â”€â”€ TYPE SCALE (unchanged from original) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-  --text-xs: 0.875rem;
-  --text-xs--line-height: 1.125rem;
-  --text-sm: 1rem;
-  --text-sm--line-height: 1.25rem;
-  --text-base: 1.125rem;
-  --text-base--line-height: 1.75rem;    /* slightly more open for serif */
-  --text-lg: 1.25rem;
+  --color-bg:             #080808;
+  --color-sidebar-bg:     #0d0d0d;
+  --color-surface:        #141414;
+  --color-surface-raised: #1c1c1c;
+  --color-border:         #222222;
+  --color-border-bright:  #2e2e2e;
+  --color-text-primary:   #f0ece4;
+  --color-text-secondary: #9a9490;
+  --color-text-muted:     #5e5a56;
+  --color-text-faint:     #3a3632;
+  --color-accent:    #c8922a;
+  --color-accent-lt: #dba84a;
+  --color-primary:    #c8922a;
+  --color-neutral:    #9a9490;
+  --color-background: #080808;
+  --color-white:      #f0ece4;
+  --color-black:      #080808;
+  --color-stone-50:  #f0ece4;
+  --color-stone-100: #d8d4cc;
+  --color-stone-200: #b0aca4;
+  --color-stone-300: #9a9490;
+  --color-stone-400: #706c68;
+  --color-stone-500: #5e5a56;
+  --color-stone-600: #4a4642;
+  --color-stone-700: #c8922a;
+  --color-stone-800: #f0ece4;
+  --color-stone-900: #f5f2ee;
+  --color-stone-950: #ffffff;
+  --text-xs:   0.75rem;
+  --text-xs--line-height: 1.1rem;
+  --text-sm:   0.875rem;
+  --text-sm--line-height: 1.3rem;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.75rem;
+  --text-lg:   1.25rem;
   --text-lg--line-height: 1.875rem;
-  --text-xl: 1.5rem;
-  --text-xl--line-height: 1.875rem;
-  --text-2xl: 1.75rem;
-  --text-2xl--line-height: 2.125rem;
-  --text-3xl: 2rem;
-  --text-3xl--line-height: 2.375rem;
-  --text-4xl: 2.25rem;
-  --text-4xl--line-height: 2.688rem;
-  --text-5xl: 2.5rem;
-  --text-5xl--line-height: 3rem;
-  --text-6xl: 3rem;
-  --text-6xl--line-height: 3.625rem;
-  --text-7xl: 3.75rem;
-  --text-7xl--line-height: 1;
-  --text-8xl: 4.5rem;
-  --text-8xl--line-height: 4.875rem;
-  --text-9xl: 6rem;
-  --text-9xl--line-height: 6.625rem;
-
-  /* â”€â”€ TRACKING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-  --tracking-tightest:  -2px;
-  --tracking-tighter:   -1px;
-  --tracking-tight:     -0.25px;
-  --tracking-wide:       0.08em;   /* body headings          */
-  --tracking-wider:      0.12em;   /* nav links              */
-  --tracking-widest:     0.25em;   /* eyebrows / section labels */
-  --tracking-roman:      0.15em;   /* Cinzel display text    */
-
-  /* â”€â”€ ANIMATIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-  --animate-slide-in:   slide-in 600ms ease both;
-  --animate-fade-up:    fade-up 500ms ease both;
-  --animate-fade-in:    fade-in 400ms ease both;
-
-  @keyframes slide-in {
-    10%  { transform: translateY(-100%); }
-    100% { transform: translateY(0); }
-  }
+  --text-xl:   1.5rem;
+  --text-2xl:  1.875rem;
+  --text-3xl:  2.25rem;
+  --text-4xl:  3rem;
+  --text-5xl:  3.75rem;
+  --text-6xl:  4.5rem;
+  --tracking-tightest: -0.03em;
+  --tracking-tighter:  -0.02em;
+  --tracking-tight:    -0.01em;
+  --tracking-roman:     0.1em;
+  --tracking-wide:      0.08em;
+  --tracking-wider:     0.12em;
+  --tracking-widest:    0.22em;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --animate-fade-up: fade-up 600ms ease both;
+  --animate-fade-in: fade-in 400ms ease both;
+  --animate-slide-in: fade-in 400ms ease both;
 
   @keyframes fade-up {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes fade-in {
     from { opacity: 0; }
     to   { opacity: 1; }
   }
-
-  /* â”€â”€ SPACING & RADIUS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-  --radius-sm:  2px;
-  --radius-md:  4px;
-  --radius-lg:  6px;
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   BASE STYLES
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
-  background-color: var(--color-background);
-  color: var(--color-text-secondary);
-  min-height: 100dvh;
-}
-
-/* â”€â”€ HEADINGS use Cinzel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  color: var(--color-text-primary);
-  font-weight: 500;
-  letter-spacing: var(--tracking-roman);
-  line-height: 1.15;
-}
-
-/* â”€â”€ LINKS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color 150ms ease;
-}
-
-a:hover {
-  color: var(--color-accent);
-}
-
-/* â”€â”€ HORIZONTAL RULES â€” styled as stone dividers â”€â”€â”€â”€â”€â”€â”€ */
-
-hr {
-  border: none;
-  border-top: 1px solid var(--color-border);
-  margin: 2rem 0;
-}
-
-/* â”€â”€ SELECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-::selection {
-  background-color: var(--color-stone-700);
-  color: var(--color-stone-50);
-}
-
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   UTILITY CLASSES â€” Roman theme helpers
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-/* Section eyebrow label */
-.label-roman {
-  font-family: var(--font-display);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--color-stone-700);
-}
-
-/* Section header row with extending line */
-.section-heading {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.section-heading::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background-color: var(--color-border);
-}
-
-/* Stone card surface */
-.card-stone {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 1rem 1.25rem;
-}
-
-.card-stone:hover {
-  border-color: var(--color-stone-600);
-  transition: border-color 200ms ease;
-}
-
-/* Ornamental divider text  Â·  âœ¦  Â· */
-.ornament {
-  text-align: center;
-  color: var(--color-border);
-  font-size: var(--text-sm);
-  letter-spacing: 0.4em;
-  user-select: none;
-}
-
-/* Latin italic text  */
-.latin {
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: var(--color-stone-800);
-}
-
-/* Roman numeral / year display */
-.numeral {
-  font-family: var(--font-display);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  color: var(--color-text-faint);
-}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-sans); font-size: var(--text-base); line-height: var(--text-base--line-height); background-color: var(--color-bg); color: var(--color-text-secondary); min-height: 100dvh; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--color-text-primary); font-weight: 500; letter-spacing: var(--tracking-roman); line-height: 1.1; }
+a { color: var(--color-accent); text-decoration: none; transition: color 150ms ease; }
+a:hover { color: var(--color-accent-lt); }
+hr { border: none; border-top: 1px solid var(--color-border); margin: 2rem 0; }
+::selection { background-color: var(--color-accent); color: var(--color-bg); }
+.label-roman { font-family: var(--font-display); font-size: 0.65rem; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-text-muted); }
+.label-accent { font-family: var(--font-display); font-size: 0.65rem; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-accent); }
+.latin { font-family: var(--font-serif); font-style: italic; color: var(--color-text-secondary); }
+.numeral { font-family: var(--font-display); font-size: 0.65rem; letter-spacing: var(--tracking-wide); color: var(--color-text-faint); }
+.ornament { text-align: center; color: var(--color-border); font-size: var(--text-sm); letter-spacing: 0.4em; user-select: none; }
+.section-heading { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.section-heading::after { content: ""; flex: 1; height: 1px; background-color: var(--color-border); }
+.card-stone { background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem 1.25rem; }
