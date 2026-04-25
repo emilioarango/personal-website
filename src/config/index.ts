@@ -29,7 +29,7 @@ export const SITE_CONTENT: SiteContent = {
     name: "Emilio Arango",
     specialty: "Systems Administrator",
     summary:
-      "Systems Administrator specializing in infrastructure, automation, cloud technologies, and keeping complex IT environments running smoothly and securely.",
+      "Systems Administrator specializing in Mac/Windows endpoint management, MDM (Jamf/Intune), Azure Entra ID, and AI-driven helpdesk automation.",
     email: "emilioearango@gmail.com",   // ← Update this once you have professional email
   },
   experience: [
