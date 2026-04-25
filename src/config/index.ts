@@ -12,7 +12,7 @@ export const SITE_CONFIG: SiteConfig = {
     { text: "About", href: "#about" },
   ],
   socialLinks: [
-    { text: "LinkedIn", href: "www.linkedin.com/in/emilio-a-b7a55722" },
+    { text: "LinkedIn", href: "https://www.linkedin.com/in/emilio-a-b7a55722" },
     { text: "GitHub", href: "https://github.com/emilioarango" },   // ← Update with your actual GitHub username
   ],
   socialImage: "/zen-og.png",
