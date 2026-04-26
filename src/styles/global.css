@@ -95,6 +95,8 @@ body {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   background-color: var(--color-background);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--color-text-muted);
   min-height: 100dvh;
 }

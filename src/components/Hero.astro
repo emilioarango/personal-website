@@ -1,65 +1,142 @@
 ---
 import type { HeroProps } from "@types";
+import { SITE_CONFIG } from "@config";
 
 type Props = HeroProps;
 const { name, specialty, summary, email } = Astro.props;
+const { siteLogo } = SITE_CONFIG;
 
 const [firstName, ...rest] = name.split(" ");
 const lastName = rest.join(" ");
 ---
 
-<section class="py-24 md:py-32" id="hero">
+<section class="relative overflow-hidden py-12 md:py-20" id="hero">
 
-  <!-- Eyebrow label -->
-  <p class="mono-label mb-6">
-    Systems Administrator · Amateur Developer
-  </p>
+  <!-- Radial glow behind name -->
+  <div class="glow" aria-hidden="true" />
 
-  <!-- Name -->
-  <h1
-    class="mb-4 font-sans font-semibold leading-none"
-    style="
-      font-size: clamp(3rem, 9vw, 5.5rem);
-      letter-spacing: -0.03em;
-      color: var(--color-text-primary);
-    "
-  >
-    {firstName}<br />{lastName}
-  </h1>
+  <div class="relative z-10 flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
 
-  <!-- Specialty -->
-  <p
-    class="mono-label mb-10"
-    style="font-size: 0.8rem; color: var(--color-text-faint);"
-  >
-    {specialty}
-  </p>
+    <!-- Text column -->
+    <div class="flex-1">
 
-  <!-- Summary -->
-  <p
-    class="mb-12 max-w-lg leading-relaxed"
-    style="color: var(--color-text-muted); font-size: var(--text-base);"
-  >
-    {summary}
-  </p>
+      <!-- Eyebrow label — brighter so it reads clearly -->
+      <p
+        class="mono-label mb-6"
+        style="color: var(--color-text-muted);"
+      >
+        Systems Administrator · Amateur Developer
+      </p>
 
-  <!-- CTA -->
-  <a
-    href={`mailto:${email}`}
-    class="cta-btn inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200"
-    style="
-      border: 1px solid var(--color-border-muted);
-      color: var(--color-text-primary);
-      background: transparent;
-    "
-  >
-    Get in Touch
-    <span style="color: var(--color-text-faint);" aria-hidden="true">↗</span>
-  </a>
+      <!-- Name -->
+      <h1
+        class="mb-4 font-sans font-semibold leading-none"
+        style="
+          font-size: clamp(2.75rem, 8vw, 5rem);
+          letter-spacing: -0.03em;
+          color: var(--color-text-primary);
+        "
+      >
+        {firstName}<br />{lastName}
+      </h1>
 
+      <!-- Specialty -->
+      <p
+        class="mono-label mb-10"
+        style="font-size: 0.8rem; color: var(--color-text-faint);"
+      >
+        {specialty}
+      </p>
+
+      <!-- Summary -->
+      <p
+        class="mb-10 max-w-md leading-relaxed"
+        style="color: var(--color-text-muted); font-size: var(--text-base);"
+      >
+        {summary}
+      </p>
+
+      <!-- CTA -->
+      <a
+        href={`mailto:${email}`}
+        class="cta-btn inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200"
+        style="
+          border: 1px solid var(--color-border-muted);
+          color: var(--color-text-primary);
+          background: transparent;
+        "
+      >
+        Get in Touch
+        <span style="color: var(--color-text-faint);" aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <!-- Photo column -->
+    <div class="photo-container flex-shrink-0">
+      <img
+        src={siteLogo}
+        alt={name}
+        width="240"
+        height="240"
+        class="photo"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+
+  </div>
 </section>
 
 <style>
+  /* Blue radial glow anchored top-left of the hero */
+  .glow {
+    position: absolute;
+    top: -80px;
+    left: -100px;
+    width: 560px;
+    height: 420px;
+    background: radial-gradient(ellipse at center, rgba(96, 165, 250, 0.09) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Photo */
+  .photo-container {
+    position: relative;
+  }
+
+  .photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid var(--color-border);
+    display: block;
+    transition: filter 300ms ease, transform 300ms ease;
+  }
+
+  .photo:hover {
+    transform: scale(1.02);
+  }
+
+  /* Subtle gradient border ring around photo */
+  .photo-container::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 17px;
+    background: linear-gradient(135deg, rgba(96,165,250,0.25) 0%, transparent 55%);
+    z-index: -1;
+  }
+
+  @media (min-width: 768px) {
+    .photo {
+      width: 240px;
+      height: 240px;
+    }
+  }
+
   .cta-btn:hover {
     border-color: var(--color-accent) !important;
     color: var(--color-accent) !important;
