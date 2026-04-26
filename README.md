@@ -2,8 +2,6 @@
 
 A minimalist, accessible and responsive personal portfolio website built with Astro and TailwindCSS.
 
-![portfolio-preview](./public/og-image.png)
-
 ## 🔥 Features
 
 - [x] Minimalist design — clean and simple
