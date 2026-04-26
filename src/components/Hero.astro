@@ -1,10 +1,7 @@
 ---
 import type { HeroProps } from "@types";
-import { SITE_CONFIG } from "@config";
-
 type Props = HeroProps;
 const { name, specialty, summary, email } = Astro.props;
-const { siteLogo } = SITE_CONFIG;
 
 const [firstName, ...rest] = name.split(" ");
 const lastName = rest.join(" ");
@@ -15,10 +12,8 @@ const lastName = rest.join(" ");
   <!-- Radial glow behind name -->
   <div class="glow" aria-hidden="true" />
 
-  <div class="relative z-10 flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
-
-    <!-- Text column -->
-    <div class="flex-1">
+  <div class="relative z-10">
+    <div>
 
       <!-- Eyebrow label — brighter so it reads clearly -->
       <p
@@ -71,24 +66,10 @@ const lastName = rest.join(" ");
       </a>
     </div>
 
-    <!-- Photo column -->
-    <div class="photo-container flex-shrink-0">
-      <img
-        src={siteLogo}
-        alt={name}
-        width="240"
-        height="240"
-        class="photo"
-        loading="eager"
-        decoding="async"
-      />
-    </div>
-
   </div>
 </section>
 
 <style>
-  /* Blue radial glow anchored top-left of the hero */
   .glow {
     position: absolute;
     top: -80px;
@@ -98,43 +79,6 @@ const lastName = rest.join(" ");
     background: radial-gradient(ellipse at center, rgba(96, 165, 250, 0.09) 0%, transparent 65%);
     pointer-events: none;
     z-index: 0;
-  }
-
-  /* Photo */
-  .photo-container {
-    position: relative;
-  }
-
-  .photo {
-    width: 200px;
-    height: 200px;
-    border-radius: 16px;
-    object-fit: cover;
-    object-position: top;
-    border: 1px solid var(--color-border);
-    display: block;
-    transition: filter 300ms ease, transform 300ms ease;
-  }
-
-  .photo:hover {
-    transform: scale(1.02);
-  }
-
-  /* Subtle gradient border ring around photo */
-  .photo-container::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: 17px;
-    background: linear-gradient(135deg, rgba(96,165,250,0.25) 0%, transparent 55%);
-    z-index: -1;
-  }
-
-  @media (min-width: 768px) {
-    .photo {
-      width: 240px;
-      height: 240px;
-    }
   }
 
   .cta-btn:hover {
