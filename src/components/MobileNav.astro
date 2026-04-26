@@ -1,0 +1,88 @@
+---
+import Menu from "@icons/Menu.astro";
+
+interface Props {
+  navLinks: { text: string; href: string }[];
+  name: string;
+  email: string;
+}
+
+const { navLinks, name, email } = Astro.props;
+const [firstName] = name.split(" ");
+---
+
+<header
+  class="lg:hidden sticky top-0 z-50 flex items-center justify-between px-6 py-4"
+  style="background-color: rgba(8,8,8,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border);"
+>
+  <a
+    href="/"
+    class="font-mono text-sm font-semibold"
+    style="color: var(--color-text-primary);"
+  >
+    {firstName}
+  </a>
+
+  <button
+    id="mobile-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+    style="color: var(--color-text-muted);"
+  >
+    <Menu />
+  </button>
+</header>
+
+<!-- Full-screen drawer -->
+<div
+  id="mobile-menu"
+  class="lg:hidden fixed inset-0 z-40 hidden flex-col items-center justify-center gap-10"
+  style="background-color: rgba(8,8,8,0.98);"
+>
+  <nav>
+    <ul class="flex flex-col items-center gap-8">
+      {
+        navLinks.map(({ text, href }: { text: string; href: string }) => (
+          <li>
+            <a
+              href={href}
+              class="mobile-nav-link font-mono text-lg uppercase tracking-widest transition-colors duration-150"
+              style="color: var(--color-text-muted);"
+            >
+              {text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <a
+    href={`mailto:${email}`}
+    class="font-mono text-xs transition-colors duration-150"
+    style="color: var(--color-text-faint);"
+  >
+    {email}
+  </a>
+</div>
+
+<script>
+  const toggle = document.querySelector("#mobile-toggle");
+  const menu   = document.querySelector("#mobile-menu");
+  const links  = document.querySelectorAll(".mobile-nav-link");
+
+  const open  = () => { menu?.classList.replace("hidden", "flex"); toggle?.setAttribute("aria-expanded", "true"); };
+  const close = () => { menu?.classList.replace("flex", "hidden");  toggle?.setAttribute("aria-expanded", "false"); };
+
+  toggle?.addEventListener("click", () => {
+    menu?.classList.contains("hidden") ? open() : close();
+  });
+
+  links.forEach((link) => link.addEventListener("click", close));
+</script>
+
+<style>
+  .mobile-nav-link:hover {
+    color: var(--color-accent) !important;
+  }
+</style>

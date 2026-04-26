@@ -9,75 +9,135 @@ interface Props {
 const { experience } = Astro.props;
 ---
 
-<Section text="Experience" href="experience">
-  <div class="flex flex-col gap-10">
-    {
-      experience.map(({ company, position, startDate, endDate, summary }) => (
-        <div
-          class="group relative border-l pl-6 transition-colors duration-200"
-          style="border-color: var(--color-border);"
-        >
-          <!-- Timeline dot -->
-          <span
-            class="absolute -left-[5px] top-[6px] h-[9px] w-[9px] rounded-full border-2 transition-colors duration-200"
-            style="
-              background-color: var(--color-surface-2);
-              border-color: var(--color-border-muted);
-            "
-          />
+<Section text="Experience" href="experience" num="02">
+  <div class="flex flex-col sm:flex-row gap-0">
 
-          <!-- Header row -->
-          <div class="mb-3 flex flex-col gap-0.5">
+    <!-- Tab buttons -->
+    <div
+      class="tab-list flex sm:flex-col overflow-x-auto sm:overflow-visible border-b sm:border-b-0 sm:border-l mb-8 sm:mb-0 sm:mr-8 flex-shrink-0"
+      style="border-color: var(--color-border);"
+      role="tablist"
+    >
+      {
+        experience.map(({ company }, i: number) => (
+          <button
+            class="tab-btn font-mono text-xs px-4 py-3 whitespace-nowrap text-left transition-all duration-150"
+            data-tab={i}
+            role="tab"
+            aria-selected={i === 0 ? "true" : "false"}
+          >
+            {company}
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Tab panels -->
+    <div class="tab-panels flex-1 min-w-0">
+      {
+        experience.map(({ company, position, startDate, endDate, summary }, i: number) => (
+          <div class="tab-panel" data-panel={i} role="tabpanel">
             <h3
-              class="text-base font-semibold leading-snug"
+              class="text-base font-semibold mb-1 leading-snug"
               style="color: var(--color-text-primary);"
             >
-              {position}
+              {position}{" "}
+              <span style="color: var(--color-accent-blue);">@ {company}</span>
             </h3>
-            <div class="flex items-center gap-2">
-              <span
-                class="text-sm font-medium"
-                style="color: var(--color-accent);"
-              >
-                {company}
-              </span>
-              <span style="color: var(--color-border-muted);" aria-hidden="true">·</span>
-              <span
-                class="font-mono text-xs"
-                style="color: var(--color-text-faint);"
-              >
-                {startDate} – {endDate}
-              </span>
-            </div>
-          </div>
 
-          <!-- Summary -->
-          {Array.isArray(summary) ? (
-            <ul class="flex flex-col gap-2">
-              {summary.map((item: string) => (
-                <li
-                  class="flex gap-3 text-sm leading-relaxed"
-                  style="color: var(--color-text-muted);"
-                >
-                  <span
-                    class="mt-[0.35rem] h-1 w-1 flex-shrink-0 rounded-full"
-                    style="background-color: var(--color-text-faint);"
-                    aria-hidden="true"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p
-              class="text-sm leading-relaxed"
-              style="color: var(--color-text-muted);"
-            >
-              {summary}
+            <p class="font-mono text-xs mb-5" style="color: var(--color-text-faint);">
+              {startDate} — {endDate}
             </p>
-          )}
-        </div>
-      ))
-    }
+
+            {Array.isArray(summary) ? (
+              <ul class="flex flex-col gap-3">
+                {summary.map((item: string) => (
+                  <li
+                    class="flex gap-3 text-sm leading-relaxed"
+                    style="color: var(--color-text-muted);"
+                  >
+                    <span
+                      class="flex-shrink-0 mt-0.5 font-mono"
+                      style="color: var(--color-accent);"
+                      aria-hidden="true"
+                    >
+                      ▹
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                {summary}
+              </p>
+            )}
+          </div>
+        ))
+      }
+    </div>
   </div>
 </Section>
+
+<script>
+  const tabs   = document.querySelectorAll<HTMLElement>(".tab-btn");
+  const panels = document.querySelectorAll<HTMLElement>(".tab-panel");
+
+  function activateTab(index: number) {
+    tabs.forEach((tab, i) => {
+      const active = i === index;
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+      tab.classList.toggle("tab-active", active);
+    });
+    panels.forEach((panel, i) => {
+      panel.style.display = i === index ? "block" : "none";
+    });
+  }
+
+  // Initialize
+  activateTab(0);
+
+  tabs.forEach((tab, i) => tab.addEventListener("click", () => activateTab(i)));
+</script>
+
+<style>
+  /* Desktop: vertical tabs with left border indicator */
+  .tab-btn {
+    border-left: 2px solid var(--color-border);
+    color: var(--color-text-faint);
+    background: transparent;
+    cursor: pointer;
+    width: 140px;
+  }
+
+  .tab-btn:hover {
+    border-left-color: var(--color-text-muted);
+    color: var(--color-text-muted) !important;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .tab-btn.tab-active {
+    border-left-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+    background-color: rgba(225, 29, 72, 0.05);
+  }
+
+  /* Mobile: horizontal tabs with bottom border */
+  @media (max-width: 639px) {
+    .tab-btn {
+      border-left: none;
+      border-bottom: 2px solid var(--color-border);
+      width: auto;
+      padding: 10px 16px;
+    }
+
+    .tab-btn:hover {
+      border-bottom-color: var(--color-text-muted);
+    }
+
+    .tab-btn.tab-active {
+      border-bottom-color: var(--color-accent) !important;
+      border-left: none !important;
+    }
+  }
+</style>

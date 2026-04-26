@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add *)",
+      "Bash(pnpm remove *)",
+      "Bash(npm install *)",
+      "Bash(npm uninstall *)",
+      "PowerShell(Get-Command node, npm, pnpm, npx 2>&1)",
+      "PowerShell(Get-Item \"C:\\\\Program Files\\\\nodejs\\\\node.exe\" -ErrorAction SilentlyContinue; Get-Item \"$env:APPDATA\\\\npm\\\\pnpm.cmd\" -ErrorAction SilentlyContinue; Get-Item \"$env:LOCALAPPDATA\\\\pnpm\\\\pnpm.exe\" -ErrorAction SilentlyContinue; Get-Item \"C:\\\\Users\\\\emili\\\\AppData\\\\Local\\\\pnpm\\\\pnpm.exe\" -ErrorAction SilentlyContinue)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Fix: revert package.json font swap to match lockfile *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'Update body font to Times New Roman *)",
+      "Bash(git commit -m 'Fix LinkedIn URL slug and ensure https:// prefix *)",
+      "Bash(git commit -m 'Enhance hero: two-column layout, glow, dot grid, photo, bolder eyebrow *)",
+      "Bash(git commit -m 'Remove headshot from hero section *)",
+      "WebFetch(domain:brittanychiang.com)"
+    ]
+  }
+}

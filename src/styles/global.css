@@ -8,26 +8,25 @@
   --font-sans: "Times New Roman", Times, serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Fira Code", monospace;
 
-  /* -- DARK COLOR PALETTE --------------------------------- */
+  /* -- DARK TECHY PALETTE --------------------------------- */
 
-  --color-background:    #0a0a0a;
-  --color-surface:       #111111;
-  --color-surface-2:     #18181b;
-  --color-border:        #27272a;
-  --color-border-muted:  #3f3f46;
+  --color-background:   #080808;
+  --color-surface:      #111111;
+  --color-border:       #1f1f1f;
+  --color-border-muted: #2a2a2a;
 
-  --color-text-primary:  #fafafa;
-  --color-text-muted:    #a1a1aa;
-  --color-text-faint:    #52525b;
+  --color-text-primary: #f5f5f5;
+  --color-text-muted:   #888888;
+  --color-text-faint:   #444444;
 
-  --color-accent:        #60a5fa;
-  --color-accent-hover:  #93c5fd;
+  --color-accent:       #e11d48;   /* red  */
+  --color-accent-blue:  #3b82f6;   /* blue */
 
-  /* Tailwind semantic aliases used in component classes */
-  --color-primary: #60a5fa;
-  --color-neutral: #a1a1aa;
-  --color-white:   #fafafa;
-  --color-black:   #0a0a0a;
+  /* Tailwind aliases */
+  --color-primary: #e11d48;
+  --color-neutral: #888888;
+  --color-white:   #f5f5f5;
+  --color-black:   #080808;
 
   /* -- TYPE SCALE ----------------------------------------- */
 
@@ -40,26 +39,10 @@
   --text-3xl:  1.875rem;  --text-3xl--line-height:  2.25rem;
   --text-4xl:  2.25rem;   --text-4xl--line-height:  2.5rem;
   --text-5xl:  3rem;      --text-5xl--line-height:  1;
-  --text-6xl:  3.75rem;   --text-6xl--line-height:  1;
-  --text-7xl:  4.5rem;    --text-7xl--line-height:  1;
-  --text-8xl:  6rem;      --text-8xl--line-height:  1;
-  --text-9xl:  8rem;      --text-9xl--line-height:  1;
-
-  /* -- TRACKING ------------------------------------------- */
-
-  --tracking-tightest: -0.05em;
-  --tracking-tighter:  -0.025em;
-  --tracking-tight:    -0.01em;
 
   /* -- ANIMATIONS ----------------------------------------- */
 
-  --animate-fade-up: fade-up 500ms ease both;
   --animate-fade-in: fade-in 400ms ease both;
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
 
   @keyframes fade-in {
     from { opacity: 0; }
@@ -86,6 +69,7 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -95,8 +79,6 @@ body {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   background-color: var(--color-background);
-  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
-  background-size: 28px 28px;
   color: var(--color-text-muted);
   min-height: 100dvh;
 }
@@ -105,7 +87,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-primary);
   font-weight: 600;
   line-height: 1.2;
-  letter-spacing: var(--tracking-tight);
 }
 
 a {
@@ -122,7 +103,7 @@ hr {
 
 ::selection {
   background-color: var(--color-accent);
-  color: #0a0a0a;
+  color: #080808;
 }
 
 /* -------------------------------------------------------
@@ -132,18 +113,33 @@ hr {
 .mono-label {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--color-text-faint);
 }
 
-.section-heading {
-  display: flex;
+/* Skill / tech tag pill */
+.tag {
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--color-accent-blue);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.section-heading::after {
+/* Section heading with extending line */
+.section-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-heading-row::after {
   content: "";
   flex: 1;
   height: 1px;

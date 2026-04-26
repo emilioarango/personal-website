@@ -1,42 +1,17 @@
 ---
 import Section from "./Section.astro";
-import type { AboutProps, HeroProps } from "@types";
+import type { AboutProps } from "@types";
 
-type Props = AboutProps & Pick<HeroProps, "name">;
+type Props = AboutProps;
 
-const { description, image, name } = Astro.props;
+const { description } = Astro.props;
 ---
 
-<Section text="About" href="about">
-  <div class="flex flex-col gap-10 md:flex-row md:items-start md:gap-12">
-
-    <!-- Text -->
-    <p
-      class="flex-1 text-sm leading-relaxed md:text-base"
-      style="color: var(--color-text-muted);"
-    >
-      {description}
-    </p>
-
-    <!-- Photo -->
-    <div
-      class="mx-auto flex-shrink-0 overflow-hidden rounded-xl md:mx-0"
-      style="
-        width: 200px;
-        height: 200px;
-        border: 1px solid var(--color-border);
-      "
-    >
-      <img
-        class="h-full w-full object-cover"
-        src={image}
-        width="200"
-        height="200"
-        alt={name}
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-
-  </div>
+<Section text="About" href="about" num="01">
+  <p
+    class="text-base leading-relaxed"
+    style="color: var(--color-text-muted);"
+  >
+    {description}
+  </p>
 </Section>

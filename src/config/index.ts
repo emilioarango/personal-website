@@ -8,8 +8,8 @@ export const SITE_CONFIG: SiteConfig = {
   lang: "en",
   siteLogo: "/emilio-small.jpg",
   navLinks: [
-    { text: "Experience", href: "#experience" },
     { text: "About", href: "#about" },
+    { text: "Experience", href: "#experience" },
   ],
   socialLinks: [
     { text: "LinkedIn", href: "https://www.linkedin.com/in/emilio-a-b7a55722" },

@@ -2,15 +2,24 @@
 interface Props {
   text: string;
   href: string;
+  num?: string;
 }
 
-const { text, href } = Astro.props;
+const { text, href, num } = Astro.props;
 ---
 
-<section id={href} class="py-20">
-  <div class="section-heading">
+<section id={href} class="mb-24">
+  <div class="section-heading-row">
+    {num && (
+      <span
+        class="font-mono text-sm flex-shrink-0"
+        style="color: var(--color-accent);"
+      >
+        {num}.
+      </span>
+    )}
     <h2
-      class="text-xl font-semibold tracking-tight"
+      class="text-lg font-semibold flex-shrink-0"
       style="color: var(--color-text-primary);"
     >
       {text}
