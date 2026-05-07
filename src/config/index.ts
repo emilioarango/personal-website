@@ -75,11 +75,10 @@ export const SITE_CONTENT: SiteContent = {
   ],
   projects: [],   // keeps the section hidden
   about: {
-    description: `
-      Hey, I'm Emilio Arango, a Systems Administrator with more than 10 years of experience in IT.
-      I specialize in infrastructure management, automation, cloud systems, security, and ensuring reliable operations across complex environments.
-      I take pride in building and maintaining systems that are stable, efficient, and secure.
-    `,
-    image: "/emilio-small.jpg",
-  },
+  description: `
+    Hey, I'm Emilio. I'm a Systems Administrator based in Southern California with a decade in IT — currently at Restaurant365, where I run cloud infrastructure, identity, and endpoint management for a platform behind tens of thousands of restaurants. My focus is the spot where reliability meets automation: building systems that stay up, scale cleanly, and don't ask their users to think about them. Lately a lot of that work has lived at the intersection of IT and AI — turning internal knowledge into self-serve tooling and finding the spots where automation actually earns its keep. Off the clock, I build custom dashboards, branded tooling, the occasional half-finished idle game — if it can be vibe-coded, I've probably tried it. When I'm not at a keyboard, I'm playing chess, putting miles on my Subaru WRX STI, getting lost in a good movie, or learning something from the last few millennia.
+  `,
+  image: "/emilio-small.jpg",
+},
+
 };
