@@ -157,7 +157,7 @@ export const RESUME = {
   title: "Resume — Emilio Arango",
   description:
     "A short overview of Emilio Arango’s work in identity, endpoints, and AI automation.",
-  headline: "Systems Engineer — Identity, Endpoint & AI Automation",
+  headline: "Systems Engineer",
   summary: `I run identity and endpoint for a company of ${USERS} people. I build AI agents and automation to cut repetitive IT work.`,
   cta: "Email me for the full resume.",
 };
