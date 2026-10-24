@@ -19,7 +19,7 @@ export const SITE = {
   title: "Emilio Arango — Systems Administrator",
   jobTitle: "Systems Administrator",
   description:
-    "Systems administrator in Irvine. Owns Entra ID, Microsoft 365, Okta, Jamf, Intune, and Sophos for 800+ users, and builds AI helpdesk automation at Restaurant365.",
+    "Systems administrator in Irvine. Owns Entra ID, Microsoft 365, Okta, Jamf, Intune, Microsoft Defender, and Mimecast for 800+ users at Restaurant365.",
   url: "https://emilioarango.com",
   lang: "en",
   locale: "en_US",
@@ -37,7 +37,8 @@ export const SITE = {
     "Microsoft 365",
     "Jamf",
     "Microsoft Intune",
-    "Sophos",
+    "Microsoft Defender",
+    "Mimecast",
     "macOS",
     "Windows",
     "Endpoint management",
@@ -66,7 +67,8 @@ export const GLANCE: { role: string; place: string; rows: GlanceRow[] } = {
   rows: [
     { label: "People", value: USERS },
     { label: "Identity", value: "Entra ID, Okta" },
-    { label: "Endpoints", value: "Jamf, Intune, Sophos" },
+    { label: "Endpoints", value: "Jamf, Intune" },
+    { label: "Security", value: "Defender, Mimecast" },
     { label: "Fleet", value: "Mac and Windows" },
     { label: "Automation", value: "AI helpdesk" },
   ],
@@ -87,8 +89,8 @@ export const SKILLS: SkillGroup[] = [
   },
   {
     name: "Security",
-    items: ["Sophos"],
-    summary: "Endpoint protection across that same fleet.",
+    items: ["Microsoft Defender", "Mimecast"],
+    summary: "Microsoft Defender on the endpoints, and Mimecast for email.",
   },
   {
     name: "Cloud / Microsoft 365",
@@ -113,7 +115,7 @@ export const EXPERIENCE: Role[] = [
     location: "Irvine, California",
     points: [
       {
-        text: `Own Entra ID, Okta, Microsoft 365, Jamf, Intune, and Sophos for ${USERS} users in Irvine.`,
+        text: `Own Entra ID, Okta, Microsoft 365, Jamf, Intune, Microsoft Defender, and Mimecast for ${USERS} users in Irvine.`,
       },
       {
         text: "Manage Mac and Windows endpoints and the high-availability systems those users rely on.",
