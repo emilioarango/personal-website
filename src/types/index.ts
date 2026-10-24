@@ -1,49 +1,43 @@
-export interface SiteConfig extends HeaderProps {
-  title: string;
-  description: string;
-  lang: string;
-  author: string;
-  socialLinks: { text: string; href: string }[];
-  socialImage: string;
-  canonicalURL?: string;
+export interface NavLink {
+  text: string;
+  href: string;
 }
 
-export interface SiteContent {
-  hero: HeroProps;
-  experience: ExperienceProps[];
-  projects: ProjectProps[];
-  about: AboutProps;
+export interface Point {
+  text: string;
+  /** Render as a TODO Emilio still needs to fill. Never invent the missing fact. */
+  todo?: boolean;
 }
 
-export interface HeroProps {
+export interface SkillGroup {
   name: string;
-  specialty: string;
   summary: string;
-  email: string;
+  items: string[];
 }
 
-export interface ExperienceProps {
+export interface GlanceRow {
+  label: string;
+  value: string;
+}
+
+export interface Role {
   company: string;
   position: string;
-  startDate: string;
-  endDate: string;
-  summary: string | string[];
+  start: string;
+  end: string;
+  location?: string;
+  points: Point[];
 }
 
-export interface ProjectProps {
+export interface WorkLink {
+  label: string;
+  href: string;
+}
+
+export interface WorkItem {
   name: string;
+  context: string;
   summary: string;
-  image: string;
-  linkPreview?: string;
-  linkSource?: string;
-}
-
-export interface AboutProps {
-  description: string;
-  image: string;
-}
-
-export interface HeaderProps {
-  siteLogo: string;
-  navLinks: { text: string; href: string }[];
+  links: WorkLink[];
+  todos: string[];
 }

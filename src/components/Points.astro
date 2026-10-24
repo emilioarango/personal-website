@@ -1,0 +1,26 @@
+---
+import type { Point } from "@types";
+
+interface Props {
+  points: Point[];
+}
+
+const { points } = Astro.props;
+---
+
+{
+  points.length > 0 && (
+    <ul class="points">
+      {points.map((point) =>
+        point.todo ? (
+          <li class="todo">
+            <span class="todo-mark">TODO</span>
+            <span>{point.text}</span>
+          </li>
+        ) : (
+          <li>{point.text}</li>
+        ),
+      )}
+    </ul>
+  )
+}

@@ -1,17 +1,15 @@
 ---
-import Section from "./Section.astro";
-import type { AboutProps } from "@types";
-
-type Props = AboutProps;
-
-const { description } = Astro.props;
+import { ABOUT } from "@config";
+import SectionHead from "./SectionHead.astro";
 ---
 
-<Section text="About" href="about" num="01">
-  <p
-    class="text-base leading-relaxed"
-    style="color: var(--color-text-muted);"
-  >
-    {description}
-  </p>
-</Section>
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <SectionHead id="about-title" index="04" title="About" />
+    <p class="about-copy">{ABOUT.body}</p>
+    <p class="interests">
+      <span class="interests-label">Interests</span>
+      <span>{ABOUT.interests.join(" · ")}</span>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+---
+import { GLANCE, HERO, RESUME, SITE, SOCIAL } from "@config";
+import Outbound from "./Outbound.astro";
+---
+
+<section class="hero" aria-labelledby="intro-name">
+  <div class="wrap">
+    <p class="kicker">{HERO.kicker}</p>
+    <h1 id="intro-name">{SITE.name}</h1>
+    <p class="lede">{HERO.line}</p>
+    <p class="meta-line">{HERO.meta}</p>
+    <div class="hero-bottom">
+      <div class="cta-row">
+        <Outbound class="btn btn-primary" href={`mailto:${SOCIAL.email}`}>
+          {SOCIAL.email}
+        </Outbound>
+        <Outbound class="btn" href={SOCIAL.linkedin}>LinkedIn</Outbound>
+        <Outbound class="btn" href={SOCIAL.github}>GitHub</Outbound>
+        <a class="btn" href={RESUME.href}>{RESUME.label}</a>
+      </div>
+
+      <aside class="glance" aria-label="Current role">
+        <p class="glance-kicker">
+          <span class="dot" aria-hidden="true"></span> Now
+        </p>
+        <p class="glance-title">{GLANCE.role}</p>
+        <p class="glance-place">{GLANCE.place}</p>
+        <dl>
+          {
+            GLANCE.rows.map((row) => (
+              <div class="glance-row">
+                <dt>{row.label}</dt>
+                <dd>{row.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </aside>
+    </div>
+  </div>
+</section>

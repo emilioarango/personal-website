@@ -1,0 +1,33 @@
+---
+import { WORK } from "@config";
+import Outbound from "./Outbound.astro";
+import Points from "./Points.astro";
+import SectionHead from "./SectionHead.astro";
+---
+
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <SectionHead id="work-title" index="03" title="Selected work" />
+    <div class="work-grid">
+      {
+        WORK.map((item) => (
+          <article class="work-card">
+            <p class="work-context">{item.context}</p>
+            <h3>{item.name}</h3>
+            <p>{item.summary}</p>
+            <Points points={item.todos.map((text) => ({ text, todo: true }))} />
+            {item.links.length > 0 && (
+              <div class="work-links">
+                {item.links.map((link) => (
+                  <Outbound class="text-link" href={link.href} arrow>
+                    {link.label}
+                  </Outbound>
+                ))}
+              </div>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
