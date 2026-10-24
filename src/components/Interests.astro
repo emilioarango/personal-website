@@ -1,6 +1,5 @@
 ---
 import { INTERESTS } from "@config";
-import Mark from "./Mark.astro";
 ---
 
 <section class="section" id="interests" aria-labelledby="interests-title">
@@ -12,9 +11,19 @@ import Mark from "./Mark.astro";
       {
         INTERESTS.map((interest) => (
           <article class="card interest-card">
-            <Mark name={interest.name} />
-            <h3>{interest.name}</h3>
-            <p>{interest.summary}</p>
+            <img
+              class="interest-photo"
+              src={interest.image}
+              alt={interest.alt}
+              width="800"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="interest-copy">
+              <h3>{interest.name}</h3>
+              <p>{interest.summary}</p>
+            </div>
           </article>
         ))
       }

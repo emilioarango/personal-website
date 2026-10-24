@@ -18,6 +18,8 @@ export interface SkillGroup {
 export interface Interest {
   name: string;
   summary: string;
+  image: string;
+  alt: string;
 }
 
 export interface Role {

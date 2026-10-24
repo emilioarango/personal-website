@@ -3,7 +3,8 @@ import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
 /**
  * Personal site content for emilioarango.com.
  * Work history stays in EXPERIENCE and is rendered only on /resume.
- * Search for `todo: true` and `PROJECT_TODO` / `resume.todo` before publishing.
+ * Add a project by appending an object to PROJECTS. Empty slots are not rendered.
+ * Search for `todo: true` and `resume.todo` before publishing.
  */
 const USERS = "800+";
 
@@ -55,22 +56,31 @@ export const INTERESTS: Interest[] = [
   {
     name: "Chess",
     summary: "A game I sit down and play.",
+    image: "/interests/chess.webp",
+    alt: "A wooden chess knight lit from the side.",
   },
   {
     name: "AI and coding",
     summary: "Writing software, and using AI while I build.",
+    image: "/interests/code.webp",
+    alt: "A dark screen of code.",
   },
   {
     name: "Film",
     summary: "Getting lost in a good movie.",
+    image: "/interests/film.webp",
+    alt: "A movie projector in low light.",
   },
   {
     name: "History",
     summary:
       "The long view, and what the last few millennia still have to say.",
+    image: "/interests/history.webp",
+    alt: "A marble bust in dramatic light.",
   },
 ];
 
+/** Append another object to show another card. Nothing is rendered for an empty list slot. */
 export const PROJECTS: WorkItem[] = [
   {
     name: "Chess engine",
@@ -81,9 +91,6 @@ export const PROJECTS: WorkItem[] = [
     todos: [],
   },
 ];
-
-export const PROJECT_TODO =
-  "Add any other project you want on this page: a name, one sentence, and a link.";
 
 export const SKILLS: SkillGroup[] = [
   {
