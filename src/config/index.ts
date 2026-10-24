@@ -76,7 +76,7 @@ export const INTERESTS: Interest[] = [
     summary:
       "The long view, and what the last few millennia still have to say.",
     image: "/interests/history.webp",
-    alt: "A marble bust in dramatic light.",
+    alt: "Michelangelo’s David, seen from below.",
   },
 ];
 

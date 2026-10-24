@@ -629,13 +629,14 @@
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
+    object-position: center;
     background: var(--color-bg-raised);
   }
 
   .interest-copy {
-    padding: 0.95rem 1.05rem 1.15rem;
+    padding: 0.65rem 0.85rem 0.8rem;
   }
 
   .interest-card h3,
