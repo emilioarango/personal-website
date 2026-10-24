@@ -1,21 +1,18 @@
 ---
 import { INTERESTS } from "@config";
+import Mark from "./Mark.astro";
 ---
 
-<section
-  class="section interest-band"
-  id="interests"
-  aria-labelledby="interests-title"
->
+<section class="section" id="interests" aria-labelledby="interests-title">
   <div class="wrap">
-    <h2 id="interests-title" class="sr-only">Interests</h2>
+    <div class="section-head">
+      <h2 id="interests-title">Things I come back to</h2>
+    </div>
     <div class="interest-grid">
       {
-        INTERESTS.map((interest, index) => (
-          <article class="interest-card">
-            <span class="interest-num" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </span>
+        INTERESTS.map((interest) => (
+          <article class="card interest-card">
+            <Mark name={interest.name} />
             <h3>{interest.name}</h3>
             <p>{interest.summary}</p>
           </article>

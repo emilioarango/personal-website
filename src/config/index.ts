@@ -19,18 +19,19 @@ export const SITE = {
   title: "Emilio Arango",
   jobTitle: "Systems Administrator",
   description:
-    "Emilio Arango, in Southern California. Chess, code, film, and history.",
+    "Emilio Arango, in Southern California. Chess, code, film, history, and Stoicism.",
   url: "https://emilioarango.com",
   lang: "en",
   locale: "en_US",
   ogImage: "/og-image.png",
-  ogImageAlt: "Emilio Arango. Chess, code, film, and history.",
+  ogImageAlt: "Emilio Arango. Chess, code, film, history, and Stoicism.",
   knowsAbout: [
     "Chess",
     "Artificial intelligence",
     "Programming",
     "Film",
     "History",
+    "Stoicism",
   ],
 };
 
@@ -42,24 +43,23 @@ export const NAV: NavLink[] = [
 
 export const HERO = {
   kicker: "Southern California",
-  line: "Chess, code, film, and history.",
+  line: "I play chess, write code, watch films, and read history and the Stoics.",
 };
 
 export const ABOUT = {
-  lead: "I'm Emilio Arango. I live in Southern California. I play chess, write code, watch films, and read history.",
+  lead: "I live in Southern California. The days I like best have a game, a film, or a book that is much older than I am.",
   detail:
-    "The chess engine is the project I keep coming back to: a game I play, written out in Python.",
+    "I write software for the fun of seeing an idea work, and I use AI while I build. Stoicism is how I try to keep the rest of it in proportion.",
 };
 
 export const INTERESTS: Interest[] = [
   {
     name: "Chess",
-    summary: "A game I play, and one I have been teaching a computer to play.",
+    summary: "A game I sit down and play.",
   },
   {
     name: "AI and coding",
-    summary:
-      "Writing software, and using AI while I build. The chess engine is the piece anyone can open.",
+    summary: "Writing software, and using AI while I build.",
   },
   {
     name: "Film",
@@ -70,6 +70,11 @@ export const INTERESTS: Interest[] = [
     summary:
       "The long view, and what the last few millennia still have to say.",
   },
+  {
+    name: "Stoicism",
+    summary:
+      "A philosophy I come back to when I want less noise and a clearer day.",
+  },
 ];
 
 export const PROJECTS: WorkItem[] = [
@@ -77,15 +82,9 @@ export const PROJECTS: WorkItem[] = [
     name: "Chess engine",
     context: "Python",
     summary:
-      "A playable chess engine in pure Python: legal move generation, minimax with alpha-beta pruning, and piece-square tables. No dependencies.",
+      "A small chess engine in pure Python: legal moves, minimax with alpha-beta pruning, and piece-square tables.",
     links: [{ label: "Source", href: SOCIAL.chessEngine }],
     todos: [],
-    facts: [
-      "Pure Python, no dependencies",
-      "Legal move generation",
-      "Minimax with alpha-beta pruning",
-      "Piece-square tables",
-    ],
   },
 ];
 

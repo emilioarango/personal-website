@@ -1,11 +1,12 @@
 ---
 import { ABOUT } from "@config";
-import SectionHead from "./SectionHead.astro";
 ---
 
 <section class="section" id="about" aria-labelledby="about-title">
   <div class="wrap about-layout">
-    <SectionHead id="about-title" index="01" title="About" />
+    <div class="section-head">
+      <h2 id="about-title">A bit about me</h2>
+    </div>
     <div class="about-copy">
       <p>{ABOUT.lead}</p>
       <p>{ABOUT.detail}</p>

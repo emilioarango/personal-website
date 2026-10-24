@@ -2,8 +2,8 @@
 import { SITE, SOCIAL } from "@config";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
-import playfairItalic from "@fontsource-variable/playfair-display/files/playfair-display-latin-wght-italic.woff2?url";
-import playfairNormal from "@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2?url";
+import frauncesItalic from "@fontsource-variable/fraunces/files/fraunces-latin-soft-italic.woff2?url";
+import frauncesNormal from "@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2?url";
 import sourceSans from "@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 
@@ -44,23 +44,47 @@ const jsonLd = JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3eee6" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search).get("theme");
+          var stored = localStorage.getItem("theme");
+          var theme =
+            q === "light" || q === "dark"
+              ? q
+              : stored === "light" || stored === "dark"
+                ? stored
+                : matchMedia("(prefers-color-scheme: dark)").matches
+                  ? "dark"
+                  : "light";
+          document.documentElement.dataset.theme = theme;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) {
+            meta.setAttribute(
+              "content",
+              theme === "dark" ? "#161310" : "#f3eee6",
+            );
+          }
+        } catch (e) {}
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.name} />
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta name="color-scheme" content="dark" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonical} />
     <link
       rel="preload"
-      href={playfairNormal}
+      href={frauncesNormal}
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href={playfairItalic}
+      href={frauncesItalic}
       as="font"
       type="font/woff2"
       crossorigin

@@ -20,6 +20,12 @@ const rel = [me ? "me" : "", external ? "noopener noreferrer" : ""]
   {...rel ? { rel } : {}}
 >
   <slot />
-  {arrow && external && <span aria-hidden="true"> ↗</span>}
+  {
+    arrow && external && (
+      <span class="arrow" aria-hidden="true">
+        ↗
+      </span>
+    )
+  }
   {external && <span class="sr-only"> (opens in a new tab)</span>}
 </a>

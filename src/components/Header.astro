@@ -7,16 +7,81 @@ const onHome = Astro.url.pathname === "/";
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="/">{SITE.name}</a>
-    <nav class="site-nav" aria-label="Sections">
-      <ul>
-        {
-          NAV.map((link) => (
-            <li>
-              <a href={onHome ? link.href : `/${link.href}`}>{link.text}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    <div class="header-tools">
+      <nav class="site-nav" aria-label="Sections">
+        <ul>
+          {
+            NAV.map((link) => (
+              <li>
+                <a href={onHome ? link.href : `/${link.href}`}>{link.text}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        type="button"
+        aria-label="Switch color theme"
+        aria-pressed="false"
+      >
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M14.5 2.4a8.8 8.8 0 1 0 7.1 13.2 7.2 7.2 0 0 1-7.1-13.2Z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+          <path
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6"
+          ></path>
+        </svg>
+      </button>
+    </div>
   </div>
 </header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("#theme-toggle");
+  const root = document.documentElement;
+  const meta = document.querySelector<HTMLMetaElement>(
+    'meta[name="theme-color"]',
+  );
+  const scheme = document.querySelector<HTMLMetaElement>(
+    'meta[name="color-scheme"]',
+  );
+
+  const colors: Record<"light" | "dark", string> = {
+    light: "#f3eee6",
+    dark: "#161310",
+  };
+
+  function currentTheme(): "light" | "dark" {
+    return root.dataset.theme === "dark" ? "dark" : "light";
+  }
+
+  function paint(theme: "light" | "dark") {
+    root.dataset.theme = theme;
+    if (meta) meta.content = colors[theme];
+    if (scheme) scheme.content = theme;
+    const next = theme === "dark" ? "light" : "dark";
+    button?.setAttribute("aria-label", `Switch to ${next} theme`);
+    button?.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+  }
+
+  paint(currentTheme());
+
+  button?.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    paint(next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      /* Storage can be blocked. The toggle still works for this visit. */
+    }
+  });
+</script>
