@@ -4,7 +4,6 @@ import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
  * Personal site content for emilioarango.com.
  * Work history stays in EXPERIENCE and is rendered only on /resume.
  * Add a project by appending an object to PROJECTS. Empty slots are not rendered.
- * Search for `todo: true` and `resume.todo` before publishing.
  */
 const USERS = "800+";
 
@@ -18,7 +17,6 @@ export const SOCIAL = {
 export const SITE = {
   name: "Emilio Arango",
   title: "Emilio Arango",
-  jobTitle: "Systems Administrator",
   description:
     "Emilio Arango, in Southern California. Chess, code, film, and history.",
   url: "https://emilioarango.com",
@@ -95,32 +93,15 @@ export const PROJECTS: WorkItem[] = [
 export const SKILLS: SkillGroup[] = [
   {
     name: "Identity",
-    items: ["Microsoft Entra ID", "Okta"],
-    summary:
-      "Directory, single sign-on, and access for the people on these platforms.",
+    items: ["Entra ID", "Okta", "M365"],
   },
   {
-    name: "Endpoint / MDM",
-    items: ["Jamf", "Microsoft Intune", "macOS", "Windows"],
-    summary:
-      "Enrollment and day-to-day management for a mixed Mac and Windows fleet.",
+    name: "Endpoint",
+    items: ["Jamf", "Intune", "Sophos"],
   },
   {
-    name: "Security",
-    items: ["Microsoft Defender", "Mimecast"],
-    summary: "Microsoft Defender on the endpoints, and Mimecast for email.",
-  },
-  {
-    name: "Cloud / Microsoft 365",
-    items: ["Microsoft 365"],
-    summary:
-      "Microsoft 365 for the organization, alongside the high-availability systems daily work depends on.",
-  },
-  {
-    name: "Automation & AI",
-    items: ["Helpdesk automation", "Self-serve tooling"],
-    summary:
-      "Internal knowledge turned into tools employees can use themselves.",
+    name: "Automation and AI",
+    items: ["Python", "MCP", "Claude Code", "Cursor", "Grok Bot", "LLM agents"],
   },
 ];
 
@@ -130,16 +111,11 @@ export const EXPERIENCE: Role[] = [
     position: "Systems Administrator",
     start: "2024",
     end: "Present",
-    location: "Irvine, California",
     points: [
+      { text: "Entra ID, Okta, and Microsoft 365 identity." },
+      { text: "A Jamf and Intune endpoint fleet with Sophos." },
       {
-        text: `Own Entra ID, Okta, Microsoft 365, Jamf, Intune, Microsoft Defender, and Mimecast for ${USERS} users in Irvine.`,
-      },
-      {
-        text: "Manage Mac and Windows endpoints and the high-availability systems those users rely on.",
-      },
-      {
-        text: "Build AI-driven helpdesk automation that turns internal knowledge into self-serve tooling.",
+        text: "Built a production AI agent, plus Python and MCP automation.",
       },
     ],
   },
@@ -148,42 +124,18 @@ export const EXPERIENCE: Role[] = [
     position: "IT Support Specialist",
     start: "2019",
     end: "2024",
-    points: [
-      {
-        text: "Supported endpoints, user access, and security practice in a financial-services environment.",
-      },
-      {
-        text: "Contributed to automation work and the day-to-day stability of shared systems.",
-      },
-    ],
   },
   {
     company: "Taco Bell",
     position: "Service Desk Analyst",
     start: "2018",
     end: "2020",
-    points: [
-      {
-        text: "Resolved hardware, network, and point-of-sale issues for restaurant and back-office teams.",
-      },
-      {
-        text: "Supported software deployments and user training.",
-      },
-    ],
   },
   {
     company: "Apple",
     position: "Genius Bar Technician",
     start: "2015",
     end: "2018",
-    points: [
-      {
-        text: "Diagnosed and repaired Apple hardware and software face to face at the Genius Bar.",
-      },
-      {
-        text: "Used Apple diagnostic tools for hands-on hardware repair.",
-      },
-    ],
   },
 ];
 
@@ -192,7 +144,8 @@ export const RESUME = {
   label: "Resume",
   title: "Resume — Emilio Arango",
   description:
-    "Resume of Emilio Arango, systems administrator at Restaurant365 in Irvine. Identity, endpoints, Microsoft 365, Defender, and Mimecast for 800+ users.",
-  summary: `Systems administrator owning identity, endpoints, and AI infrastructure for ${USERS} users at Restaurant365 in Irvine. In IT since 2015, from the Apple Genius Bar through financial-services support and a restaurant service desk.`,
-  todo: "Add public/resume.pdf, then set resume.href in src/config/index.ts to /resume.pdf so the Resume button downloads a file. This page is the placeholder.",
+    "A short overview of Emilio Arango’s work in identity, endpoints, and AI automation.",
+  headline: "Systems Engineer — Identity, Endpoint & AI Automation",
+  summary: `I run identity and endpoint for a company of ${USERS} people. I build AI agents and automation to cut repetitive IT work.`,
+  cta: "Email me for the full resume.",
 };

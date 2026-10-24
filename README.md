@@ -2,7 +2,7 @@
 
 Personal site for Emilio Arango. Built with Astro and Tailwind CSS and deployed at [emilioarango.com](https://emilioarango.com).
 
-The homepage is about him. Work history is only on `/resume`. Copy lives in `src/config/index.ts`. Add a project by appending an object to `PROJECTS`; empty slots are not shown. Search that file for `resume.todo` before publishing. Photograph credits are in [CREDITS.md](CREDITS.md).
+The homepage is about him. A short work overview lives on `/resume`, and the homepage stays free of it. Copy lives in `src/config/index.ts`. Add a project by appending an object to `PROJECTS`; empty slots are not shown. Photograph credits are in [CREDITS.md](CREDITS.md).
 
 ## Getting started
 

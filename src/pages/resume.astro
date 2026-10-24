@@ -1,82 +1,70 @@
 ---
-import Points from "@components/Points.astro";
-import Outbound from "@components/Outbound.astro";
 import Layout from "@layouts/Layout.astro";
-import { EXPERIENCE, INTERESTS, RESUME, SITE, SKILLS, SOCIAL } from "@config";
+import { EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
 ---
 
 <Layout title={RESUME.title} description={RESUME.description}>
   <article class="resume wrap">
-    <div class="resume-toolbar no-print">
-      <p class="todo">
-        <span class="todo-mark">TODO</span>
-        <span>{RESUME.todo}</span>
-      </p>
-      <button class="btn" type="button" id="print-resume">Print</button>
-    </div>
-
-    <header class="resume-header">
-      <h1>{SITE.name}</h1>
-      <p class="resume-role">{SITE.jobTitle}</p>
-      <p class="resume-contact">
-        <span>Southern California</span>
-        <a href={`mailto:${SOCIAL.email}`}>{SOCIAL.email}</a>
-        <Outbound href={SOCIAL.linkedin}>LinkedIn</Outbound>
-        <Outbound href={SOCIAL.github}>GitHub</Outbound>
-        <a href={SITE.url}>emilioarango.com</a>
-      </p>
+    <header class="resume-intro">
+      <p class="kicker">{SITE.name}</p>
+      <h1>{RESUME.headline}</h1>
+      <p class="lede">{RESUME.summary}</p>
     </header>
 
-    <section class="resume-block" aria-labelledby="resume-summary">
-      <h2 id="resume-summary">Summary</h2>
-      <p class="resume-summary">{RESUME.summary}</p>
+    <section class="resume-block" aria-labelledby="resume-experience">
+      <div class="section-head">
+        <h2 id="resume-experience">Experience</h2>
+      </div>
+      <ol class="timeline">
+        {
+          EXPERIENCE.map((role) => (
+            <li>
+              <div class="timeline-head">
+                <h3>
+                  {role.position}
+                  <span>{role.company}</span>
+                </h3>
+                <p>
+                  {role.start}–{role.end}
+                </p>
+              </div>
+              {role.points && role.points.length > 0 && (
+                <ul>
+                  {role.points.map((point) => (
+                    <li>{point.text}</li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ol>
     </section>
 
     <section class="resume-block" aria-labelledby="resume-skills">
-      <h2 id="resume-skills">Skills</h2>
-      <dl class="resume-skills">
+      <div class="section-head">
+        <h2 id="resume-skills">Skills</h2>
+      </div>
+      <div class="skill-groups">
         {
           SKILLS.map((group) => (
             <div>
-              <dt>{group.name}</dt>
-              <dd>{group.items.join(", ")}</dd>
+              <h3>{group.name}</h3>
+              <ul class="chips">
+                {group.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
             </div>
           ))
         }
-      </dl>
+      </div>
     </section>
 
-    <section class="resume-block" aria-labelledby="resume-experience">
-      <h2 id="resume-experience">Experience</h2>
-      {
-        EXPERIENCE.map((role) => (
-          <div>
-            <div class="resume-role-head">
-              <h3>
-                {role.position}, {role.company}
-              </h3>
-              <p>
-                {role.start}–{role.end}
-              </p>
-            </div>
-            {role.location && <p class="resume-where">{role.location}</p>}
-            <Points points={role.points} />
-          </div>
-        ))
-      }
-    </section>
-
-    <section class="resume-block" aria-labelledby="resume-interests">
-      <h2 id="resume-interests">Interests</h2>
-      <p class="resume-summary">
-        {INTERESTS.map((interest) => interest.name).join(" · ")}
-      </p>
+    <section class="resume-cta" aria-labelledby="resume-cta">
+      <h2 id="resume-cta">Full resume</h2>
+      <p>{RESUME.cta}</p>
+      <a class="btn btn-primary" href={`mailto:${SOCIAL.email}`}>Email me</a>
     </section>
   </article>
 </Layout>
-
-<script>
-  document.getElementById("print-resume")?.addEventListener("click", () => {
-    window.print();
-  });
-</script>

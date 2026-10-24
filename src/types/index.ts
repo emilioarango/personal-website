@@ -11,8 +11,8 @@ export interface Point {
 
 export interface SkillGroup {
   name: string;
-  summary: string;
   items: string[];
+  summary?: string;
 }
 
 export interface Interest {
@@ -28,7 +28,7 @@ export interface Role {
   start: string;
   end: string;
   location?: string;
-  points: Point[];
+  points?: Point[];
 }
 
 export interface WorkLink {
