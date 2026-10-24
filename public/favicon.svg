@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Emilio Arango">
   <rect width="32" height="32" rx="7" fill="#f4f6f8"/>
-  <circle cx="16" cy="16" r="11" fill="none" stroke="#0b6a4a" stroke-width="1.4"/>
+  <circle cx="16" cy="16" r="11" fill="none" stroke="#0f4c9e" stroke-width="1.4"/>
   <text x="16" y="20.2" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="11" font-weight="600" fill="#0f172a">EA</text>
 </svg>
