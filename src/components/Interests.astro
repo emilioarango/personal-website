@@ -1,15 +1,21 @@
 ---
 import { INTERESTS } from "@config";
-import SectionHead from "./SectionHead.astro";
 ---
 
-<section class="section" id="interests" aria-labelledby="interests-title">
+<section
+  class="section interest-band"
+  id="interests"
+  aria-labelledby="interests-title"
+>
   <div class="wrap">
-    <SectionHead id="interests-title" index="02" title="Interests" />
-    <div>
+    <h2 id="interests-title" class="sr-only">Interests</h2>
+    <div class="interest-grid">
       {
-        INTERESTS.map((interest) => (
-          <article class="skill">
+        INTERESTS.map((interest, index) => (
+          <article class="interest-card">
+            <span class="interest-num" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
             <h3>{interest.name}</h3>
             <p>{interest.summary}</p>
           </article>

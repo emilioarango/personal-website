@@ -2,6 +2,9 @@
 import { SITE, SOCIAL } from "@config";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
+import playfairItalic from "@fontsource-variable/playfair-display/files/playfair-display-latin-wght-italic.woff2?url";
+import playfairNormal from "@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2?url";
+import sourceSans from "@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 
 interface Props {
@@ -48,6 +51,27 @@ const jsonLd = JSON.stringify({
     <meta name="color-scheme" content="dark" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonical} />
+    <link
+      rel="preload"
+      href={playfairNormal}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={playfairItalic}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={sourceSans}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

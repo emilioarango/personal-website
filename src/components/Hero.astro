@@ -1,31 +1,22 @@
 ---
-import { HERO, INTERESTS, RESUME, SITE, SOCIAL } from "@config";
+import { HERO, RESUME, SITE, SOCIAL } from "@config";
 import Outbound from "./Outbound.astro";
 ---
 
 <section class="hero" aria-labelledby="intro-name">
-  <div class="wrap">
-    <p class="kicker">{HERO.kicker}</p>
-    <h1 id="intro-name">{SITE.name}</h1>
-    <p class="lede">{HERO.line}</p>
-    <div class="hero-bottom">
-      <div class="cta-row">
-        <Outbound class="btn btn-primary" href={`mailto:${SOCIAL.email}`}>
-          {SOCIAL.email}
-        </Outbound>
-        <Outbound class="btn" href={SOCIAL.linkedin}>LinkedIn</Outbound>
-        <Outbound class="btn" href={SOCIAL.github}>GitHub</Outbound>
-        <a class="btn" href={RESUME.href}>{RESUME.label}</a>
-      </div>
-
-      <aside class="glance" aria-label="Interests">
-        <p class="glance-kicker">
-          <span class="dot" aria-hidden="true"></span> These days
-        </p>
-        <ul class="aside-list">
-          {INTERESTS.map((interest) => <li>{interest.name}</li>)}
-        </ul>
-      </aside>
+  <div class="wrap hero-layout">
+    <div class="hero-copy">
+      <p class="kicker">{HERO.kicker}</p>
+      <h1 id="intro-name">{SITE.name}</h1>
+      <p class="lede">{HERO.line}</p>
+    </div>
+    <div class="cta-row">
+      <Outbound class="btn btn-primary" href={`mailto:${SOCIAL.email}`}>
+        {SOCIAL.email}
+      </Outbound>
+      <Outbound class="btn" href={SOCIAL.linkedin}>LinkedIn</Outbound>
+      <Outbound class="btn" href={SOCIAL.github}>GitHub</Outbound>
+      <a class="btn" href={RESUME.href}>{RESUME.label}</a>
     </div>
   </div>
 </section>

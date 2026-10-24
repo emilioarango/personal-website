@@ -4,8 +4,11 @@ import SectionHead from "./SectionHead.astro";
 ---
 
 <section class="section" id="about" aria-labelledby="about-title">
-  <div class="wrap">
+  <div class="wrap about-layout">
     <SectionHead id="about-title" index="01" title="About" />
-    <p class="about-copy">{ABOUT.body}</p>
+    <div class="about-copy">
+      <p>{ABOUT.lead}</p>
+      <p>{ABOUT.detail}</p>
+    </div>
   </div>
 </section>

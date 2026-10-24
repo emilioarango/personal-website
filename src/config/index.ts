@@ -19,36 +19,36 @@ export const SITE = {
   title: "Emilio Arango",
   jobTitle: "Systems Administrator",
   description:
-    "Emilio Arango, in Southern California. Chess, code, film, history, and a Subaru WRX STI.",
+    "Emilio Arango, in Southern California. Chess, code, film, and history.",
   url: "https://emilioarango.com",
   lang: "en",
   locale: "en_US",
   ogImage: "/og-image.png",
-  ogImageAlt:
-    "Emilio Arango. Chess, code, film, history, and a Subaru WRX STI.",
+  ogImageAlt: "Emilio Arango. Chess, code, film, and history.",
   knowsAbout: [
     "Chess",
     "Artificial intelligence",
     "Programming",
     "Film",
     "History",
-    "Motorsport",
   ],
 };
 
 export const NAV: NavLink[] = [
-  { text: "About", href: "#about" },
   { text: "Interests", href: "#interests" },
+  { text: "About", href: "#about" },
   { text: "Projects", href: "#projects" },
 ];
 
 export const HERO = {
   kicker: "Southern California",
-  line: "Chess, code, film, history, and a Subaru WRX STI.",
+  line: "Chess, code, film, and history.",
 };
 
 export const ABOUT = {
-  body: "I'm Emilio Arango. I live in Southern California. I play chess, write code, watch films, read history, and drive a Subaru WRX STI.",
+  lead: "I'm Emilio Arango. I live in Southern California. I play chess, write code, watch films, and read history.",
+  detail:
+    "The chess engine is the project I keep coming back to: a game I play, written out in Python.",
 };
 
 export const INTERESTS: Interest[] = [
@@ -70,10 +70,6 @@ export const INTERESTS: Interest[] = [
     summary:
       "The long view, and what the last few millennia still have to say.",
   },
-  {
-    name: "Motorsport",
-    summary: "The sport, and the Subaru WRX STI I drive.",
-  },
 ];
 
 export const PROJECTS: WorkItem[] = [
@@ -84,6 +80,12 @@ export const PROJECTS: WorkItem[] = [
       "A playable chess engine in pure Python: legal move generation, minimax with alpha-beta pruning, and piece-square tables. No dependencies.",
     links: [{ label: "Source", href: SOCIAL.chessEngine }],
     todos: [],
+    facts: [
+      "Pure Python, no dependencies",
+      "Legal move generation",
+      "Minimax with alpha-beta pruning",
+      "Piece-square tables",
+    ],
   },
 ];
 

@@ -40,4 +40,5 @@ export interface WorkItem {
   summary: string;
   links: WorkLink[];
   todos: string[];
+  facts?: string[];
 }

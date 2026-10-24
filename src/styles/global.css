@@ -1,39 +1,39 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "Inter Variable";
+  font-family: "Playfair Display Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 100 900;
-  src: url("@fontsource-variable/inter/files/inter-latin-wght-normal.woff2")
-    format("woff2");
-  unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
-    U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url("@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2")
+  font-weight: 400 900;
+  src: url("@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2")
     format("woff2");
 }
 
 @font-face {
-  font-family: "JetBrains Mono";
+  font-family: "Playfair Display Variable";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url("@fontsource-variable/playfair-display/files/playfair-display-latin-wght-italic.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Source Sans 3 Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 500;
-  src: url("@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2")
+  font-weight: 200 900;
+  src: url("@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2")
     format("woff2");
 }
 
 @theme {
-  --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+  --font-sans:
+    "Source Sans 3 Variable", "Source Sans 3", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-display:
+    "Playfair Display Variable", "Iowan Old Style", Palatino, Georgia, serif;
+  --font-mono: ui-monospace, "Cascadia Mono", monospace;
 
   --color-bg: #0a0a0a;
   --color-bg-raised: #111111;
@@ -90,9 +90,10 @@
   h2,
   h3 {
     color: var(--color-ink);
+    font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
   }
 
   a {
@@ -143,7 +144,7 @@
   }
 
   .wrap {
-    width: min(100% - 2.5rem, 68rem);
+    width: min(100% - 2rem, 88rem);
     margin-inline: auto;
   }
 
@@ -182,10 +183,11 @@
 
   .brand {
     color: var(--color-ink);
+    font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     text-decoration: none;
-    font-size: 1.05rem;
+    font-size: 1.35rem;
   }
 
   .brand:hover {
@@ -218,8 +220,14 @@
   }
 
   .hero {
-    padding-top: 3.25rem;
-    padding-bottom: 3.5rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.15rem;
+  }
+
+  .hero-layout {
+    display: grid;
+    gap: 1.25rem;
+    align-items: end;
   }
 
   .hero-bottom {
@@ -229,32 +237,34 @@
   }
 
   .kicker {
-    margin-bottom: 1rem;
+    margin-bottom: 0.65rem;
     color: var(--color-signal);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    line-height: 1.45;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    line-height: 1.4;
     text-transform: uppercase;
   }
 
   .hero h1 {
-    font-size: clamp(2.65rem, 6.4vw, 4.35rem);
-    font-weight: 600;
-    letter-spacing: -0.045em;
-    line-height: 0.98;
+    font-size: clamp(3.5rem, 7.4vw, 6.4rem);
+    font-weight: 650;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
     text-wrap: balance;
   }
 
   .lede {
-    max-width: 54rem;
-    margin-top: 1.15rem;
+    max-width: 18em;
+    margin-top: 0.85rem;
     color: var(--color-ink);
-    font-size: clamp(1.35rem, 2.1vw, 1.65rem);
+    font-family: var(--font-display);
+    font-style: italic;
     font-weight: 500;
-    letter-spacing: -0.028em;
-    line-height: 1.28;
+    font-size: clamp(1.65rem, 2.5vw, 2.2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 
   .meta-line {
@@ -268,7 +278,7 @@
     flex-wrap: wrap;
     align-content: flex-start;
     gap: 0.6rem;
-    margin-top: 0;
+    margin-top: 1.35rem;
   }
 
   .btn {
@@ -390,13 +400,111 @@
 
   .project-todo {
     max-width: none;
-    margin-top: 1.25rem;
+    margin-top: 0.85rem;
+  }
+
+  .interest-band {
+    padding-top: 0.25rem;
+    border-top: none;
+  }
+
+  .interest-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .interest-card {
+    position: relative;
+    display: flex;
+    min-height: 11.25rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-top: 3px solid var(--color-accent);
+    background: var(--color-bg-raised);
+    padding: 1rem 1.05rem 1.05rem;
+  }
+
+  .interest-card:nth-child(even) {
+    border-top-color: var(--color-signal);
+  }
+
+  .interest-num {
+    position: absolute;
+    top: -0.35rem;
+    left: 0.15rem;
+    color: rgba(212, 32, 32, 0.3);
+    font-family: var(--font-display);
+    font-size: clamp(5.4rem, 12vw, 7.75rem);
+    font-weight: 650;
+    line-height: 0.78;
+    pointer-events: none;
+  }
+
+  .interest-card:nth-child(even) .interest-num {
+    color: rgba(74, 127, 212, 0.32);
+  }
+
+  .interest-card h3 {
+    position: relative;
+    max-width: 12ch;
+    font-size: clamp(1.65rem, 2vw, 2.05rem);
+  }
+
+  .interest-card p {
+    position: relative;
+    max-width: 22ch;
+    color: var(--color-secondary);
+    font-size: 1.02rem;
+    line-height: 1.35;
+  }
+
+  .project-feature {
+    display: grid;
+    gap: 1.25rem 2.75rem;
+    border: 1px solid var(--color-line);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-bg-raised);
+    padding: 1.35rem 1.35rem 1.4rem;
+  }
+
+  .project-feature h3 {
+    margin: 0.25rem 0 0.65rem;
+    font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+  }
+
+  .project-feature > div > p:not(.work-context) {
+    max-width: 40rem;
+    font-size: 1.12rem;
+    line-height: 1.45;
+  }
+
+  .project-facts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .project-facts li {
+    padding-block: 0.72rem;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-size: 1.02rem;
   }
 
   .section {
-    padding-block: 3.25rem;
+    padding-block: 1.85rem;
     border-top: 1px solid var(--color-line);
     scroll-margin-top: 5.25rem;
+  }
+
+  .section.interest-band {
+    padding-top: 0.35rem;
+    padding-bottom: 1.25rem;
+    border-top: none;
   }
 
   .section-head {
@@ -408,14 +516,14 @@
 
   .section-index {
     color: var(--color-signal);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
   }
 
   .section-head h2 {
-    font-size: clamp(1.45rem, 2vw, 1.75rem);
+    font-size: clamp(2rem, 3vw, 2.75rem);
     letter-spacing: -0.03em;
   }
 
@@ -537,9 +645,9 @@
   .todo-mark {
     flex: none;
     color: var(--color-todo-mark);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.68rem;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.08em;
   }
 
@@ -561,10 +669,10 @@
 
   .work-context {
     color: var(--color-signal);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
   }
 
@@ -596,11 +704,19 @@
     text-underline-offset: 0.2em;
   }
 
+  .about-layout {
+    display: grid;
+    gap: 0.85rem 2.5rem;
+    align-items: end;
+  }
+
   .about-copy {
-    max-width: 40rem;
-    margin-top: 1.15rem;
-    font-size: 1.0625rem;
-    line-height: 1.65;
+    display: grid;
+    gap: 0.7rem 2.25rem;
+    margin-top: 0;
+    color: var(--color-ink);
+    font-size: clamp(1.25rem, 1.7vw, 1.7rem);
+    line-height: 1.35;
   }
 
   .interests {
@@ -720,10 +836,10 @@
   .resume-block h2 {
     padding-bottom: 0.35rem;
     border-bottom: 1px solid var(--color-line);
-    font-size: 0.78rem;
-    font-family: var(--font-mono);
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-signal);
   }
@@ -769,8 +885,10 @@
 
   .resume-role-head p {
     color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
   }
 
   .resume-where {
@@ -806,7 +924,32 @@
 
 @media (min-width: 800px) {
   .wrap {
-    width: min(100% - 4rem, 68rem);
+    width: min(100% - 3rem, 88rem);
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) 17.5rem;
+    gap: 1.5rem 2.5rem;
+  }
+
+  .hero-layout .cta-row {
+    margin-top: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-layout {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .about-copy {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .about-layout .section-head {
+    margin-bottom: 0;
   }
 
   .skill {
@@ -825,6 +968,26 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  .interest-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-feature {
+    grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.8fr);
+    align-items: stretch;
+    padding: 1.7rem 2rem 1.8rem;
+  }
+
+  .project-facts {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: none;
+    border-left: 1px solid var(--color-line);
+    padding-left: 1.75rem;
+  }
+
   .resume-skills div {
     grid-template-columns: 12.5rem minmax(0, 1fr);
   }
@@ -832,18 +995,25 @@
 
 @media (min-width: 960px) {
   .hero {
-    padding-top: 5rem;
-    padding-bottom: 4.75rem;
+    padding-top: 2.35rem;
+    padding-bottom: 1.15rem;
   }
 
-  .hero-bottom {
-    grid-template-columns: minmax(0, 1fr) 22rem;
-    gap: 2.5rem;
-    align-items: end;
+  .hero h1 {
+    font-size: clamp(4.6rem, 7.6vw, 7.25rem);
   }
 
   .section {
-    padding-block: 4.25rem;
+    padding-block: 2.1rem;
+  }
+
+  .interest-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  .interest-card {
+    min-height: 14.75rem;
   }
 }
 
