@@ -19,19 +19,18 @@ export const SITE = {
   title: "Emilio Arango",
   jobTitle: "Systems Administrator",
   description:
-    "Emilio Arango, in Southern California. Chess, code, film, history, and Stoicism.",
+    "Emilio Arango, in Southern California. Chess, code, film, and history.",
   url: "https://emilioarango.com",
   lang: "en",
   locale: "en_US",
   ogImage: "/og-image.png",
-  ogImageAlt: "Emilio Arango. Chess, code, film, history, and Stoicism.",
+  ogImageAlt: "Emilio Arango. Chess, code, film, and history.",
   knowsAbout: [
     "Chess",
     "Artificial intelligence",
     "Programming",
     "Film",
     "History",
-    "Stoicism",
   ],
 };
 
@@ -43,13 +42,13 @@ export const NAV: NavLink[] = [
 
 export const HERO = {
   kicker: "Southern California",
-  line: "I play chess, write code, watch films, and read history and the Stoics.",
+  line: "I play chess, write code, watch films, and read history.",
 };
 
 export const ABOUT = {
   lead: "I live in Southern California. The days I like best have a game, a film, or a book that is much older than I am.",
   detail:
-    "I write software for the fun of seeing an idea work, and I use AI while I build. Stoicism is how I try to keep the rest of it in proportion.",
+    "I write software for the fun of seeing an idea work, and I use AI while I build. The rest of the day I try to keep in proportion.",
 };
 
 export const INTERESTS: Interest[] = [
@@ -69,11 +68,6 @@ export const INTERESTS: Interest[] = [
     name: "History",
     summary:
       "The long view, and what the last few millennia still have to say.",
-  },
-  {
-    name: "Stoicism",
-    summary:
-      "A philosophy I come back to when I want less noise and a clearer day.",
   },
 ];
 
