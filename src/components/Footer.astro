@@ -1,0 +1,26 @@
+---
+import { SITE, SOCIAL } from "@config";
+import Outbound from "./Outbound.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-copy">© {year} {SITE.name}</p>
+    <ul>
+      <li>
+        <Outbound href={`mailto:${SOCIAL.email}`}>{SOCIAL.email}</Outbound>
+      </li>
+      <li>
+        <Outbound href={SOCIAL.linkedin} me>LinkedIn</Outbound>
+      </li>
+      <li>
+        <Outbound href={SOCIAL.github} me>GitHub</Outbound>
+      </li>
+      <li>
+        <a href="/resume">Resume</a>
+      </li>
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,170 @@
+---
+import { HERO, RESUME, SITE, SOCIAL } from "@config";
+import Outbound from "./Outbound.astro";
+---
+
+<section class="hero" aria-labelledby="intro-name">
+  <div class="wrap hero-layout">
+    <div class="hero-copy">
+      <p class="kicker">{HERO.kicker}</p>
+      <h1 id="intro-name">
+        <span class="hi">Hi, I'm</span>
+        {SITE.name}.
+      </h1>
+      <p class="lede">{HERO.line}</p>
+      <div class="cta-row">
+        <Outbound class="btn btn-primary" href={`mailto:${SOCIAL.email}`}>
+          Email me
+        </Outbound>
+        <Outbound class="btn" href={SOCIAL.linkedin}>LinkedIn</Outbound>
+        <Outbound class="btn" href={SOCIAL.github}>GitHub</Outbound>
+        <a class="btn" href={RESUME.href}>{RESUME.label}</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg class="medallion" viewBox="0 0 160 160" aria-hidden="true">
+        <circle cx="80" cy="80" r="76" fill="var(--color-medallion)"></circle>
+        <circle
+          cx="80"
+          cy="80"
+          r="71"
+          fill="none"
+          stroke="var(--color-accent)"
+          stroke-width="1.25"
+          opacity="0.75"></circle>
+        <g fill="var(--color-laurel)">
+          <ellipse
+            cx="70.6"
+            cy="133.2"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(190 70.6 133.2)"></ellipse>
+          <ellipse
+            cx="56.3"
+            cy="128.5"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(206 56.3 128.5)"></ellipse>
+          <ellipse
+            cx="43.9"
+            cy="120.1"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(222 43.9 120.1)"></ellipse>
+          <ellipse
+            cx="34.2"
+            cy="108.6"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(238 34.2 108.6)"></ellipse>
+          <ellipse
+            cx="28.1"
+            cy="94.9"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(254 28.1 94.9)"></ellipse>
+          <ellipse
+            cx="26.0"
+            cy="80.0"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(270 26 80)"></ellipse>
+          <ellipse
+            cx="28.1"
+            cy="65.1"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(286 28.1 65.1)"></ellipse>
+          <ellipse
+            cx="34.2"
+            cy="51.4"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(302 34.2 51.4)"></ellipse>
+          <ellipse
+            cx="43.9"
+            cy="39.9"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(318 43.9 39.9)"></ellipse>
+          <ellipse
+            cx="56.3"
+            cy="31.5"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(334 56.3 31.5)"></ellipse>
+          <ellipse
+            cx="98.5"
+            cy="29.3"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(20 98.5 29.3)"></ellipse>
+          <ellipse
+            cx="111.7"
+            cy="36.3"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(36 111.7 36.3)"></ellipse>
+          <ellipse
+            cx="122.6"
+            cy="46.8"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(52 122.6 46.8)"></ellipse>
+          <ellipse
+            cx="130.1"
+            cy="59.8"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(68 130.1 59.8)"></ellipse>
+          <ellipse
+            cx="133.7"
+            cy="74.4"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(84 133.7 74.4)"></ellipse>
+          <ellipse
+            cx="133.2"
+            cy="89.4"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(100 133.2 89.4)"></ellipse>
+          <ellipse
+            cx="128.5"
+            cy="103.7"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(116 128.5 103.7)"></ellipse>
+          <ellipse
+            cx="120.1"
+            cy="116.1"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(132 120.1 116.1)"></ellipse>
+          <ellipse
+            cx="108.6"
+            cy="125.8"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(148 108.6 125.8)"></ellipse>
+          <ellipse
+            cx="94.9"
+            cy="131.9"
+            rx="9.5"
+            ry="3.5"
+            transform="rotate(164 94.9 131.9)"></ellipse>
+        </g>
+        <circle cx="80" cy="136" r="3.1" fill="var(--color-accent)"></circle>
+        <text
+          x="80"
+          y="90"
+          text-anchor="middle"
+          fill="var(--color-ink)"
+          font-family="Fraunces, Georgia, serif"
+          font-size="40"
+          font-weight="560">EA</text
+        >
+      </svg>
+    </div>
+  </div>
+</section>

@@ -1,84 +1,166 @@
-import type { SiteConfig, SiteContent } from "../types";
+import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
 
-export const SITE_CONFIG: SiteConfig = {
-  title: "Emilio Arango — Systems Administrator",
-  author: "Emilio Arango",
-  description:
-    "Hey, I'm Emilio. I'm a Systems Administrator based in Southern California with a decade in IT — currently at Restaurant365, where I run cloud infrastructure, identity, and endpoint management for a platform behind tens of thousands of restaurants. My focus is the spot where reliability meets automation: building systems that stay up, scale cleanly, and don't ask their users to think about them. Lately a lot of that work has lived at the intersection of IT and AI — turning internal knowledge into self-serve tooling and finding the spots where automation actually earns its keep. Off the clock, I build, custom dashboards, branded tooling, the occasional half-finished idle game — if it can be vibe-coded, I've probably tried it. When I'm not at a keyboard, I'm playing chess, putting miles on my Subaru WRX STI, getting lost in a good movie, or learning something from the last few millennia.",
-  lang: "en",
-  siteLogo: "/emilio-small.jpg",
-  navLinks: [
-    { text: "About", href: "#about" },
-    { text: "Experience", href: "#experience" },
-  ],
-  socialLinks: [
-    { text: "LinkedIn", href: "https://www.linkedin.com/in/emilio-a-b7a55722" },
-    { text: "GitHub", href: "https://github.com/emilioarango" },   // ← Update with your actual GitHub username
-  ],
-  socialImage: "/zen-og.png",
-  canonicalURL: "https://emilioarango.com",
+/**
+ * Personal site content for emilioarango.com.
+ * Work history stays in EXPERIENCE and is rendered only on /resume.
+ * Add a project by appending an object to PROJECTS. Empty slots are not rendered.
+ */
+
+export const SOCIAL = {
+  email: "emilioearango@gmail.com",
+  linkedin: "https://www.linkedin.com/in/emilio-a-b7a55722",
+  github: "https://github.com/emilioarango",
+  chessEngine: "https://github.com/emilioarango/chess-engine",
 };
 
-export const SITE_CONTENT: SiteContent = {
-  hero: {
-    name: "Emilio Arango",
-    specialty: "Systems Administrator",
-    summary:
-      "Systems Administrator specializing in Mac/Windows endpoint management, MDM (Jamf/Intune), Azure Entra ID, and AI-driven helpdesk automation.",
-    email: "emilioearango@gmail.com",   // ← Update this once you have professional email
-  },
-  experience: [
-    {
-      company: "Restaurant365",
-      position: "Systems Administrator",
-      startDate: "2024",
-      endDate: "Present",
-      summary: [
-        "Manage and maintain critical cloud infrastructure supporting restaurant accounting, inventory, workforce management, and payroll platforms.",
-        "Handle system integrations, automation workflows, and performance monitoring to ensure high availability and operational efficiency.",
-        "Provide advanced troubleshooting, security management, and user access administration.",
-      ],
-    },
-    {
-      company: "Happy Money",
-      position: "IT Support Specialist",
-      startDate: "2019",
-      endDate: "2024",
-      summary: [
-        "Delivered technical support and systems maintenance in a fast-paced financial services environment.",
-        "Managed endpoint devices, user access, troubleshooting, and security best practices.",
-        "Supported infrastructure stability and assisted with automation initiatives.",
-      ],
-    },
-    {
-      company: "Taco Bell",
-      position: "Service Desk Analyst",
-      startDate: "2018",
-      endDate: "2020",
-      summary: [
-        "Provided hands-on IT support for restaurant locations and back-office systems.",
-        "Managed hardware troubleshooting, network issues, and point-of-sale system maintenance.",
-        "Assisted with software deployments and user training.",
-      ],
-    },
-    {
-      company: "Apple Store",
-      position: "Genius Bar Technician",
-      startDate: "2015",
-      endDate: "2018",
-      summary: [
-        "Delivered technical support and repairs for Apple hardware and software.",
-        "Diagnosed and resolved complex customer issues while maintaining high customer satisfaction.",
-        "Worked with advanced diagnostic tools and performed hardware repairs.",
-      ],
-    },
+export const SITE = {
+  name: "Emilio Arango",
+  title: "Emilio Arango",
+  description:
+    "Emilio Arango, in Southern California. Chess, code, film, and history.",
+  url: "https://emilioarango.com",
+  lang: "en",
+  locale: "en_US",
+  ogImage: "/og-image.png",
+  ogImageAlt: "Emilio Arango. Chess, code, film, and history.",
+  knowsAbout: [
+    "Chess",
+    "Artificial intelligence",
+    "Programming",
+    "Film",
+    "History",
   ],
-  projects: [],   // keeps the section hidden
-  about: {
-  description: `
-    Hey, I'm Emilio. I'm a Systems Administrator based in Southern California with a decade in IT — currently at Restaurant365, where I run cloud infrastructure, identity, and endpoint management for a platform behind tens of thousands of restaurants. My focus is the spot where reliability meets automation: building systems that stay up, scale cleanly, and don't ask their users to think about them. Lately a lot of that work has lived at the intersection of IT and AI — turning internal knowledge into self-serve tooling and finding the spots where automation actually earns its keep. Off the clock, I build custom dashboards, branded tooling, the occasional half-finished idle game — if it can be vibe-coded, I've probably tried it. When I'm not at a keyboard, I'm playing chess, putting miles on my Subaru WRX STI, getting lost in a good movie, or learning something from the last few millennia.
-  `,
-  image: "/emilio-small.jpg",
-},
+};
 
+export const NAV: NavLink[] = [
+  { text: "Interests", href: "#interests" },
+  { text: "About", href: "#about" },
+  { text: "Projects", href: "#projects" },
+];
+
+export const HERO = {
+  kicker: "Southern California",
+  line: "I play chess, write code, watch films, and read history.",
+};
+
+export const ABOUT = {
+  lead: "I live in Southern California. The days I like best have a game, a film, or a book that is much older than I am.",
+  detail:
+    "I write software for the fun of seeing an idea work, and I use AI while I build. The rest of the day I try to keep in proportion.",
+};
+
+export const INTERESTS: Interest[] = [
+  {
+    name: "Chess",
+    summary: "A game I sit down and play.",
+    image: "/interests/chess.webp",
+    alt: "A wooden chess knight lit from the side.",
+  },
+  {
+    name: "AI and coding",
+    summary: "Writing software, and using AI while I build.",
+    image: "/interests/code.webp",
+    alt: "A dark screen of code.",
+  },
+  {
+    name: "Film",
+    summary: "Getting lost in a good movie.",
+    image: "/interests/film.webp",
+    alt: "A movie projector in low light.",
+  },
+  {
+    name: "History",
+    summary:
+      "The long view, and what the last few millennia still have to say.",
+    image: "/interests/history.webp",
+    alt: "Michelangelo’s David, seen from below.",
+  },
+];
+
+/** Append another object to show another card. Nothing is rendered for an empty list slot. */
+export const PROJECTS: WorkItem[] = [
+  {
+    name: "Chess engine",
+    context: "Python",
+    summary:
+      "A small chess engine in pure Python: legal moves, minimax with alpha-beta pruning, and piece-square tables.",
+    links: [{ label: "Source", href: SOCIAL.chessEngine }],
+    todos: [],
+  },
+];
+
+export const SKILLS: SkillGroup[] = [
+  {
+    name: "Identity",
+    items: ["Entra ID", "Microsoft 365", "Conditional Access", "SSO", "Okta"],
+  },
+  {
+    name: "Endpoint",
+    items: ["Intune", "Microsoft Defender", "Jamf Pro", "Autopilot"],
+  },
+  {
+    name: "Automation and AI",
+    items: ["Python", "MCP", "Claude Code", "Cursor", "Grok Bot", "LLM agents"],
+  },
+];
+
+export const EXPERIENCE: Role[] = [
+  {
+    company: "Restaurant365",
+    position: "Systems Administrator",
+    start: "2024",
+    end: "Present",
+    points: [
+      {
+        text: "Entra ID, Microsoft 365, Conditional Access, and SSO.",
+      },
+      {
+        text: "Run a hybrid fleet: Intune, Autopilot, and Microsoft Defender on Windows, and Jamf Pro on Mac.",
+      },
+      {
+        text: "Lead helpdesk operations and serve as the escalation point for Tier 1–3 issues across the organization.",
+      },
+      {
+        text: "Built a production AI agent, plus Python and MCP automation.",
+      },
+    ],
+  },
+  {
+    company: "Happy Money",
+    position: "IT Support Specialist",
+    start: "2019",
+    end: "2024",
+  },
+  {
+    company: "Taco Bell",
+    position: "Service Desk Analyst",
+    start: "2018",
+    end: "2020",
+  },
+  {
+    company: "Apple",
+    position: "Genius Bar Technician",
+    start: "2015",
+    end: "2018",
+  },
+];
+
+export const EDUCATION = [
+  "California State University, Fullerton: B.B.A., Concentration in Marketing (2018)",
+  "AZ-900 Microsoft Azure Fundamentals",
+  "Okta Certified (2023–2025)",
+  "Google IT Support Professional",
+  "Jira Fundamentals",
+];
+
+export const RESUME = {
+  href: "/resume",
+  label: "Resume",
+  title: "Resume — Emilio Arango",
+  description:
+    "A short overview of Emilio Arango’s work in identity, endpoints, and AI automation.",
+  headline: "Systems Engineer",
+  summary:
+    "I run identity and endpoint for a multi-site organization. I build AI agents and automation to cut repetitive IT work.",
+  cta: "Email me for the full resume.",
 };

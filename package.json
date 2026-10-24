@@ -1,5 +1,5 @@
 {
-  "name": "astro-zen",
+  "name": "personal-site",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
-    "@fontsource-variable/gabarito": "^5.1.0",
-    "@fontsource/be-vietnam-pro": "^5.1.0",
+    "@fontsource-variable/fraunces": "5.2.8",
+    "@fontsource-variable/source-sans-3": "^5.3.1",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.17.1",
     "tailwindcss": "^4.1.17",
@@ -23,5 +23,11 @@
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.11"
   },
-  "packageManager": "pnpm@10.18.2"
+  "packageManager": "pnpm@10.18.2",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  }
 }

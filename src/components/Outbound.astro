@@ -1,0 +1,31 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+  arrow?: boolean;
+  me?: boolean;
+}
+
+const { href, class: className = "", arrow = false, me = false } = Astro.props;
+const external = href.startsWith("http");
+const rel = [me ? "me" : "", external ? "noopener noreferrer" : ""]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<a
+  href={href}
+  class={className}
+  {...external ? { target: "_blank" } : {}}
+  {...rel ? { rel } : {}}
+>
+  <slot />
+  {
+    arrow && external && (
+      <span class="arrow" aria-hidden="true">
+        ↗
+      </span>
+    )
+  }
+  {external && <span class="sr-only"> (opens in a new tab)</span>}
+</a>

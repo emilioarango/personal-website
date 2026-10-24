@@ -1,0 +1,32 @@
+---
+import { INTERESTS } from "@config";
+---
+
+<section class="section" id="interests" aria-labelledby="interests-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="interests-title">Things I come back to</h2>
+    </div>
+    <div class="interest-grid">
+      {
+        INTERESTS.map((interest) => (
+          <article class="card interest-card">
+            <img
+              class="interest-photo"
+              src={interest.image}
+              alt={interest.alt}
+              width="3"
+              height="2"
+              loading="lazy"
+              decoding="sync"
+            />
+            <div class="interest-copy">
+              <h3>{interest.name}</h3>
+              <p>{interest.summary}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
