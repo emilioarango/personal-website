@@ -883,6 +883,17 @@
     line-height: 1.35;
   }
 
+  .credential-list {
+    display: grid;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0.15rem 0 0;
+    padding: 0;
+    color: var(--color-secondary);
+    font-size: 1.05rem;
+    line-height: 1.45;
+  }
+
   .resume-cta {
     margin-top: 2.3rem;
     padding: 1.15rem 1.2rem 1.25rem;

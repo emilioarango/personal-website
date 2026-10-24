@@ -93,11 +93,11 @@ export const PROJECTS: WorkItem[] = [
 export const SKILLS: SkillGroup[] = [
   {
     name: "Identity",
-    items: ["Entra ID", "Okta", "M365"],
+    items: ["Entra ID", "Microsoft 365", "Conditional Access", "SSO", "Okta"],
   },
   {
     name: "Endpoint",
-    items: ["Jamf", "Intune", "Sophos"],
+    items: ["Intune", "Microsoft Defender", "Jamf Pro", "Autopilot"],
   },
   {
     name: "Automation and AI",
@@ -112,8 +112,12 @@ export const EXPERIENCE: Role[] = [
     start: "2024",
     end: "Present",
     points: [
-      { text: "Entra ID, Okta, and Microsoft 365 identity." },
-      { text: "A Jamf and Intune endpoint fleet with Sophos." },
+      {
+        text: "Entra ID, Microsoft 365, Conditional Access, and SSO.",
+      },
+      {
+        text: "Run a hybrid fleet: Intune, Autopilot, and Microsoft Defender on Windows, and Jamf Pro on Mac.",
+      },
       {
         text: "Built a production AI agent, plus Python and MCP automation.",
       },
@@ -137,6 +141,14 @@ export const EXPERIENCE: Role[] = [
     start: "2015",
     end: "2018",
   },
+];
+
+export const EDUCATION = [
+  "California State University, Fullerton: B.B.A., Concentration in Marketing (2018)",
+  "AZ-900 Microsoft Azure Fundamentals",
+  "Okta Certified (2023–2025)",
+  "Google IT Support Professional",
+  "Jira Fundamentals",
 ];
 
 export const RESUME = {

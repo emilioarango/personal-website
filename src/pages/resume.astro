@@ -1,6 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
+import { EDUCATION, EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
 ---
 
 <Layout title={RESUME.title} description={RESUME.description}>
@@ -59,6 +59,15 @@ import { EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
           ))
         }
       </div>
+    </section>
+
+    <section class="resume-block" aria-labelledby="resume-education">
+      <div class="section-head">
+        <h2 id="resume-education">Education & Certifications</h2>
+      </div>
+      <ul class="credential-list">
+        {EDUCATION.map((item) => <li>{item}</li>)}
+      </ul>
     </section>
 
     <section class="resume-cta" aria-labelledby="resume-cta">
