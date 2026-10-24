@@ -5,7 +5,6 @@ import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
  * Work history stays in EXPERIENCE and is rendered only on /resume.
  * Add a project by appending an object to PROJECTS. Empty slots are not rendered.
  */
-const USERS = "800+";
 
 export const SOCIAL = {
   email: "emilioearango@gmail.com",
@@ -119,6 +118,9 @@ export const EXPERIENCE: Role[] = [
         text: "Run a hybrid fleet: Intune, Autopilot, and Microsoft Defender on Windows, and Jamf Pro on Mac.",
       },
       {
+        text: "Lead helpdesk operations and serve as the escalation point for Tier 1–3 issues across the organization.",
+      },
+      {
         text: "Built a production AI agent, plus Python and MCP automation.",
       },
     ],
@@ -158,6 +160,7 @@ export const RESUME = {
   description:
     "A short overview of Emilio Arango’s work in identity, endpoints, and AI automation.",
   headline: "Systems Engineer",
-  summary: `I run identity and endpoint for a company of ${USERS} people. I build AI agents and automation to cut repetitive IT work.`,
+  summary:
+    "I run identity and endpoint for a multi-site organization. I build AI agents and automation to cut repetitive IT work.",
   cta: "Email me for the full resume.",
 };
