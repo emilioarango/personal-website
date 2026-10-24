@@ -23,19 +23,12 @@ const jsonLd = JSON.stringify({
   mainEntity: {
     "@type": "Person",
     name: SITE.name,
-    jobTitle: SITE.jobTitle,
     description: SITE.description,
     email: `mailto:${SOCIAL.email}`,
     url: SITE.url,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: SITE.location.locality,
-      addressRegion: SITE.location.region,
-      addressCountry: SITE.location.country,
-    },
-    worksFor: {
-      "@type": "Organization",
-      name: "Restaurant365",
+    homeLocation: {
+      "@type": "Place",
+      name: "Southern California",
     },
     sameAs: [SOCIAL.linkedin, SOCIAL.github],
     knowsAbout: SITE.knowsAbout,

@@ -15,9 +15,9 @@ export interface SkillGroup {
   items: string[];
 }
 
-export interface GlanceRow {
-  label: string;
-  value: string;
+export interface Interest {
+  name: string;
+  summary: string;
 }
 
 export interface Role {

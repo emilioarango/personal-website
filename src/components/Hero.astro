@@ -1,5 +1,5 @@
 ---
-import { GLANCE, HERO, RESUME, SITE, SOCIAL } from "@config";
+import { HERO, INTERESTS, RESUME, SITE, SOCIAL } from "@config";
 import Outbound from "./Outbound.astro";
 ---
 
@@ -8,7 +8,6 @@ import Outbound from "./Outbound.astro";
     <p class="kicker">{HERO.kicker}</p>
     <h1 id="intro-name">{SITE.name}</h1>
     <p class="lede">{HERO.line}</p>
-    <p class="meta-line">{HERO.meta}</p>
     <div class="hero-bottom">
       <div class="cta-row">
         <Outbound class="btn btn-primary" href={`mailto:${SOCIAL.email}`}>
@@ -19,22 +18,13 @@ import Outbound from "./Outbound.astro";
         <a class="btn" href={RESUME.href}>{RESUME.label}</a>
       </div>
 
-      <aside class="glance" aria-label="Current role">
+      <aside class="glance" aria-label="Interests">
         <p class="glance-kicker">
-          <span class="dot" aria-hidden="true"></span> Now
+          <span class="dot" aria-hidden="true"></span> These days
         </p>
-        <p class="glance-title">{GLANCE.role}</p>
-        <p class="glance-place">{GLANCE.place}</p>
-        <dl>
-          {
-            GLANCE.rows.map((row) => (
-              <div class="glance-row">
-                <dt>{row.label}</dt>
-                <dd>{row.value}</dd>
-              </div>
-            ))
-          }
-        </dl>
+        <ul class="aside-list">
+          {INTERESTS.map((interest) => <li>{interest.name}</li>)}
+        </ul>
       </aside>
     </div>
   </div>

@@ -1,9 +1,9 @@
-import type { GlanceRow, NavLink, Role, SkillGroup, WorkItem } from "../types";
+import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
 
 /**
- * Portfolio content for emilioarango.com.
- * Search for `todo: true` and `resume.todo` before publishing.
- * USERS is the only headcount that should appear on the site.
+ * Personal site content for emilioarango.com.
+ * Work history stays in EXPERIENCE and is rendered only on /resume.
+ * Search for `todo: true` and `PROJECT_TODO` / `resume.todo` before publishing.
  */
 const USERS = "800+";
 
@@ -16,63 +16,79 @@ export const SOCIAL = {
 
 export const SITE = {
   name: "Emilio Arango",
-  title: "Emilio Arango — Systems Administrator",
+  title: "Emilio Arango",
   jobTitle: "Systems Administrator",
   description:
-    "Systems administrator in Irvine. Owns Entra ID, Microsoft 365, Okta, Jamf, Intune, Microsoft Defender, and Mimecast for 800+ users at Restaurant365.",
+    "Emilio Arango, in Southern California. Chess, code, film, history, and a Subaru WRX STI.",
   url: "https://emilioarango.com",
   lang: "en",
   locale: "en_US",
   ogImage: "/og-image.png",
   ogImageAlt:
-    "Emilio Arango, systems administrator. He owns identity, endpoints, and AI infrastructure for 800+ users.",
-  location: {
-    locality: "Irvine",
-    region: "CA",
-    country: "US",
-  },
+    "Emilio Arango. Chess, code, film, history, and a Subaru WRX STI.",
   knowsAbout: [
-    "Microsoft Entra ID",
-    "Okta",
-    "Microsoft 365",
-    "Jamf",
-    "Microsoft Intune",
-    "Microsoft Defender",
-    "Mimecast",
-    "macOS",
-    "Windows",
-    "Endpoint management",
-    "Identity and access",
-    "High availability",
-    "Helpdesk automation",
+    "Chess",
+    "Artificial intelligence",
+    "Programming",
+    "Film",
+    "History",
+    "Motorsport",
   ],
 };
 
 export const NAV: NavLink[] = [
-  { text: "Skills", href: "#skills" },
-  { text: "Experience", href: "#experience" },
-  { text: "Work", href: "#work" },
   { text: "About", href: "#about" },
+  { text: "Interests", href: "#interests" },
+  { text: "Projects", href: "#projects" },
 ];
 
 export const HERO = {
-  kicker: "Senior systems · IT infrastructure · AI",
-  line: `I own identity, endpoints, and AI infrastructure for ${USERS} users.`,
-  meta: "Systems Administrator · Restaurant365 · Irvine, California · 2024–Present",
+  kicker: "Southern California",
+  line: "Chess, code, film, history, and a Subaru WRX STI.",
 };
 
-export const GLANCE: { role: string; place: string; rows: GlanceRow[] } = {
-  role: "Systems Administrator",
-  place: "Restaurant365 · Irvine",
-  rows: [
-    { label: "People", value: USERS },
-    { label: "Identity", value: "Entra ID, Okta" },
-    { label: "Endpoints", value: "Jamf, Intune" },
-    { label: "Security", value: "Defender, Mimecast" },
-    { label: "Fleet", value: "Mac and Windows" },
-    { label: "Automation", value: "AI helpdesk" },
-  ],
+export const ABOUT = {
+  body: "I'm Emilio Arango. I live in Southern California. I play chess, write code, watch films, read history, and drive a Subaru WRX STI.",
 };
+
+export const INTERESTS: Interest[] = [
+  {
+    name: "Chess",
+    summary: "A game I play, and one I have been teaching a computer to play.",
+  },
+  {
+    name: "AI and coding",
+    summary:
+      "Writing software, and using AI while I build. The chess engine is the piece anyone can open.",
+  },
+  {
+    name: "Film",
+    summary: "Getting lost in a good movie.",
+  },
+  {
+    name: "History",
+    summary:
+      "The long view, and what the last few millennia still have to say.",
+  },
+  {
+    name: "Motorsport",
+    summary: "The sport, and the Subaru WRX STI I drive.",
+  },
+];
+
+export const PROJECTS: WorkItem[] = [
+  {
+    name: "Chess engine",
+    context: "Python",
+    summary:
+      "A playable chess engine in pure Python: legal move generation, minimax with alpha-beta pruning, and piece-square tables. No dependencies.",
+    links: [{ label: "Source", href: SOCIAL.chessEngine }],
+    todos: [],
+  },
+];
+
+export const PROJECT_TODO =
+  "Add any other project you want on this page: a name, one sentence, and a link.";
 
 export const SKILLS: SkillGroup[] = [
   {
@@ -123,10 +139,6 @@ export const EXPERIENCE: Role[] = [
       {
         text: "Build AI-driven helpdesk automation that turns internal knowledge into self-serve tooling.",
       },
-      {
-        todo: true,
-        text: "Add one measured outcome for automation or availability (a count, a rate, or time saved). Use a real figure only.",
-      },
     ],
   },
   {
@@ -173,40 +185,12 @@ export const EXPERIENCE: Role[] = [
   },
 ];
 
-export const WORK: WorkItem[] = [
-  {
-    name: "AI helpdesk automation",
-    context: "Restaurant365 · Internal",
-    summary:
-      "Self-serve helpdesk tooling that turns Restaurant365’s internal knowledge into something employees can use themselves.",
-    links: [],
-    todos: [
-      "Name the tool or workflow.",
-      "Add the stack you are willing to share (platform, model, or scripts).",
-      "Add one real result for this project (a count, a rate, or time saved).",
-    ],
-  },
-  {
-    name: "Chess engine",
-    context: "Personal project · Python",
-    summary:
-      "A playable chess engine in pure Python: legal move generation, minimax with alpha-beta pruning, and piece-square tables. No dependencies.",
-    links: [{ label: "Source", href: SOCIAL.chessEngine }],
-    todos: [],
-  },
-];
-
-export const ABOUT = {
-  body: "I have spent my career in IT since 2015, from Genius Bar repairs to owning identity and endpoint platforms at Restaurant365. The work I want stays up and gets quieter: access that is clear, queues that shrink, and tools people can use on their own. Away from the keyboard I play chess, drive a Subaru WRX STI, and spend time with film and history.",
-  interests: ["Chess", "Subaru WRX STI", "Film", "History"],
-};
-
 export const RESUME = {
   href: "/resume",
   label: "Resume",
   title: "Resume — Emilio Arango",
   description:
-    "Resume of Emilio Arango, systems administrator at Restaurant365 in Irvine. Identity, endpoints, Microsoft 365, and AI helpdesk automation for 800+ users.",
+    "Resume of Emilio Arango, systems administrator at Restaurant365 in Irvine. Identity, endpoints, Microsoft 365, Defender, and Mimecast for 800+ users.",
   summary: `Systems administrator owning identity, endpoints, and AI infrastructure for ${USERS} users at Restaurant365 in Irvine. In IT since 2015, from the Apple Genius Bar through financial-services support and a restaurant service desk.`,
-  todo: "Add public/resume.pdf, then set resume.href in src/config/index.ts to /resume.pdf so the hero Resume button downloads a file. This page is the placeholder.",
+  todo: "Add public/resume.pdf, then set resume.href in src/config/index.ts to /resume.pdf so the Resume button downloads a file. This page is the placeholder.",
 };

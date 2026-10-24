@@ -1,8 +1,8 @@
 # Emilio Arango — personal site
 
-Recruiter-ready portfolio for Emilio Arango, systems administrator. Built with Astro and Tailwind CSS and deployed at [emilioarango.com](https://emilioarango.com).
+Personal site for Emilio Arango. Built with Astro and Tailwind CSS and deployed at [emilioarango.com](https://emilioarango.com).
 
-Copy, skills, and experience live in `src/config/index.ts`. Search that file for `todo: true` and `resume.todo` before publishing.
+The homepage is about him. Work history is only on `/resume`. Copy lives in `src/config/index.ts`. Search that file for `PROJECT_TODO` and `resume.todo` before publishing.
 
 ## Getting started
 

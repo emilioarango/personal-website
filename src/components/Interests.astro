@@ -1,0 +1,20 @@
+---
+import { INTERESTS } from "@config";
+import SectionHead from "./SectionHead.astro";
+---
+
+<section class="section" id="interests" aria-labelledby="interests-title">
+  <div class="wrap">
+    <SectionHead id="interests-title" index="02" title="Interests" />
+    <div>
+      {
+        INTERESTS.map((interest) => (
+          <article class="skill">
+            <h3>{interest.name}</h3>
+            <p>{interest.summary}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
