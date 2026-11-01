@@ -127,7 +127,7 @@ export const EXPERIENCE: Role[] = [
   {
     company: "Happy Money",
     position: "IT Support Specialist",
-    start: "2019",
+    start: "2020",
     end: "2024",
   },
   {
