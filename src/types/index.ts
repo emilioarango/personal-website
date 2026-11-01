@@ -5,8 +5,6 @@ export interface NavLink {
 
 export interface Point {
   text: string;
-  /** Render as a TODO Emilio still needs to fill. Never invent the missing fact. */
-  todo?: boolean;
 }
 
 export interface SkillGroup {
@@ -41,6 +39,4 @@ export interface WorkItem {
   context: string;
   summary: string;
   links: WorkLink[];
-  todos: string[];
-  facts?: string[];
 }

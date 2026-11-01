@@ -85,7 +85,6 @@ export const PROJECTS: WorkItem[] = [
     summary:
       "A small chess engine in pure Python: legal moves, minimax with alpha-beta pruning, and piece-square tables.",
     links: [{ label: "Source", href: SOCIAL.chessEngine }],
-    todos: [],
   },
 ];
 
@@ -128,7 +127,7 @@ export const EXPERIENCE: Role[] = [
   {
     company: "Happy Money",
     position: "IT Support Specialist",
-    start: "2019",
+    start: "2020",
     end: "2024",
   },
   {
