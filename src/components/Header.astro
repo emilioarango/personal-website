@@ -23,7 +23,7 @@ const onHome = Astro.url.pathname === "/";
         class="theme-toggle"
         id="theme-toggle"
         type="button"
-        aria-label="Switch color theme"
+        aria-label="Dark theme"
         aria-pressed="false"
       >
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
@@ -68,8 +68,6 @@ const onHome = Astro.url.pathname === "/";
     root.dataset.theme = theme;
     if (meta) meta.content = colors[theme];
     if (scheme) scheme.content = theme;
-    const next = theme === "dark" ? "light" : "dark";
-    button?.setAttribute("aria-label", `Switch to ${next} theme`);
     button?.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
   }
 

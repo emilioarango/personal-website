@@ -85,6 +85,12 @@
   --color-inverse: #ffffff;
 }
 
+/*
+ * Dark palette, defined twice on purpose:
+ *  1. [data-theme="dark"]: explicit choice (toggle, ?theme=, or the pre-paint script)
+ *  2. prefers-color-scheme: no-JS fallback when data-theme is unset
+ * Keep both blocks identical when editing a color.
+ */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --color-bg: #0f172a;
@@ -110,6 +116,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  /* Mirror of :root[data-theme="dark"] above. Keep in sync. */
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --color-bg: #0f172a;
