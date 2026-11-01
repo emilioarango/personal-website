@@ -85,7 +85,6 @@ export const PROJECTS: WorkItem[] = [
     summary:
       "A small chess engine in pure Python: legal moves, minimax with alpha-beta pruning, and piece-square tables.",
     links: [{ label: "Source", href: SOCIAL.chessEngine }],
-    todos: [],
   },
 ];
 

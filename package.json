@@ -10,18 +10,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
     "@fontsource-variable/fraunces": "5.2.8",
     "@fontsource-variable/source-sans-3": "^5.3.1",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.17.1",
-    "tailwindcss": "^4.1.17",
-    "typescript": "^5.6.2"
+    "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.6",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.6.11"
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "typescript": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   },
   "packageManager": "pnpm@10.18.2",
   "pnpm": {
