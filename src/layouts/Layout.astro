@@ -2,6 +2,8 @@
 import { SITE, SOCIAL } from "@config";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 import frauncesItalic from "@fontsource-variable/fraunces/files/fraunces-latin-soft-italic.woff2?url";
 import frauncesNormal from "@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2?url";
 import sourceSans from "@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2?url";
@@ -123,6 +125,8 @@ const jsonLd = JSON.stringify({
     <link rel="me" href={SOCIAL.github} />
 
     <script is:inline type="application/ld+json" set:html={jsonLd} />
+    <Analytics />
+    <SpeedInsights />
   </head>
   <body>
     <a class="skip" href="#content">Skip to content</a>
