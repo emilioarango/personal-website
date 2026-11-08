@@ -32,7 +32,9 @@ type Options = {
   onError?: (error: unknown) => void;
 };
 
-const IDLE_SPEED = 0.18;
+/** Slow continuous yaw while idle (~one turn every ~28s). */
+const IDLE_SPEED = 0.22;
+const IDLE_RESUME_MS = 1400;
 const DRAG_SENSITIVITY = 0.0055;
 const KEY_STEP = 0.12;
 const DAMPING = 0.086;
@@ -66,33 +68,36 @@ export async function createKnightScene(
   const scene = new Scene();
   scene.background = null;
 
-  const camera = new PerspectiveCamera(32, 1, 0.05, 40);
-  // Frame the full Staunton silhouette (base through mane), not a cropped pedestal.
-  camera.position.set(1.05, 0.62, 2.35);
-  camera.lookAt(0, 0.42, 0);
+  const camera = new PerspectiveCamera(30, 1, 0.05, 40);
+  // Large in-frame presence with headroom for mane/ears through a full turn.
+  camera.position.set(0.95, 0.66, 2.15);
+  camera.lookAt(0, 0.5, 0);
 
   const root = new Group();
   scene.add(root);
 
-  const ambient = new AmbientLight(0xffffff, 0.22);
-  const hemi = new HemisphereLight(0xd8dce2, 0x0a0a0c, 0.55);
-  const key = new DirectionalLight(0xffffff, 1.35);
-  key.position.set(2.4, 3.2, 1.8);
-  const fill = new DirectionalLight(0xc8ccd2, 0.35);
-  fill.position.set(-2.2, 1.2, 1.4);
-  const rim = new DirectionalLight(0xf2f4f7, 0.85);
-  rim.position.set(-1.2, 2.4, -2.6);
-  scene.add(ambient, hemi, key, fill, rim);
+  const ambient = new AmbientLight(0xffffff, 0.18);
+  const hemi = new HemisphereLight(0xe6e8ec, 0x08080a, 0.62);
+  const key = new DirectionalLight(0xffffff, 1.55);
+  key.position.set(2.6, 3.4, 2.0);
+  const fill = new DirectionalLight(0xc4c8d0, 0.42);
+  fill.position.set(-2.4, 1.4, 1.6);
+  const rim = new DirectionalLight(0xf5f6f8, 1.05);
+  rim.position.set(-1.4, 2.6, -2.8);
+  const kick = new DirectionalLight(0xd8dbe0, 0.28);
+  kick.position.set(0.2, -0.4, 2.2);
+  scene.add(ambient, hemi, key, fill, rim, kick);
 
   const pointer = new Vector2();
   const velocity = new Vector2();
-  let polar = 0.08;
-  let azimuth = 0.35;
+  let polar = 0.06;
+  let azimuth = 0.55;
   const targetPolar = { current: polar };
   const targetAzimuth = { current: azimuth };
   let dragging = false;
   let interacting = false;
   let idlePaused = false;
+  let idleResumeTimer = 0;
   let frame = 0;
   let visible = true;
   let pageVisible = document.visibilityState === "visible";
@@ -103,16 +108,16 @@ export async function createKnightScene(
   let lastTime = performance.now();
 
   const bodyMaterial = new MeshStandardMaterial({
-    color: new Color("#0b0b0d"),
-    metalness: 0.08,
-    roughness: 0.86,
-    envMapIntensity: 0.2,
+    color: new Color("#09090b"),
+    metalness: 0.12,
+    roughness: 0.78,
+    envMapIntensity: 0.25,
   });
 
   const edgeMaterial = new LineBasicMaterial({
-    color: new Color("#e8eaed"),
+    color: new Color("#eceff3"),
     transparent: true,
-    opacity: 0.28,
+    opacity: 0.22,
     depthWrite: false,
   });
 
@@ -120,7 +125,7 @@ export async function createKnightScene(
     const box = new Box3().setFromObject(object);
     const size = box.getSize(new Vector3());
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    object.scale.setScalar(0.9 / maxDim);
+    object.scale.setScalar(1.14 / maxDim);
 
     box.setFromObject(object);
     const center = box.getCenter(new Vector3());
@@ -136,12 +141,24 @@ export async function createKnightScene(
       child.castShadow = false;
       child.receiveShadow = false;
 
-      // Lower threshold catches Staunton mane/groove contours without a dense mesh.
-      const edges = new EdgesGeometry(child.geometry, 18);
+      // Selective contours for Staunton mane/groove detail without a dense mesh.
+      const edges = new EdgesGeometry(child.geometry, 24);
       const lines = new LineSegments(edges, edgeMaterial);
       lines.renderOrder = 2;
       child.add(lines);
     });
+  }
+
+  function pauseIdle() {
+    idlePaused = true;
+    window.clearTimeout(idleResumeTimer);
+  }
+
+  function scheduleIdleResume() {
+    window.clearTimeout(idleResumeTimer);
+    idleResumeTimer = window.setTimeout(() => {
+      idlePaused = false;
+    }, IDLE_RESUME_MS);
   }
 
   function setSize() {
@@ -172,11 +189,12 @@ export async function createKnightScene(
   }
 
   function resetOrientation() {
-    targetAzimuth.current = 0.35;
-    targetPolar.current = 0.08;
+    targetAzimuth.current = 0.55;
+    targetPolar.current = 0.06;
     velocity.set(0, 0);
     interacting = false;
-    idlePaused = false;
+    pauseIdle();
+    scheduleIdleResume();
   }
 
   function tick(now: number) {
@@ -207,7 +225,7 @@ export async function createKnightScene(
     if (event.button !== 0) return;
     dragging = true;
     interacting = true;
-    idlePaused = true;
+    pauseIdle();
     canvas.setPointerCapture(event.pointerId);
     pointer.set(event.clientX, event.clientY);
   }
@@ -228,6 +246,7 @@ export async function createKnightScene(
     if (event.pointerType === "touch") return;
     dragging = false;
     interacting = false;
+    scheduleIdleResume();
     try {
       canvas.releasePointerCapture(event.pointerId);
     } catch {
@@ -258,7 +277,7 @@ export async function createKnightScene(
         Math.abs(totalX) > Math.abs(totalY) * 1.15 ? "rotate" : "scroll";
       if (touchAxis === "rotate") {
         interacting = true;
-        idlePaused = true;
+        pauseIdle();
       }
     }
 
@@ -273,8 +292,10 @@ export async function createKnightScene(
   }
 
   function onTouchEnd() {
+    const wasRotating = touchAxis === "rotate";
     touchAxis = "none";
     interacting = false;
+    if (wasRotating) scheduleIdleResume();
   }
 
   function onKeyDown(event: KeyboardEvent) {
@@ -288,7 +309,7 @@ export async function createKnightScene(
     if (!keys.has(event.key)) return;
     event.preventDefault();
     interacting = true;
-    idlePaused = true;
+    pauseIdle();
     if (event.key === "ArrowLeft") targetAzimuth.current -= KEY_STEP;
     if (event.key === "ArrowRight") targetAzimuth.current += KEY_STEP;
     if (event.key === "ArrowUp") targetPolar.current -= KEY_STEP * 0.7;
@@ -305,6 +326,7 @@ export async function createKnightScene(
       event.key === "ArrowDown"
     ) {
       interacting = false;
+      scheduleIdleResume();
     }
   }
 
@@ -356,6 +378,7 @@ export async function createKnightScene(
   function destroy() {
     if (disposed) return;
     disposed = true;
+    window.clearTimeout(idleResumeTimer);
     cancelAnimationFrame(frame);
     resizeObserver.disconnect();
     intersectionObserver.disconnect();

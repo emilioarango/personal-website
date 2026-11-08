@@ -342,9 +342,9 @@
 
   .knight-frame {
     position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1.15;
-    max-height: min(62dvh, 36rem);
+    width: min(100%, 28rem);
+    aspect-ratio: 1 / 1.2;
+    max-height: min(72dvh, 42rem);
     margin-inline: auto;
   }
 
@@ -787,8 +787,9 @@
   }
 
   .knight-frame {
-    max-height: min(78dvh, 42rem);
-    aspect-ratio: 1 / 1.2;
+    width: min(100%, 40rem);
+    max-height: min(88dvh, 52rem);
+    aspect-ratio: 1 / 1.22;
   }
 
   .resume-teaser-layout,
