@@ -13,6 +13,7 @@ import {
   MeshStandardMaterial,
   PerspectiveCamera,
   Scene,
+  Sphere,
   Vector2,
   Vector3,
   WebGLRenderer,
@@ -32,14 +33,14 @@ type Options = {
   onError?: (error: unknown) => void;
 };
 
-/** Slow continuous yaw while idle (~one turn every ~28s). */
-const IDLE_SPEED = 0.22;
-const IDLE_RESUME_MS = 1400;
+/** Slow continuous yaw while idle (~one full turn every ~14s). */
+const IDLE_SPEED = 0.45;
+const IDLE_RESUME_MS = 900;
 const DRAG_SENSITIVITY = 0.0055;
 const KEY_STEP = 0.12;
 const DAMPING = 0.086;
-const MAX_POLAR = Math.PI * 0.42;
-const MIN_POLAR = -Math.PI * 0.18;
+const MAX_POLAR = Math.PI * 0.22;
+const MIN_POLAR = -Math.PI * 0.08;
 const TOUCH_SLOP = 10;
 
 export async function createKnightScene(
@@ -68,11 +69,7 @@ export async function createKnightScene(
   const scene = new Scene();
   scene.background = null;
 
-  const camera = new PerspectiveCamera(30, 1, 0.05, 40);
-  // Large in-frame presence with headroom for mane/ears through a full turn.
-  camera.position.set(0.95, 0.66, 2.15);
-  camera.lookAt(0, 0.5, 0);
-
+  const camera = new PerspectiveCamera(35, 1, 0.05, 40);
   const root = new Group();
   scene.add(root);
 
@@ -124,14 +121,33 @@ export async function createKnightScene(
   function fitModel(object: Group) {
     const box = new Box3().setFromObject(object);
     const size = box.getSize(new Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    object.scale.setScalar(1.14 / maxDim);
+    // Normalize by height so Staunton proportions stay predictable in frame.
+    object.scale.setScalar(1 / (size.y || 1));
 
     box.setFromObject(object);
     const center = box.getCenter(new Vector3());
     object.position.x -= center.x;
     object.position.y -= box.min.y;
     object.position.z -= center.z;
+  }
+
+  function frameCamera() {
+    root.updateWorldMatrix(true, true);
+    const sphere = new Box3()
+      .setFromObject(root)
+      .getBoundingSphere(new Sphere());
+    const fov = MathUtils.degToRad(camera.fov);
+    // Margin so mane/ears clear the canvas edge through a full yaw turn.
+    const dist = (sphere.radius * 1.65) / Math.sin(fov / 2);
+    camera.position.set(
+      dist * 0.38,
+      sphere.center.y + sphere.radius * 0.12,
+      dist,
+    );
+    camera.lookAt(sphere.center.x, sphere.center.y, sphere.center.z);
+    camera.near = Math.max(0.05, dist / 100);
+    camera.far = dist * 20;
+    camera.updateProjectionMatrix();
   }
 
   function applyMaterials(object: Group) {
@@ -162,9 +178,8 @@ export async function createKnightScene(
   }
 
   function setSize() {
-    const parent = canvas.parentElement;
-    if (!parent) return;
-    const rect = parent.getBoundingClientRect();
+    // Use the canvas's laid-out box (includes CSS bleed), not the smaller frame.
+    const rect = canvas.getBoundingClientRect();
     const width = Math.max(1, Math.floor(rect.width));
     const height = Math.max(1, Math.floor(rect.height));
     const dpr = Math.min(window.devicePixelRatio || 1, width < 720 ? 1.5 : 2);
@@ -203,21 +218,23 @@ export async function createKnightScene(
     const dt = Math.min(0.05, (now - lastTime) / 1000);
     lastTime = now;
 
-    if (!visible || !pageVisible) return;
+    if (!pageVisible) return;
 
     if (!interacting && !reducedMotion && !idlePaused) {
-      targetAzimuth.current += IDLE_SPEED * dt;
+      // Drive yaw directly so idle spin is obvious from first paint.
+      azimuth += IDLE_SPEED * dt;
+      targetAzimuth.current = azimuth;
+    } else {
+      targetAzimuth.current += velocity.x;
+      targetPolar.current += velocity.y;
+      clampTargets();
+      velocity.multiplyScalar(1 - Math.min(1, DAMPING * (60 * dt)));
+      azimuth += (targetAzimuth.current - azimuth) * Math.min(1, 10 * dt);
+      polar += (targetPolar.current - polar) * Math.min(1, 10 * dt);
     }
 
-    targetAzimuth.current += velocity.x;
-    targetPolar.current += velocity.y;
-    clampTargets();
-    velocity.multiplyScalar(1 - Math.min(1, DAMPING * (60 * dt)));
-
-    azimuth += (targetAzimuth.current - azimuth) * Math.min(1, 10 * dt);
-    polar += (targetPolar.current - polar) * Math.min(1, 10 * dt);
     applyOrientation();
-    renderer.render(scene, camera);
+    if (visible) renderer.render(scene, camera);
   }
 
   function onPointerDown(event: PointerEvent) {
@@ -337,9 +354,13 @@ export async function createKnightScene(
     (entries) => {
       visible = entries.some((entry) => entry.isIntersecting);
     },
-    { threshold: 0.05 },
+    { threshold: 0.01 },
   );
-  intersectionObserver.observe(canvas);
+  // Observe the frame, not the canvas — canvas starts `hidden` and may never
+  // report intersection until after idle would have been skipped.
+  const observeTarget = canvas.parentElement ?? canvas;
+  intersectionObserver.observe(observeTarget);
+  visible = true;
 
   const onVisibility = () => {
     pageVisible = document.visibilityState === "visible";
@@ -368,7 +389,14 @@ export async function createKnightScene(
     applyMaterials(model);
     fitModel(model);
     root.add(model);
+    // Unhide first so layout/bleed metrics are real, then frame the camera.
     onReady?.();
+    setSize();
+    frameCamera();
+    requestAnimationFrame(() => {
+      setSize();
+      frameCamera();
+    });
   } catch (error) {
     onError?.(error);
     destroy();

@@ -97,6 +97,8 @@ import { HERO, SITE } from "@config";
       status.hidden = true;
       if (reducedMotion && hint) {
         hint.textContent = "Use arrow keys or drag to rotate";
+      } else if (hint) {
+        hint.textContent = "Drag to rotate · auto-spins when idle";
       }
     };
 

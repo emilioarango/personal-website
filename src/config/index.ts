@@ -38,7 +38,7 @@ export const NAV: NavLink[] = [
 
 export const HERO = {
   kicker: "Southern California",
-  line: "Systems administrator. Chess player.",
+  line: "Systems administrator.",
 };
 
 export const ABOUT = {

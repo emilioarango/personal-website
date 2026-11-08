@@ -276,7 +276,7 @@
     min-height: calc(100dvh - 3.75rem);
     display: grid;
     align-items: stretch;
-    overflow: clip;
+    overflow: visible;
   }
 
   .hero-stage {
@@ -338,6 +338,7 @@
     align-content: end;
     gap: 0.75rem;
     min-height: 20rem;
+    overflow: visible;
   }
 
   .knight-frame {
@@ -346,14 +347,16 @@
     aspect-ratio: 1 / 1.2;
     max-height: min(72dvh, 42rem);
     margin-inline: auto;
+    overflow: visible;
   }
 
   .knight-fallback,
   .knight-canvas {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    /* Generous bleed so yaw turns never meet a hard rectangular crop. */
+    inset: -18% -24%;
+    width: auto;
+    height: auto;
     display: block;
   }
 
