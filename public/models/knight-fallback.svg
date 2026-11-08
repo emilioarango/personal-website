@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320" role="img" aria-label="Matte black Staunton chess knight">
+  <defs>
+    <linearGradient id="sheen" x1="50" y1="10" x2="190" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2c2c30"/>
+      <stop offset="42%" stop-color="#0d0d0f"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </linearGradient>
+  </defs>
+  <g fill="url(#sheen)" stroke="#d9dbe0" stroke-opacity="0.3" stroke-width="1.05">
+    <!-- Classic Staunton horse head + turned base -->
+    <path d="M128 292c-40 0-68-9-68-22v-8c0-10 16-17 40-22 6-20 10-42 8-62-3-28-14-48-34-64-12-10-18-24-14-38 5-18 24-30 44-26 8 2 16 7 20 14 6-8 18-12 30-8 16 6 24 22 20 38-2 8-7 14-14 18 14 18 22 40 20 64-2 28-12 50-28 66 28 7 48 16 48 28v8c0 13-32 22-72 22z"/>
+    <path d="M96 118c10-26 34-40 56-32 8 3 14 8 18 15 6-10 18-14 30-8 12 6 18 20 14 32-12 10-28 12-40 4-10 12-26 20-44 16-14-2-26-12-34-27z" fill="#101013" stroke="#eceff3" stroke-opacity="0.22"/>
+    <ellipse cx="128" cy="286" rx="62" ry="11" fill="#080809" stroke="#cfd2d6" stroke-opacity="0.22"/>
+  </g>
+  <g fill="none" stroke="#f2f3f5" stroke-opacity="0.2" stroke-width="0.85">
+    <path d="M98 248c22-8 48-12 74-8"/>
+    <path d="M112 168c6 20 8 40 4 58"/>
+    <path d="M148 122c12 18 16 38 12 58"/>
+    <path d="M118 96c2 10-2 20-10 28"/>
+  </g>
+</svg>

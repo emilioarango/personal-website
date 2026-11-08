@@ -1,9 +1,8 @@
-import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
+import type { NavLink, Role, SkillGroup, WorkItem } from "../types";
 
 /**
  * Personal site content for emilioarango.com.
  * Work history stays in EXPERIENCE and is rendered only on /resume.
- * Add a project by appending an object to PROJECTS. Empty slots are not rendered.
  */
 
 export const SOCIAL = {
@@ -17,30 +16,29 @@ export const SITE = {
   name: "Emilio Arango",
   title: "Emilio Arango",
   description:
-    "Emilio Arango, in Southern California. Chess, code, film, and history.",
+    "Emilio Arango — personal site. Systems administrator in Southern California.",
   url: "https://emilioarango.com",
   lang: "en",
   locale: "en_US",
   ogImage: "/og-image.png",
-  ogImageAlt: "Emilio Arango. Chess, code, film, and history.",
+  ogImageAlt: "Emilio Arango",
   knowsAbout: [
     "Chess",
     "Artificial intelligence",
     "Programming",
-    "Film",
-    "History",
+    "Identity and access management",
+    "Endpoint management",
   ],
 };
 
 export const NAV: NavLink[] = [
-  { text: "Interests", href: "#interests" },
-  { text: "About", href: "#about" },
-  { text: "Projects", href: "#projects" },
+  { text: "Résumé", href: "#resume" },
+  { text: "Contact", href: "#contact" },
 ];
 
 export const HERO = {
   kicker: "Southern California",
-  line: "I play chess, write code, watch films, and read history.",
+  line: "Systems administrator. Chess player.",
 };
 
 export const ABOUT = {
@@ -49,35 +47,7 @@ export const ABOUT = {
     "I write software for the fun of seeing an idea work, and I use AI while I build. The rest of the day I try to keep in proportion.",
 };
 
-export const INTERESTS: Interest[] = [
-  {
-    name: "Chess",
-    summary: "A game I sit down and play.",
-    image: "/interests/chess.webp",
-    alt: "A wooden chess knight lit from the side.",
-  },
-  {
-    name: "AI and coding",
-    summary: "Writing software, and using AI while I build.",
-    image: "/interests/code.webp",
-    alt: "A dark screen of code.",
-  },
-  {
-    name: "Film",
-    summary: "Getting lost in a good movie.",
-    image: "/interests/film.webp",
-    alt: "A movie projector in low light.",
-  },
-  {
-    name: "History",
-    summary:
-      "The long view, and what the last few millennia still have to say.",
-    image: "/interests/history.webp",
-    alt: "Michelangelo’s David, seen from below.",
-  },
-];
-
-/** Append another object to show another card. Nothing is rendered for an empty list slot. */
+/** Kept for /resume tooling context; not rendered on the homepage. */
 export const PROJECTS: WorkItem[] = [
   {
     name: "Chess engine",
@@ -154,12 +124,12 @@ export const EDUCATION = [
 
 export const RESUME = {
   href: "/resume",
-  label: "Resume",
-  title: "Resume — Emilio Arango",
+  label: "Résumé",
+  title: "Résumé — Emilio Arango",
   description:
     "A short overview of Emilio Arango’s work in identity, endpoints, and AI automation.",
-  headline: "Systems Engineer",
+  headline: "Systems Administrator",
   summary:
     "I run identity and endpoint for a multi-site organization. I build AI agents and automation to cut repetitive IT work.",
-  cta: "Email me for the full resume.",
+  cta: "Email me for the full résumé.",
 };
