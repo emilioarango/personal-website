@@ -189,14 +189,13 @@ export async function createKnightScene(
   let lastTime = performance.now();
   let clock = 0;
 
-  // Faceted obsidian: flat-shaded planes with a clearcoat, still monochrome.
+  // Polished ebony lacquer: near-black with a clearcoat, still monochrome.
   const bodyMaterial = new MeshPhysicalMaterial({
     color: new Color("#0b0b0e"),
-    metalness: 0.35,
-    roughness: 0.4,
-    clearcoat: 0.7,
-    clearcoatRoughness: 0.32,
-    flatShading: true,
+    metalness: 0.3,
+    roughness: 0.34,
+    clearcoat: 0.85,
+    clearcoatRoughness: 0.2,
   });
 
   // Crisp silver-white contour plus a wider, fainter pass for a soft glow.
@@ -262,8 +261,8 @@ export async function createKnightScene(
       child.castShadow = !lowPower;
       child.receiveShadow = false;
 
-      // Hard creases only: every facet boundary reads as a clean contour.
-      const edges = new EdgesGeometry(child.geometry, 20);
+      // Contours only on real creases (rings, bevel rims), not smooth curves.
+      const edges = new EdgesGeometry(child.geometry, 40);
       const lines = new LineSegments(edges, edgeMaterial);
       lines.renderOrder = 2;
       const glow = new LineSegments(edges, glowMaterial);

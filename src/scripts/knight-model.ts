@@ -1,205 +1,196 @@
 import {
   BufferGeometry,
+  CubicBezierCurve,
   ExtrudeGeometry,
-  Float32BufferAttribute,
   Group,
   LatheGeometry,
-  Line,
-  LineBasicMaterial,
-  LineLoop,
   Mesh,
-  MeshBasicMaterial,
+  MeshPhysicalMaterial,
   Object3D,
   Shape,
+  SphereGeometry,
   Vector2,
 } from "three";
+import { mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 /**
- * A modern, blocky chess knight built from primitives, in the same hard-edged
- * language as the 3MILIONAIRE pyramid: a square stepped plinth (a four-sided
- * lathe, like the pyramid's base) and a horse head extruded from a silhouette
- * drawn only with straight, square and 45-degree cuts. Tech details are thin
- * glowing traces: a circuit line on each cheek ending at a slit eye, a spine
- * ridge for the mane, and a light band around the plinth.
+ * A classic Staunton chess knight built from primitives: a smoothly turned
+ * base (lathe) and a horse head extruded from a curved silhouette with rounded
+ * bevels, plus a smooth mane crest and small polished eyes.
  *
  * Units: roughly 1 tall, head facing +X. The scene normalises size anyway.
  */
 
 type Point = [number, number];
 
-/** Square stepped plinth as (radius, height); four lathe segments make it square. */
+/** Turned base profile as (radius, height), bottom to top: foot, bead, waist, collar. */
 const BASE_PROFILE: Point[] = [
   [0, 0],
-  [0.36, 0],
-  [0.36, 0.055],
-  [0.31, 0.055],
-  [0.31, 0.1],
-  [0.235, 0.13],
-  [0.205, 0.255],
-  [0.265, 0.27],
-  [0.265, 0.315],
-  [0.21, 0.315],
-  [0.21, 0.33],
-  [0, 0.33],
+  [0.296, 0],
+  [0.304, 0.008],
+  [0.306, 0.02],
+  [0.3, 0.032],
+  [0.284, 0.04],
+  [0.288, 0.05],
+  [0.286, 0.062],
+  [0.272, 0.07],
+  [0.248, 0.076],
+  [0.222, 0.088],
+  [0.197, 0.108],
+  [0.178, 0.135],
+  [0.166, 0.168],
+  [0.161, 0.2],
+  [0.163, 0.226],
+  [0.176, 0.24],
+  [0.198, 0.25],
+  [0.208, 0.26],
+  [0.208, 0.272],
+  [0.198, 0.282],
+  [0.176, 0.29],
+  [0.162, 0.3],
+  [0.156, 0.312],
+  [0.15, 0.32],
+  [0, 0.32],
 ];
 
-/** Blocky horse head facing +X: only vertical, horizontal and 45-degree edges. */
-const HEAD_OUTLINE: Point[] = [
-  [-0.15, 0.32],
-  [-0.15, 0.6], // back of neck
-  [-0.07, 0.76], // back of head
-  [-0.07, 0.9], // rear of ear
-  [0.015, 0.9], // ear top
-  [0.015, 0.835],
-  [0.1, 0.835], // crown
-  [0.265, 0.67], // 45-degree face plane
-  [0.265, 0.56], // squared muzzle
-  [0.16, 0.56],
-  [0.16, 0.585], // mouth notch
-  [0.085, 0.585],
-  [0.035, 0.535], // jaw to throat
-  [0.035, 0.47],
-  [0.135, 0.37], // chest
-  [0.135, 0.32],
+/** Back of the neck, shared by the head outline and the mane crest. */
+const NECK_BACK = [
+  new CubicBezierCurve(
+    new Vector2(-0.14, 0.31),
+    new Vector2(-0.172, 0.42),
+    new Vector2(-0.17, 0.6),
+    new Vector2(-0.11, 0.74),
+  ),
+  new CubicBezierCurve(
+    new Vector2(-0.11, 0.74),
+    new Vector2(-0.095, 0.78),
+    new Vector2(-0.08, 0.81),
+    new Vector2(-0.072, 0.84),
+  ),
 ];
 
-/** Mane: a stepped spine ridge set into the back of the neck. */
-const MANE_OUTLINE: Point[] = [
-  [-0.12, 0.38],
-  [-0.185, 0.38],
-  [-0.185, 0.6],
-  [-0.105, 0.76],
-  [-0.06, 0.76],
-  [-0.12, 0.64],
-];
-
-/** Rectangular eye slit. */
-const EYE_OUTLINE: Point[] = [
-  [0.085, 0.745],
-  [0.15, 0.745],
-  [0.15, 0.765],
-  [0.085, 0.765],
-];
-
-/** Circuit trace on the cheek, ending at the eye. */
-const CHEEK_TRACE: Point[] = [
-  [-0.09, 0.42],
-  [-0.09, 0.6],
-  [0.0, 0.69],
-  [0.0, 0.755],
-  [0.075, 0.755],
-];
-
-const HEAD_DEPTH = 0.17;
-const HEAD_BEVEL = 0.014;
-
-function shapeFrom(points: Point[]): Shape {
-  const shape = new Shape();
-  points.forEach(([x, y], i) =>
-    i === 0 ? shape.moveTo(x, y) : shape.lineTo(x, y),
-  );
-  shape.closePath();
-  return shape;
+/** Classic Staunton profile facing +X: small ear, long face, open jaw. */
+function headShape(): Shape {
+  const s = new Shape();
+  s.moveTo(-0.14, 0.31);
+  for (const c of NECK_BACK) {
+    s.bezierCurveTo(c.v1.x, c.v1.y, c.v2.x, c.v2.y, c.v3.x, c.v3.y);
+  }
+  // Ear: a small, softly pointed tip, then down into the forehead.
+  s.bezierCurveTo(-0.066, 0.89, -0.05, 0.94, -0.035, 0.955);
+  s.bezierCurveTo(-0.02, 0.935, -0.008, 0.89, 0.0, 0.862);
+  s.quadraticCurveTo(0.03, 0.875, 0.08, 0.862);
+  // Long face: the nose line runs forward and down at about 45 degrees.
+  s.bezierCurveTo(0.15, 0.83, 0.25, 0.73, 0.32, 0.65);
+  // Rounded muzzle, small mouth notch, chin.
+  s.bezierCurveTo(0.36, 0.61, 0.365, 0.555, 0.33, 0.537);
+  s.quadraticCurveTo(0.305, 0.53, 0.295, 0.548);
+  s.quadraticCurveTo(0.285, 0.52, 0.25, 0.515);
+  // Lower jaw sweeps back, throat dips, chest flows down to the collar.
+  s.bezierCurveTo(0.19, 0.515, 0.13, 0.55, 0.1, 0.585);
+  s.bezierCurveTo(0.05, 0.565, 0.035, 0.5, 0.055, 0.45);
+  s.bezierCurveTo(0.085, 0.4, 0.135, 0.37, 0.14, 0.31);
+  s.lineTo(-0.14, 0.31);
+  return s;
 }
 
-function extrudeCentered(
-  points: Point[],
-  depth: number,
-  bevel: number,
-): ExtrudeGeometry {
-  const geometry = new ExtrudeGeometry(shapeFrom(points), {
+/** Smooth crest along the back of the neck, thinning out at both ends. */
+function maneShape(): Shape {
+  const samples = 48;
+  const outer: Vector2[] = [];
+  const inner: Vector2[] = [];
+  const total = NECK_BACK.length;
+  for (let i = 0; i <= samples; i++) {
+    const u = 0.12 + (i / samples) * 0.76; // skip the very base and the ear
+    const seg = Math.min(total - 1, Math.floor(u * total));
+    const t = u * total - seg;
+    const curve = NECK_BACK[seg];
+    const p = curve.getPoint(t);
+    const tangent = curve.getTangent(t);
+    // Outward normal (towards the back of the horse, -X side).
+    const n = new Vector2(-tangent.y, tangent.x);
+    if (n.x > 0) n.negate();
+    const taper = Math.sin((i / samples) * Math.PI); // thin at both ends
+    outer.push(p.clone().addScaledVector(n, 0.024 * taper));
+    inner.push(p.clone().addScaledVector(n, -0.03 * taper - 0.004));
+  }
+  const s = new Shape();
+  s.moveTo(outer[0].x, outer[0].y);
+  outer.slice(1).forEach((p) => s.lineTo(p.x, p.y));
+  inner.reverse().forEach((p) => s.lineTo(p.x, p.y));
+  s.closePath();
+  return s;
+}
+
+/** Extrude, centre on Z, then weld so normals shade smoothly. */
+function sculpt(shape: Shape, depth: number, bevel: number): BufferGeometry {
+  let geometry: BufferGeometry = new ExtrudeGeometry(shape, {
     depth,
-    bevelEnabled: bevel > 0,
+    bevelEnabled: true,
     bevelThickness: bevel,
-    bevelSize: bevel,
-    bevelSegments: 1, // single chamfer: crisp, machined edges
-    curveSegments: 1,
+    bevelSize: bevel * 0.8,
+    bevelSegments: 5,
+    curveSegments: 18,
   });
   geometry.translate(0, 0, -depth / 2);
-  return geometry;
-}
-
-function polyline(points: Point[], z: number): BufferGeometry {
-  const geometry = new BufferGeometry();
-  geometry.setAttribute(
-    "position",
-    new Float32BufferAttribute(
-      points.flatMap(([x, y]) => [x, y, z]),
-      3,
-    ),
-  );
+  geometry.deleteAttribute("normal");
+  geometry.deleteAttribute("uv");
+  geometry = mergeVertices(geometry, 1e-5);
+  geometry.computeVertexNormals();
   return geometry;
 }
 
 export type KnightModel = {
   group: Group;
-  /** Objects that keep their own material and get no contour (glow details). */
+  /** Objects that keep their own material and get no contour (eyes). */
   accents: Object3D[];
   dispose: () => void;
 };
 
+const HEAD_DEPTH = 0.13;
+const HEAD_BEVEL = 0.034;
+
 export function buildKnight(): KnightModel {
   const group = new Group();
   const accents: Object3D[] = [];
-  const disposables: Array<{ dispose: () => void }> = [];
 
-  // Four radial segments, turned 45 degrees: a square plinth, like the pyramid.
-  const base = new Mesh(
-    new LatheGeometry(
-      BASE_PROFILE.map(([r, y]) => new Vector2(r, y)),
-      4,
-    ),
-  );
-  base.rotation.y = Math.PI / 4;
-  group.add(base);
-
-  group.add(new Mesh(extrudeCentered(HEAD_OUTLINE, HEAD_DEPTH, HEAD_BEVEL)));
   group.add(
-    new Mesh(extrudeCentered(MANE_OUTLINE, HEAD_DEPTH * 0.45, HEAD_BEVEL)),
-  );
-
-  const glowMaterial = new MeshBasicMaterial({ color: 0xf4f6fa });
-  const traceMaterial = new LineBasicMaterial({
-    color: 0xf4f6fa,
-    transparent: true,
-    opacity: 0.85,
-  });
-  disposables.push(glowMaterial, traceMaterial);
-
-  // Eye slit and cheek circuit on each side, just proud of the surface.
-  const cheek = HEAD_DEPTH / 2 + HEAD_BEVEL + 0.0015;
-  for (const side of [1, -1]) {
-    const eyeGeometry = extrudeCentered(EYE_OUTLINE, 0.003, 0);
-    eyeGeometry.translate(0, 0, side * cheek);
-    const eye = new Mesh(eyeGeometry, glowMaterial);
-    const trace = new Line(polyline(CHEEK_TRACE, side * cheek), traceMaterial);
-    group.add(eye, trace);
-    accents.push(eye, trace);
-  }
-
-  // Light band around the plinth step (square, matching the lathe's faces).
-  const half = 0.31 * Math.SQRT1_2 + 0.002;
-  const band = new LineLoop(
-    polyline(
-      [
-        [-half, -half],
-        [half, -half],
-        [half, half],
-        [-half, half],
-      ],
-      0,
+    new Mesh(
+      new LatheGeometry(
+        BASE_PROFILE.map(([r, y]) => new Vector2(r, y)),
+        72,
+      ),
     ),
-    traceMaterial,
   );
-  // polyline() lays points in XY; swing the loop flat onto the step.
-  band.rotation.x = -Math.PI / 2;
-  band.position.y = 0.1;
-  group.add(band);
-  accents.push(band);
+
+  group.add(new Mesh(sculpt(headShape(), HEAD_DEPTH, HEAD_BEVEL)));
+  group.add(new Mesh(sculpt(maneShape(), HEAD_DEPTH * 0.42, 0.016)));
+
+  // Small polished eyes set into each cheek.
+  const eyeMaterial = new MeshPhysicalMaterial({
+    color: 0x030304,
+    metalness: 0.2,
+    roughness: 0.12,
+    clearcoat: 1,
+  });
+  const eyeGeometry = new SphereGeometry(1, 20, 12);
+  const [ex, ey] = [0.115, 0.785];
+  const cheek = HEAD_DEPTH / 2 + HEAD_BEVEL;
+  for (const side of [1, -1]) {
+    const eye = new Mesh(eyeGeometry, eyeMaterial);
+    eye.scale.set(0.028, 0.017, 0.012);
+    eye.position.set(ex, ey, side * (cheek - 0.002));
+    eye.rotation.z = -0.35;
+    group.add(eye);
+    accents.push(eye);
+  }
 
   return {
     group,
     accents,
-    dispose: () => disposables.forEach((d) => d.dispose()),
+    dispose: () => {
+      eyeGeometry.dispose();
+      eyeMaterial.dispose();
+    },
   };
 }
