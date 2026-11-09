@@ -12,6 +12,7 @@ import {
   LineSegments,
   MathUtils,
   Mesh,
+  Object3D,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
   PCFSoftShadowMap,
@@ -42,8 +43,10 @@ type Options = {
   onError?: (error: unknown) => void;
 };
 
-/** Slow continuous yaw while idle, like the pyramid (~one full turn per minute). */
-const IDLE_SPEED = 0.1;
+/** Continuous yaw while idle (~one full turn every 35s). */
+const IDLE_SPEED = 0.18;
+/** With Reduce Motion on, keep a gentle turn (~one per 2 min) but no float. */
+const IDLE_SPEED_REDUCED = 0.05;
 /** Gentle vertical float, in model-height units (the knight is 1 tall). */
 const BOB_AMPLITUDE = 0.022;
 const BOB_SPEED = 0.077;
@@ -117,7 +120,7 @@ export async function createKnightScene(
   key.shadow.bias = -0.0004;
   const fill = new DirectionalLight(0xaeb6c8, 0.55);
   fill.position.set(-3.0, 1.6, 1.4);
-  const rim = new PointLight(0xffffff, 3, 8, 2);
+  const rim = new PointLight(0xffffff, 1.4, 8, 2);
   rim.position.set(0, -0.7, -1.6);
   const crown = new PointLight(0xdfe6ff, 1.6, 6, 2);
   crown.position.set(0, 1.5, 1.2);
@@ -192,7 +195,7 @@ export async function createKnightScene(
     metalness: 0.35,
     roughness: 0.4,
     clearcoat: 0.7,
-    clearcoatRoughness: 0.18,
+    clearcoatRoughness: 0.32,
     flatShading: true,
   });
 
@@ -250,7 +253,7 @@ export async function createKnightScene(
   }
 
   const knight = buildKnight();
-  const accents = new Set<Mesh>(knight.accents);
+  const accents = new Set<Object3D>(knight.accents);
 
   function applyMaterials(object: Group) {
     object.traverse((child) => {
@@ -326,9 +329,9 @@ export async function createKnightScene(
     if (!pageVisible) return;
     clock += dt;
 
-    if (!interacting && !reducedMotion && !idlePaused) {
-      // Drive yaw directly so idle spin is obvious from first paint.
-      azimuth += IDLE_SPEED * dt;
+    if (!interacting && !idlePaused) {
+      // Always turn on its own, like the pyramid; slower under Reduce Motion.
+      azimuth += (reducedMotion ? IDLE_SPEED_REDUCED : IDLE_SPEED) * dt;
       targetAzimuth.current = azimuth;
     } else {
       targetAzimuth.current += velocity.x;
@@ -345,7 +348,7 @@ export async function createKnightScene(
         Math.sin(clock * BOB_SPEED * Math.PI * 2) * BOB_AMPLITUDE;
       motes.rotation.y = clock * 0.04;
       motes.rotation.x = clock * 0.015;
-      rim.intensity = 2.2 + Math.sin(clock * 0.72) * 1.1;
+      rim.intensity = 1.1 + Math.sin(clock * 0.72) * 0.5;
     }
     if (visible) renderer.render(scene, camera);
   }
