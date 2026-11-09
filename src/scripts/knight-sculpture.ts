@@ -3,6 +3,7 @@ import {
   ConeGeometry,
   DoubleSide,
   ExtrudeGeometry,
+  Float32BufferAttribute,
   Group,
   LatheGeometry,
   Mesh,
@@ -46,11 +47,13 @@ const BASE_PROFILE: Array<[number, number]> = [
 function finShape(length: number, width: number): Shape {
   const s = new Shape();
   s.moveTo(0, -width * 0.5);
-  s.lineTo(length * 0.34, -width * 0.66);
-  s.lineTo(length * 0.68, -width * 0.48);
-  s.lineTo(length, width * 0.38); // tip curls upward
-  s.lineTo(length * 0.62, width * 0.22);
-  s.lineTo(length * 0.28, width * 0.5);
+  s.lineTo(length * 0.3, -width * 0.72);
+  s.lineTo(length * 0.62, -width * 0.6);
+  s.lineTo(length * 0.88, -width * 0.12);
+  s.lineTo(length, width * 0.42); // tip curls upward
+  s.lineTo(length * 0.74, width * 0.14);
+  s.lineTo(length * 0.44, width * 0.3);
+  s.lineTo(length * 0.16, width * 0.52);
   s.lineTo(0, width * 0.5);
   s.closePath();
   return s;
@@ -153,9 +156,9 @@ export function addSculptureParts(
   // Mane: a central crest flanked by two splayed rows. Fins start above the
   // poll sweeping up and back, then flow down the neck, longest at the top.
   const rows = [
-    { x: 0, yaw: 0, count: 6, scale: 1, lift: 0 },
-    { x: 0.0042, yaw: 0.11, count: 5, scale: 0.86, lift: -0.0045 },
-    { x: -0.0042, yaw: -0.11, count: 5, scale: 0.86, lift: -0.0045 },
+    { x: 0, yaw: 0, count: 5, scale: 1, lift: 0 },
+    { x: 0.0048, yaw: 0.15, count: 4, scale: 0.84, lift: -0.006 },
+    { x: -0.0048, yaw: -0.15, count: 4, scale: 0.84, lift: -0.006 },
   ];
   const top = topY - 0.004;
   const bottom = 0.052;
@@ -168,8 +171,8 @@ export function addSculptureParts(
       if (back === null || front === null) continue;
       // Seat the root inside the neck, but never deep enough to show in front.
       const inset = Math.min(0.006, (back - front) * 0.18);
-      const length = (0.032 - 0.012 * t) * row.scale;
-      const width = (0.0125 - 0.004 * t) * row.scale;
+      const length = (0.04 - 0.014 * t) * row.scale;
+      const width = (0.0165 - 0.0055 * t) * row.scale;
       const geometry = new ExtrudeGeometry(finShape(length, width), {
         depth: 0.0022,
         bevelEnabled: false,
@@ -180,13 +183,83 @@ export function addSculptureParts(
       fin.rotation.y = -Math.PI / 2; // blade length now points +Z (backwards)
       const pivot = new Object3D();
       pivot.position.set(row.x, y, back - inset);
-      // Flow: about +35 degrees at the poll, down to -70 degrees low on the neck.
+      // Flow: about +23 degrees at the poll, down to -60 degrees low on the neck.
       pivot.rotation.order = "YXZ";
-      pivot.rotation.x = -(0.6 - 1.82 * t);
+      pivot.rotation.x = -(0.4 - 1.45 * t);
       pivot.rotation.y = row.yaw;
       pivot.add(fin);
       bust.add(pivot);
     }
+  }
+
+  // Raised V-collar on the chest: two faceted bands that run from the
+  // shoulders down to a point above the stem, following the chest surface.
+  const shoulderY = 0.056;
+  const chestFront = frontOfNeck(head, shoulderY) ?? -0.016;
+  const shoulderX = sideOfHead(head, shoulderY, chestFront + 0.005) * 0.72;
+  const collarArms: Array<[number, number, number, number]> = [
+    // x0, y0 (shoulder) to x1, y1 (point above the stem)
+    [shoulderX, shoulderY, 0, 0.03],
+    [-shoulderX, shoulderY, 0, 0.03],
+  ];
+  for (const [x0, y0, x1, y1] of collarArms) {
+    let lastZ = chestFront;
+    const steps = 8;
+    const half = 0.0026;
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    const len = Math.hypot(dx, dy);
+    const [nx, ny] = [-dy / len, dx / len]; // band normal in the XY plane
+    const verts: number[] = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const cx = x0 + dx * t;
+      const cy = y0 + dy * t;
+      for (const sgn of [-1, 1]) {
+        const px = cx + nx * half * sgn;
+        const py = cy + ny * half * sgn;
+        const d = hit(head, [px, py, -1], [0, 0, 1]);
+        const z = d === null ? lastZ : -1 + d;
+        lastZ = z;
+        verts.push(px, py, z - 0.0016, px, py, z + 0.003); // proud face, buried back
+      }
+    }
+    // Quads: front face, two side walls (back stays buried in the chest).
+    const index: number[] = [];
+    for (let i = 0; i < steps; i++) {
+      const a = i * 4;
+      const b = a + 4;
+      const [aL, aLb, aR, aRb, bL, bLb, bR, bRb] = [
+        a,
+        a + 1,
+        a + 2,
+        a + 3,
+        b,
+        b + 1,
+        b + 2,
+        b + 3,
+      ];
+      index.push(aL, bL, aR, aR, bL, bR); // front
+      index.push(aL, aLb, bL, bL, aLb, bLb); // left wall
+      index.push(aR, bR, aRb, aRb, bR, bRb); // right wall
+    }
+    // Make the front face point out of the chest (-Z) whatever the arm direction.
+    const v = (k: number) => verts.slice(k * 3, k * 3 + 3);
+    const [p0, p1, p2] = [v(index[0]), v(index[1]), v(index[2])];
+    const nz =
+      (p1[0] - p0[0]) * (p2[1] - p0[1]) - (p1[1] - p0[1]) * (p2[0] - p0[0]);
+    if (nz > 0) {
+      for (let k = 0; k < index.length; k += 3) {
+        [index[k + 1], index[k + 2]] = [index[k + 2], index[k + 1]];
+      }
+    }
+    const collar = new BufferGeometry();
+    collar.setAttribute("position", new Float32BufferAttribute(verts, 3));
+    collar.setIndex(index);
+    collar.computeVertexNormals();
+    geometries.push(collar);
+    const band = new Mesh(collar);
+    bust.add(band);
   }
 
   // Glossy bead eyes set into each side of the head.
