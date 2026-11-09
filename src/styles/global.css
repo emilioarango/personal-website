@@ -350,13 +350,19 @@
     overflow: visible;
   }
 
+  .knight-viewport {
+    position: absolute;
+    /* Oversized stage: sculpture can rotate without meeting a hard crop. */
+    inset: -22% -28%;
+    overflow: visible;
+  }
+
   .knight-fallback,
   .knight-canvas {
     position: absolute;
-    /* Generous bleed so yaw turns never meet a hard rectangular crop. */
-    inset: -18% -24%;
-    width: auto;
-    height: auto;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     display: block;
   }
 

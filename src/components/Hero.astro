@@ -15,22 +15,24 @@ import { HERO, SITE } from "@config";
 
     <div class="knight" data-knight>
       <div class="knight-frame">
-        <img
-          class="knight-fallback"
-          src="/models/knight-fallback.svg"
-          alt=""
-          width="480"
-          height="640"
-          decoding="async"
-          data-knight-fallback
-        />
-        <canvas
-          class="knight-canvas"
-          data-knight-canvas
-          tabindex="0"
-          role="img"
-          aria-label={`Interactive matte black chess knight sculpture for ${SITE.name}. Use arrow keys to rotate, Home to reset.`}
-          hidden></canvas>
+        <div class="knight-viewport">
+          <img
+            class="knight-fallback"
+            src="/models/knight-fallback.svg"
+            alt=""
+            width="480"
+            height="640"
+            decoding="async"
+            data-knight-fallback
+          />
+          <canvas
+            class="knight-canvas"
+            data-knight-canvas
+            tabindex="0"
+            role="img"
+            aria-label={`Interactive matte black chess knight sculpture for ${SITE.name}. Use arrow keys to rotate, Home to reset.`}
+            hidden></canvas>
+        </div>
         <p class="knight-status" data-knight-status hidden>
           Loading sculpture…
         </p>

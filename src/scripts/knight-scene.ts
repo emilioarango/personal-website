@@ -124,11 +124,11 @@ export async function createKnightScene(
     // Normalize by height so Staunton proportions stay predictable in frame.
     object.scale.setScalar(1 / (size.y || 1));
 
+    // Pivot at the geometric center so yaw/pitch keep the silhouette in-sphere.
+    // (Rotating around the base was swinging the head out of frame.)
     box.setFromObject(object);
     const center = box.getCenter(new Vector3());
-    object.position.x -= center.x;
-    object.position.y -= box.min.y;
-    object.position.z -= center.z;
+    object.position.sub(center);
   }
 
   function frameCamera() {
@@ -137,13 +137,9 @@ export async function createKnightScene(
       .setFromObject(root)
       .getBoundingSphere(new Sphere());
     const fov = MathUtils.degToRad(camera.fov);
-    // Margin so mane/ears clear the canvas edge through a full yaw turn.
-    const dist = (sphere.radius * 1.65) / Math.sin(fov / 2);
-    camera.position.set(
-      dist * 0.38,
-      sphere.center.y + sphere.radius * 0.12,
-      dist,
-    );
+    // Sphere is rotation-invariant around this pivot; generous margin avoids crops.
+    const dist = (sphere.radius * 2.05) / Math.sin(fov / 2);
+    camera.position.set(dist * 0.26, sphere.center.y, dist);
     camera.lookAt(sphere.center.x, sphere.center.y, sphere.center.z);
     camera.near = Math.max(0.05, dist / 100);
     camera.far = dist * 20;
@@ -347,7 +343,10 @@ export async function createKnightScene(
     }
   }
 
-  const resizeObserver = new ResizeObserver(() => setSize());
+  const resizeObserver = new ResizeObserver(() => {
+    setSize();
+    if (root.children.length > 0) frameCamera();
+  });
   if (canvas.parentElement) resizeObserver.observe(canvas.parentElement);
 
   const intersectionObserver = new IntersectionObserver(
