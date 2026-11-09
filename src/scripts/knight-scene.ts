@@ -29,6 +29,7 @@ import {
 } from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { addSculptureParts, type SculptureParts } from "./knight-sculpture";
 
 export type KnightSceneHandles = {
   destroy: () => void;
@@ -99,7 +100,7 @@ export async function createKnightScene(
   const envScene = new RoomEnvironment();
   const envTexture = pmrem.fromScene(envScene, 0.04).texture;
   scene.environment = envTexture;
-  scene.environmentIntensity = 0.45;
+  scene.environmentIntensity = 0.32;
   envScene.dispose();
   pmrem.dispose();
 
@@ -189,20 +190,32 @@ export async function createKnightScene(
   let lastTime = performance.now();
   let clock = 0;
 
-  // Polished ebony lacquer: near-black with a clearcoat, still monochrome.
+  // Matte black sculpture: flat-shaded facets catch the light plane by plane.
   const bodyMaterial = new MeshPhysicalMaterial({
-    color: new Color("#0b0b0e"),
-    metalness: 0.3,
-    roughness: 0.34,
-    clearcoat: 0.85,
-    clearcoatRoughness: 0.2,
+    color: new Color("#09090b"),
+    metalness: 0.12,
+    roughness: 0.58,
+    clearcoat: 0.25,
+    clearcoatRoughness: 0.45,
+    flatShading: true,
   });
+  // Same finish, smooth-shaded, for the turned disc base.
+  const smoothMaterial = bodyMaterial.clone();
+  smoothMaterial.flatShading = false;
+  // Glossy bead eyes.
+  const eyeMaterial = new MeshPhysicalMaterial({
+    color: new Color("#050506"),
+    metalness: 0.2,
+    roughness: 0.08,
+    clearcoat: 1,
+  });
+  let parts: SculptureParts | null = null;
 
   // Crisp silver-white contour plus a wider, fainter pass for a soft glow.
   const edgeMaterial = new LineBasicMaterial({
     color: new Color("#e4e8ef"),
     transparent: true,
-    opacity: 0.65,
+    opacity: 0.2,
     depthWrite: false,
   });
   const glowMaterial = new LineBasicMaterial({
@@ -251,15 +264,20 @@ export async function createKnightScene(
     camera.updateProjectionMatrix();
   }
 
-  function applyMaterials(object: Group) {
+  function applyMaterials(object: Group, sculpture: SculptureParts) {
+    const smooth = new Set<Mesh>(sculpture.smooth);
+    const accents = new Set(sculpture.accents);
+    const meshes: Mesh[] = [];
     object.traverse((child) => {
-      if (!(child instanceof Mesh)) return;
-      child.material = bodyMaterial;
+      if (child instanceof Mesh && !accents.has(child)) meshes.push(child);
+    });
+    meshes.forEach((child) => {
+      child.material = smooth.has(child) ? smoothMaterial : bodyMaterial;
       child.castShadow = !lowPower;
       child.receiveShadow = false;
 
-      // Contours only on real creases (rings, bevel rims), not smooth curves.
-      const edges = new EdgesGeometry(child.geometry, 40);
+      // Faint contours on the sharper facet creases and the base rims.
+      const edges = new EdgesGeometry(child.geometry, 42);
       const lines = new LineSegments(edges, edgeMaterial);
       lines.renderOrder = 2;
       const glow = new LineSegments(edges, glowMaterial);
@@ -500,7 +518,8 @@ export async function createKnightScene(
     const gltf = await new GLTFLoader().loadAsync(modelUrl);
     if (disposed) return null;
     const model = gltf.scene;
-    applyMaterials(model);
+    parts = addSculptureParts(model, eyeMaterial);
+    applyMaterials(model, parts);
     fitModel(model);
     root.add(model);
     // Unhide first so layout/bleed metrics are real, then frame the camera.
@@ -535,6 +554,9 @@ export async function createKnightScene(
     canvas.removeEventListener("keyup", onKeyUp);
     document.removeEventListener("visibilitychange", onVisibility);
     bodyMaterial.dispose();
+    smoothMaterial.dispose();
+    eyeMaterial.dispose();
+    parts?.dispose();
     edgeMaterial.dispose();
     glowMaterial.dispose();
     moteGeometry.dispose();

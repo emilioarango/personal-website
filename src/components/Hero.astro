@@ -18,7 +18,7 @@ import { HERO, SITE } from "@config";
       data-knight-canvas
       tabindex="0"
       role="img"
-      aria-label={`Interactive matte black chess knight sculpture for ${SITE.name}. Use arrow keys to rotate.`}
+      aria-label={`Interactive faceted black chess knight sculpture for ${SITE.name}. Use arrow keys to rotate.`}
       hidden></canvas>
     <p class="knight-status" data-knight-status hidden>Loading sculpture…</p>
   </div>
@@ -90,7 +90,7 @@ import { HERO, SITE } from "@config";
       .then(({ createKnightScene }) =>
         createKnightScene({
           canvas,
-          modelUrl: "/models/staunton-knight.glb",
+          modelUrl: "/models/knight-bust.glb",
           reducedMotion,
           onReady: showCanvas,
           onError: () => {
