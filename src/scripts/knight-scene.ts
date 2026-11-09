@@ -12,7 +12,6 @@ import {
   LineSegments,
   MathUtils,
   Mesh,
-  Object3D,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
   PCFSoftShadowMap,
@@ -29,7 +28,7 @@ import {
   WebGLRenderer,
 } from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { buildKnight } from "./knight-model";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export type KnightSceneHandles = {
   destroy: () => void;
@@ -38,6 +37,7 @@ export type KnightSceneHandles = {
 
 type Options = {
   canvas: HTMLCanvasElement;
+  modelUrl: string;
   reducedMotion: boolean;
   onReady?: () => void;
   onError?: (error: unknown) => void;
@@ -63,7 +63,7 @@ const TOUCH_SLOP = 10;
 export async function createKnightScene(
   options: Options,
 ): Promise<KnightSceneHandles | null> {
-  const { canvas, reducedMotion, onReady, onError } = options;
+  const { canvas, modelUrl, reducedMotion, onReady, onError } = options;
 
   if (!window.WebGLRenderingContext) {
     onError?.(new Error("WebGL unavailable"));
@@ -251,12 +251,9 @@ export async function createKnightScene(
     camera.updateProjectionMatrix();
   }
 
-  const knight = buildKnight();
-  const accents = new Set<Object3D>(knight.accents);
-
   function applyMaterials(object: Group) {
     object.traverse((child) => {
-      if (!(child instanceof Mesh) || accents.has(child)) return;
+      if (!(child instanceof Mesh)) return;
       child.material = bodyMaterial;
       child.castShadow = !lowPower;
       child.receiveShadow = false;
@@ -500,7 +497,9 @@ export async function createKnightScene(
   frame = requestAnimationFrame(tick);
 
   try {
-    const model = knight.group;
+    const gltf = await new GLTFLoader().loadAsync(modelUrl);
+    if (disposed) return null;
+    const model = gltf.scene;
     applyMaterials(model);
     fitModel(model);
     root.add(model);
@@ -545,7 +544,6 @@ export async function createKnightScene(
     baseline.geometry.dispose();
     (baseline.material as MeshBasicMaterial).dispose();
     envTexture.dispose();
-    knight.dispose();
     root.traverse((child) => {
       if (child instanceof Mesh) {
         child.geometry.dispose();

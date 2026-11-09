@@ -544,6 +544,18 @@
     font-size: 0.92rem;
   }
 
+  .footer-credit {
+    flex-basis: 100%;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+  }
+
+  .footer-inner .footer-credit a {
+    color: var(--color-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
