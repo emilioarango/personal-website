@@ -2,13 +2,9 @@
 
 ## 3D chess knight
 
-The interactive hero sculpture uses a **Staunton tournament-style** dark knight from Polyy.AI’s free 3D Chess Pieces Pack:
+The hero sculpture is an original, faceted knight built procedurally in code (`src/scripts/knight-model.ts`) with three.js primitives. No external model file is used.
 
-- Source: [3D Chess Pieces Pack on itch.io](https://polyyai.itch.io/3d-chess-pieces-pack) (Polyy.AI)
-- File used: full-detail `08_knight_dark.glb` (textures stripped; matte-black material applied in-engine)
-- License: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (public domain dedication)
-- Attribution: **not required** under CC0
-- Local asset: `public/models/black-knight.glb`
+An earlier version used Polyy.AI's CC0 [3D Chess Pieces Pack](https://polyyai.itch.io/3d-chess-pieces-pack); that asset has been removed.
 
 ## Fallback illustration
 

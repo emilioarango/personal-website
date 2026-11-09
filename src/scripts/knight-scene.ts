@@ -27,8 +27,8 @@ import {
   Vector3,
   WebGLRenderer,
 } from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
+import { buildKnight } from "./knight-model";
 
 export type KnightSceneHandles = {
   destroy: () => void;
@@ -37,7 +37,6 @@ export type KnightSceneHandles = {
 
 type Options = {
   canvas: HTMLCanvasElement;
-  modelUrl: string;
   reducedMotion: boolean;
   onReady?: () => void;
   onError?: (error: unknown) => void;
@@ -61,7 +60,7 @@ const TOUCH_SLOP = 10;
 export async function createKnightScene(
   options: Options,
 ): Promise<KnightSceneHandles | null> {
-  const { canvas, modelUrl, reducedMotion, onReady, onError } = options;
+  const { canvas, reducedMotion, onReady, onError } = options;
 
   if (!window.WebGLRenderingContext) {
     onError?.(new Error("WebGL unavailable"));
@@ -187,13 +186,14 @@ export async function createKnightScene(
   let lastTime = performance.now();
   let clock = 0;
 
-  // Polished near-black with a clearcoat: sculptural, still monochrome.
+  // Faceted obsidian: flat-shaded planes with a clearcoat, still monochrome.
   const bodyMaterial = new MeshPhysicalMaterial({
-    color: new Color("#0a0a0c"),
-    metalness: 0.4,
-    roughness: 0.36,
-    clearcoat: 0.6,
-    clearcoatRoughness: 0.24,
+    color: new Color("#0b0b0e"),
+    metalness: 0.35,
+    roughness: 0.4,
+    clearcoat: 0.7,
+    clearcoatRoughness: 0.18,
+    flatShading: true,
   });
 
   // Crisp silver-white contour plus a wider, fainter pass for a soft glow.
@@ -249,15 +249,18 @@ export async function createKnightScene(
     camera.updateProjectionMatrix();
   }
 
+  const knight = buildKnight();
+  const accents = new Set<Mesh>(knight.accents);
+
   function applyMaterials(object: Group) {
     object.traverse((child) => {
-      if (!(child instanceof Mesh)) return;
+      if (!(child instanceof Mesh) || accents.has(child)) return;
       child.material = bodyMaterial;
       child.castShadow = !lowPower;
       child.receiveShadow = false;
 
-      // Selective contours for Staunton mane/groove detail without a dense mesh.
-      const edges = new EdgesGeometry(child.geometry, 24);
+      // Hard creases only: every facet boundary reads as a clean contour.
+      const edges = new EdgesGeometry(child.geometry, 20);
       const lines = new LineSegments(edges, edgeMaterial);
       lines.renderOrder = 2;
       const glow = new LineSegments(edges, glowMaterial);
@@ -495,10 +498,7 @@ export async function createKnightScene(
   frame = requestAnimationFrame(tick);
 
   try {
-    const loader = new GLTFLoader();
-    const gltf = await loader.loadAsync(modelUrl);
-    if (disposed) return null;
-    const model = gltf.scene;
+    const model = knight.group;
     applyMaterials(model);
     fitModel(model);
     root.add(model);
@@ -543,6 +543,7 @@ export async function createKnightScene(
     baseline.geometry.dispose();
     (baseline.material as MeshBasicMaterial).dispose();
     envTexture.dispose();
+    knight.dispose();
     root.traverse((child) => {
       if (child instanceof Mesh) {
         child.geometry.dispose();

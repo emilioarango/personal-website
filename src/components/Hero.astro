@@ -90,7 +90,6 @@ import { HERO, SITE } from "@config";
       .then(({ createKnightScene }) =>
         createKnightScene({
           canvas,
-          modelUrl: "/models/black-knight.glb",
           reducedMotion,
           onReady: showCanvas,
           onError: () => {
