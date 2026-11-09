@@ -1,19 +1,15 @@
-# Image credits
+# Credits
 
-Interest photographs on the homepage are grayscale crops. Unsplash and Pexels both allow this use without attribution. Credits are noted here anyway.
+## 3D chess knight
 
-## Chess
+The interactive hero sculpture uses a **Staunton tournament-style** dark knight from Polyy.AI’s free 3D Chess Pieces Pack:
 
-[A wooden chess knight](https://unsplash.com/photos/chess-pieces-arranged-on-a-board-Ti8M92TEhGE) by [Abhishek Tewari](https://unsplash.com/@abhi_2410) on [Unsplash](https://unsplash.com/license).
+- Source: [3D Chess Pieces Pack on itch.io](https://polyyai.itch.io/3d-chess-pieces-pack) (Polyy.AI)
+- File used: full-detail `08_knight_dark.glb` (textures stripped; matte-black material applied in-engine)
+- License: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (public domain dedication)
+- Attribution: **not required** under CC0
+- Local asset: `public/models/black-knight.glb`
 
-## AI and coding
+## Fallback illustration
 
-[A dark screen of code](https://unsplash.com/photos/a-computer-screen-with-a-lot-of-text-on-it-JPL5eIpYugo) by [Rahul Mishra](https://unsplash.com/@rahuulmiishra) on [Unsplash](https://unsplash.com/license).
-
-## Film
-
-[A movie projector](https://unsplash.com/photos/a-close-up-shot-of-a-movie-projector-5cVsDisurBo) by [Ragnar Beaverson](https://unsplash.com/@ragnarbeaverson) on [Unsplash](https://unsplash.com/license).
-
-## History
-
-[Michelangelo’s David, from below](https://unsplash.com/photos/a-close-up-of-a-statue-of-a-man-YD_h3vSkyFI) by [Andrea De Santis](https://unsplash.com/@santesson89) on [Unsplash](https://unsplash.com/license).
+`public/models/knight-fallback.svg` is an original Staunton-inspired silhouette drawn for this site as a non-WebGL fallback.

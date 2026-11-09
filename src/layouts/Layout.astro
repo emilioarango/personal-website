@@ -42,36 +42,12 @@ const jsonLd = JSON.stringify({
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={SITE.lang} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f4f6f8" />
-    <meta name="color-scheme" content="light dark" />
-    <script is:inline>
-      (function () {
-        try {
-          var q = new URLSearchParams(location.search).get("theme");
-          var stored = localStorage.getItem("theme");
-          var theme =
-            q === "light" || q === "dark"
-              ? q
-              : stored === "light" || stored === "dark"
-                ? stored
-                : matchMedia("(prefers-color-scheme: dark)").matches
-                  ? "dark"
-                  : "light";
-          document.documentElement.dataset.theme = theme;
-          var meta = document.querySelector('meta[name="theme-color"]');
-          if (meta) {
-            meta.setAttribute(
-              "content",
-              theme === "dark" ? "#0f172a" : "#f4f6f8",
-            );
-          }
-        } catch (e) {}
-      })();
-    </script>
+    <meta name="theme-color" content="#070708" />
+    <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.name} />
