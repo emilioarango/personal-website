@@ -1,24 +1,34 @@
 import {
   AmbientLight,
   Box3,
+  BufferGeometry,
   Color,
   DirectionalLight,
   EdgesGeometry,
+  Float32BufferAttribute,
   Group,
   HemisphereLight,
   LineBasicMaterial,
   LineSegments,
   MathUtils,
   Mesh,
-  MeshStandardMaterial,
+  MeshBasicMaterial,
+  MeshPhysicalMaterial,
+  PCFSoftShadowMap,
   PerspectiveCamera,
+  PlaneGeometry,
+  PMREMGenerator,
+  PointLight,
+  Points,
+  PointsMaterial,
   Scene,
-  Sphere,
+  ShadowMaterial,
   Vector2,
   Vector3,
   WebGLRenderer,
 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 
 export type KnightSceneHandles = {
   destroy: () => void;
@@ -33,14 +43,19 @@ type Options = {
   onError?: (error: unknown) => void;
 };
 
-/** Slow continuous yaw while idle (~one full turn every ~14s). */
-const IDLE_SPEED = 0.45;
+/** Slow continuous yaw while idle, like the pyramid (~one full turn per minute). */
+const IDLE_SPEED = 0.1;
+/** Gentle vertical float, in model-height units (the knight is 1 tall). */
+const BOB_AMPLITUDE = 0.022;
+const BOB_SPEED = 0.077;
+const REST_AZIMUTH = 0.55;
+const REST_POLAR = 0.1;
 const IDLE_RESUME_MS = 900;
 const DRAG_SENSITIVITY = 0.0055;
 const KEY_STEP = 0.12;
 const DAMPING = 0.086;
-const MAX_POLAR = Math.PI * 0.22;
-const MIN_POLAR = -Math.PI * 0.08;
+const MAX_POLAR = Math.PI * 0.2;
+const MIN_POLAR = -Math.PI * 0.07;
 const TOUCH_SLOP = 10;
 
 export async function createKnightScene(
@@ -69,26 +84,93 @@ export async function createKnightScene(
   const scene = new Scene();
   scene.background = null;
 
-  const camera = new PerspectiveCamera(35, 1, 0.05, 40);
+  // Lighter-weight scene on phones and coarse pointers: no shadows, fewer motes.
+  const lowPower =
+    window.innerWidth < 720 || window.matchMedia("(pointer: coarse)").matches;
+
+  const camera = new PerspectiveCamera(42, 1, 0.05, 40);
   const root = new Group();
   scene.add(root);
 
-  const ambient = new AmbientLight(0xffffff, 0.18);
-  const hemi = new HemisphereLight(0xe6e8ec, 0x08080a, 0.62);
-  const key = new DirectionalLight(0xffffff, 1.55);
-  key.position.set(2.6, 3.4, 2.0);
-  const fill = new DirectionalLight(0xc4c8d0, 0.42);
-  fill.position.set(-2.4, 1.4, 1.6);
-  const rim = new DirectionalLight(0xf5f6f8, 1.05);
-  rim.position.set(-1.4, 2.6, -2.8);
-  const kick = new DirectionalLight(0xd8dbe0, 0.28);
-  kick.position.set(0.2, -0.4, 2.2);
-  scene.add(ambient, hemi, key, fill, rim, kick);
+  // Procedural studio environment so highlights read on the near-black body.
+  const pmrem = new PMREMGenerator(renderer);
+  const envScene = new RoomEnvironment();
+  const envTexture = pmrem.fromScene(envScene, 0.04).texture;
+  scene.environment = envTexture;
+  scene.environmentIntensity = 0.45;
+  envScene.dispose();
+  pmrem.dispose();
+
+  renderer.shadowMap.enabled = !lowPower;
+  renderer.shadowMap.type = PCFSoftShadowMap;
+
+  // Pyramid-style rig in neutral silver-white: cool key, soft fill, pulsing rim.
+  const ambient = new AmbientLight(0xffffff, 0.12);
+  const hemi = new HemisphereLight(0xe6e8ec, 0x08080a, 0.45);
+  const key = new DirectionalLight(0xeef2ff, 1.9);
+  key.position.set(3.2, 4.4, 3.0);
+  key.castShadow = !lowPower;
+  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.camera.near = 0.5;
+  key.shadow.camera.far = 14;
+  key.shadow.camera.left = key.shadow.camera.bottom = -2.2;
+  key.shadow.camera.right = key.shadow.camera.top = 2.2;
+  key.shadow.bias = -0.0004;
+  const fill = new DirectionalLight(0xaeb6c8, 0.55);
+  fill.position.set(-3.0, 1.6, 1.4);
+  const rim = new PointLight(0xffffff, 3, 8, 2);
+  rim.position.set(0, -0.7, -1.6);
+  const crown = new PointLight(0xdfe6ff, 1.6, 6, 2);
+  crown.position.set(0, 1.5, 1.2);
+  scene.add(ambient, hemi, key, fill, rim, crown);
+  scene.add(key.target);
+
+  // Shadow catcher + faint baseline under the knight (set to the model's base).
+  const ground = new Mesh(
+    new PlaneGeometry(14, 14),
+    new ShadowMaterial({ opacity: 0.55 }),
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  const baseline = new Mesh(
+    new PlaneGeometry(2.6, 0.004),
+    new MeshBasicMaterial({
+      color: 0xeceff3,
+      opacity: 0.18,
+      transparent: true,
+      depthWrite: false,
+    }),
+  );
+  baseline.rotation.x = -Math.PI / 2;
+  scene.add(ground, baseline);
+
+  // Drifting motes, as on the pyramid, kept faint and monochrome.
+  const moteCount = lowPower ? 36 : 90;
+  const motePositions = new Float32Array(moteCount * 3);
+  for (let i = 0; i < moteCount; i++) {
+    motePositions[i * 3] = (Math.random() - 0.5) * 4.4;
+    motePositions[i * 3 + 1] = (Math.random() - 0.5) * 2.2;
+    motePositions[i * 3 + 2] = (Math.random() - 0.5) * 4.4;
+  }
+  const moteGeometry = new BufferGeometry();
+  moteGeometry.setAttribute(
+    "position",
+    new Float32BufferAttribute(motePositions, 3),
+  );
+  const moteMaterial = new PointsMaterial({
+    color: 0xeceff3,
+    size: 0.011,
+    opacity: 0.4,
+    transparent: true,
+    depthWrite: false,
+  });
+  const motes = new Points(moteGeometry, moteMaterial);
+  scene.add(motes);
 
   const pointer = new Vector2();
   const velocity = new Vector2();
-  let polar = 0.06;
-  let azimuth = 0.55;
+  let polar = REST_POLAR;
+  let azimuth = REST_AZIMUTH;
   const targetPolar = { current: polar };
   const targetAzimuth = { current: azimuth };
   let dragging = false;
@@ -103,20 +185,33 @@ export async function createKnightScene(
   let touchStartX = 0;
   let touchStartY = 0;
   let lastTime = performance.now();
+  let clock = 0;
 
-  const bodyMaterial = new MeshStandardMaterial({
-    color: new Color("#09090b"),
-    metalness: 0.12,
-    roughness: 0.78,
-    envMapIntensity: 0.25,
+  // Polished near-black with a clearcoat: sculptural, still monochrome.
+  const bodyMaterial = new MeshPhysicalMaterial({
+    color: new Color("#0a0a0c"),
+    metalness: 0.4,
+    roughness: 0.36,
+    clearcoat: 0.6,
+    clearcoatRoughness: 0.24,
   });
 
+  // Crisp silver-white contour plus a wider, fainter pass for a soft glow.
   const edgeMaterial = new LineBasicMaterial({
-    color: new Color("#eceff3"),
+    color: new Color("#e4e8ef"),
     transparent: true,
-    opacity: 0.22,
+    opacity: 0.65,
     depthWrite: false,
   });
+  const glowMaterial = new LineBasicMaterial({
+    color: new Color("#cfd6e4"),
+    transparent: true,
+    opacity: 0.12,
+    depthWrite: false,
+  });
+
+  // Horizontal sweep radius of the (height-normalised) model as it yaws.
+  let radiusXZ = 0.35;
 
   function fitModel(object: Group) {
     const box = new Box3().setFromObject(object);
@@ -129,18 +224,26 @@ export async function createKnightScene(
     box.setFromObject(object);
     const center = box.getCenter(new Vector3());
     object.position.sub(center);
+
+    // Seat the ground and baseline just under the base (bob never touches them).
+    const baseY = -0.5 - 0.1;
+    radiusXZ = Math.hypot(size.x, size.z) / (2 * (size.y || 1));
+    ground.position.y = baseY;
+    baseline.position.y = baseY + 0.01;
   }
 
   function frameCamera() {
-    root.updateWorldMatrix(true, true);
-    const sphere = new Box3()
-      .setFromObject(root)
-      .getBoundingSphere(new Sphere());
-    const fov = MathUtils.degToRad(camera.fov);
-    // Sphere is rotation-invariant around this pivot; generous margin avoids crops.
-    const dist = (sphere.radius * 2.05) / Math.sin(fov / 2);
-    camera.position.set(dist * 0.26, sphere.center.y, dist);
-    camera.lookAt(sphere.center.x, sphere.center.y, sphere.center.z);
+    const vFov = MathUtils.degToRad(camera.fov);
+    const hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera.aspect);
+    // The knight is 1 tall. Fill most of the hero height on wide screens, and
+    // cap by the yaw sweep width so it never clips on a phone.
+    const fillV = camera.aspect > 1 ? 0.74 : 0.62;
+    const distV = 0.5 / Math.tan(vFov / 2) / fillV;
+    const distH = radiusXZ / Math.tan(hFov / 2) / 0.9;
+    const dist = Math.max(distV, distH) + radiusXZ * 0.5;
+    // Slightly raised camera, aimed a touch low, like the pyramid.
+    camera.position.set(0, dist * 0.14, dist);
+    camera.lookAt(0, -0.03, 0);
     camera.near = Math.max(0.05, dist / 100);
     camera.far = dist * 20;
     camera.updateProjectionMatrix();
@@ -150,14 +253,17 @@ export async function createKnightScene(
     object.traverse((child) => {
       if (!(child instanceof Mesh)) return;
       child.material = bodyMaterial;
-      child.castShadow = false;
+      child.castShadow = !lowPower;
       child.receiveShadow = false;
 
       // Selective contours for Staunton mane/groove detail without a dense mesh.
       const edges = new EdgesGeometry(child.geometry, 24);
       const lines = new LineSegments(edges, edgeMaterial);
       lines.renderOrder = 2;
-      child.add(lines);
+      const glow = new LineSegments(edges, glowMaterial);
+      glow.scale.setScalar(1.006);
+      glow.renderOrder = 1;
+      child.add(glow, lines);
     });
   }
 
@@ -200,8 +306,8 @@ export async function createKnightScene(
   }
 
   function resetOrientation() {
-    targetAzimuth.current = 0.55;
-    targetPolar.current = 0.06;
+    targetAzimuth.current = REST_AZIMUTH;
+    targetPolar.current = REST_POLAR;
     velocity.set(0, 0);
     interacting = false;
     pauseIdle();
@@ -215,6 +321,7 @@ export async function createKnightScene(
     lastTime = now;
 
     if (!pageVisible) return;
+    clock += dt;
 
     if (!interacting && !reducedMotion && !idlePaused) {
       // Drive yaw directly so idle spin is obvious from first paint.
@@ -230,6 +337,13 @@ export async function createKnightScene(
     }
 
     applyOrientation();
+    if (!reducedMotion) {
+      root.position.y =
+        Math.sin(clock * BOB_SPEED * Math.PI * 2) * BOB_AMPLITUDE;
+      motes.rotation.y = clock * 0.04;
+      motes.rotation.x = clock * 0.015;
+      rim.intensity = 2.2 + Math.sin(clock * 0.72) * 1.1;
+    }
     if (visible) renderer.render(scene, camera);
   }
 
@@ -421,6 +535,14 @@ export async function createKnightScene(
     document.removeEventListener("visibilitychange", onVisibility);
     bodyMaterial.dispose();
     edgeMaterial.dispose();
+    glowMaterial.dispose();
+    moteGeometry.dispose();
+    moteMaterial.dispose();
+    ground.geometry.dispose();
+    (ground.material as ShadowMaterial).dispose();
+    baseline.geometry.dispose();
+    (baseline.material as MeshBasicMaterial).dispose();
+    envTexture.dispose();
     root.traverse((child) => {
       if (child instanceof Mesh) {
         child.geometry.dispose();

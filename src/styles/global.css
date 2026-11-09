@@ -273,88 +273,30 @@
 
   .hero {
     position: relative;
-    min-height: calc(100dvh - 3.75rem);
+    isolation: isolate;
+    min-height: calc(100svh - 3.75rem);
     display: grid;
-    align-items: stretch;
-    overflow: visible;
+    place-items: center;
+    overflow: hidden;
   }
 
-  .hero-stage {
-    position: relative;
-    display: grid;
-    grid-template-rows: auto minmax(18rem, 1fr);
-    gap: 0.5rem;
-    width: min(100% - 2rem, 72rem);
-    margin-inline: auto;
-    padding-top: 1.5rem;
-    padding-bottom: 1.75rem;
-    min-height: inherit;
-  }
-
-  .hero-copy {
-    position: relative;
-    z-index: 2;
-    max-width: 18rem;
-    pointer-events: none;
-  }
-
-  .hero-copy a {
-    pointer-events: auto;
-  }
-
-  .hero-kicker {
-    margin-bottom: 0.85rem;
-    color: var(--color-muted);
-    font-size: 0.72rem;
-    font-weight: 650;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  .hero-name {
-    font-size: clamp(3.2rem, 14vw, 6.5rem);
-    font-weight: 480;
-    font-variation-settings: "SOFT" 35;
-    letter-spacing: -0.045em;
-    line-height: 0.9;
-  }
-
-  .hero-name-line {
-    display: block;
-  }
-
-  .hero-lede {
-    max-width: 16rem;
-    margin-top: 1.15rem;
-    color: var(--color-secondary);
-    font-size: 1.05rem;
-    line-height: 1.5;
-  }
-
+  /* Full-bleed stage: the knight fills the hero and turns behind the name. */
   .knight {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    align-content: end;
-    gap: 0.75rem;
-    min-height: 20rem;
-    overflow: visible;
-  }
-
-  .knight-frame {
-    position: relative;
-    width: min(100%, 28rem);
-    aspect-ratio: 1 / 1.2;
-    max-height: min(72dvh, 42rem);
-    margin-inline: auto;
-    overflow: visible;
-  }
-
-  .knight-viewport {
     position: absolute;
-    /* Oversized stage: sculpture can rotate without meeting a hard crop. */
-    inset: -22% -28%;
-    overflow: visible;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .knight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 75% 70% at 50% 50%,
+      transparent 45%,
+      rgba(7, 7, 8, 0.85) 100%
+    );
   }
 
   .knight-fallback,
@@ -368,7 +310,7 @@
 
   .knight-fallback {
     object-fit: contain;
-    object-position: center bottom;
+    object-position: center;
     opacity: 1;
     transition: opacity 0.45s ease;
     pointer-events: none;
@@ -377,7 +319,7 @@
   .knight-canvas {
     touch-action: pan-y;
     cursor: grab;
-    outline-offset: 4px;
+    outline-offset: -6px;
   }
 
   .knight-canvas:active {
@@ -387,8 +329,9 @@
   .knight-status {
     position: absolute;
     left: 50%;
-    bottom: 1rem;
+    bottom: 1.25rem;
     transform: translateX(-50%);
+    z-index: 3;
     margin: 0;
     padding: 0.35rem 0.65rem;
     border: 1px solid var(--color-line);
@@ -398,37 +341,88 @@
     letter-spacing: 0.04em;
   }
 
-  .knight-controls {
+  /* Name sits in front of the knight and never intercepts the drag. */
+  .hero-overlay {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-inline: 1rem;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .hero-name {
+    font-size: clamp(1.55rem, 7.2vw, 5.75rem);
+    font-weight: 700;
+    font-variation-settings: "SOFT" 20;
+    letter-spacing: 0.16em;
+    margin-right: -0.16em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-shadow:
+      0 2px 30px rgba(0, 0, 0, 0.85),
+      0 0 70px rgba(0, 0, 0, 1);
+    animation: hero-rise 1s ease 0.7s both;
+  }
+
+  .hero-tagline {
+    position: absolute;
+    bottom: 4.25rem;
+    left: 50%;
+    z-index: 2;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
-    gap: 0.65rem 1rem;
-    min-height: 2.75rem;
+    gap: 0.35rem 0.75rem;
+    width: min(100% - 2rem, 40rem);
+    color: var(--color-secondary);
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-style: italic;
+    text-align: center;
+    text-shadow: 0 0 24px rgba(0, 0, 0, 0.95);
+    pointer-events: none;
+    animation: hero-rise-centered 1s ease 0.9s both;
   }
 
   .knight-hint {
+    position: absolute;
+    bottom: 1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
     color: var(--color-muted);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: hero-rise-centered 1s ease 1.4s both;
   }
 
-  .knight-reset {
-    min-height: 2.5rem;
-    padding: 0.35rem 0.8rem;
-    border: 1px solid var(--color-line-strong);
-    background: transparent;
-    color: var(--color-secondary);
-    font: inherit;
-    font-size: 0.85rem;
-    letter-spacing: 0.04em;
-    cursor: pointer;
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
-  .knight-reset:hover {
-    color: var(--color-ink);
-    border-color: var(--color-ink);
+  @keyframes hero-rise-centered {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 14px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
   }
 
   .section {
@@ -767,40 +761,6 @@
     font-size: 1.15rem;
   }
 
-  .hero-stage {
-    grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1.2fr);
-    grid-template-rows: 1fr;
-    align-items: center;
-    gap: 1rem 2rem;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
-  }
-
-  .hero-copy {
-    max-width: 22rem;
-    align-self: center;
-  }
-
-  .hero-name {
-    font-size: clamp(4.2rem, 8vw, 7.2rem);
-  }
-
-  .hero-lede {
-    max-width: 18rem;
-    font-size: 1.12rem;
-  }
-
-  .knight {
-    min-height: calc(100dvh - 7rem);
-    align-content: center;
-  }
-
-  .knight-frame {
-    width: min(100%, 40rem);
-    max-height: min(88dvh, 52rem);
-    aspect-ratio: 1 / 1.22;
-  }
-
   .resume-teaser-layout,
   .contact-layout {
     grid-template-columns: 12rem minmax(0, 1fr);
@@ -809,20 +769,6 @@
 
   .resume {
     width: min(100% - 3rem, 40rem);
-  }
-}
-
-@media (min-width: 1040px) {
-  .hero-stage {
-    grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.15fr);
-  }
-
-  .hero-copy {
-    max-width: 26rem;
-  }
-
-  .hero-name {
-    font-size: clamp(5.5rem, 7.5vw, 8rem);
   }
 }
 
@@ -841,7 +787,6 @@
 
 @media (forced-colors: active) {
   .btn,
-  .knight-reset,
   .brand-mark {
     border: 1px solid ButtonText;
   }

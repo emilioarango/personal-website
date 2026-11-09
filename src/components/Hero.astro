@@ -3,49 +3,37 @@ import { HERO, SITE } from "@config";
 ---
 
 <section class="hero" aria-labelledby="intro-name">
-  <div class="hero-stage">
-    <div class="hero-copy">
-      <p class="hero-kicker">{HERO.kicker}</p>
-      <h1 id="intro-name" class="hero-name">
-        <span class="hero-name-line">Emilio</span>
-        <span class="hero-name-line">Arango</span>
-      </h1>
-      {HERO.line && <p class="hero-lede">{HERO.line}</p>}
-    </div>
-
-    <div class="knight" data-knight>
-      <div class="knight-frame">
-        <div class="knight-viewport">
-          <img
-            class="knight-fallback"
-            src="/models/knight-fallback.svg"
-            alt=""
-            width="480"
-            height="640"
-            decoding="async"
-            data-knight-fallback
-          />
-          <canvas
-            class="knight-canvas"
-            data-knight-canvas
-            tabindex="0"
-            role="img"
-            aria-label={`Interactive matte black chess knight sculpture for ${SITE.name}. Use arrow keys to rotate, Home to reset.`}
-            hidden></canvas>
-        </div>
-        <p class="knight-status" data-knight-status hidden>
-          Loading sculpture…
-        </p>
-      </div>
-
-      <div class="knight-controls" data-knight-controls hidden>
-        <p class="knight-hint" data-knight-hint>Drag to rotate</p>
-        <button type="button" class="knight-reset" data-knight-reset>
-          Reset view
-        </button>
-      </div>
-    </div>
+  <div class="knight" data-knight>
+    <img
+      class="knight-fallback"
+      src="/models/knight-fallback.svg"
+      alt=""
+      width="480"
+      height="640"
+      decoding="async"
+      data-knight-fallback
+    />
+    <canvas
+      class="knight-canvas"
+      data-knight-canvas
+      tabindex="0"
+      role="img"
+      aria-label={`Interactive matte black chess knight sculpture for ${SITE.name}. Use arrow keys to rotate.`}
+      hidden></canvas>
+    <p class="knight-status" data-knight-status hidden>Loading sculpture…</p>
   </div>
+
+  <div class="hero-overlay">
+    <h1 id="intro-name" class="hero-name">{SITE.name}</h1>
+  </div>
+
+  <p class="hero-tagline">
+    {HERO.kicker}
+    {HERO.line && <span aria-hidden="true">&middot;</span>}
+    {HERO.line}
+  </p>
+
+  <p class="knight-hint" data-knight-hint hidden>Drag to rotate</p>
 </section>
 
 <script>
@@ -57,15 +45,9 @@ import { HERO, SITE } from "@config";
     "[data-knight-fallback]",
   );
   const status = document.querySelector<HTMLElement>("[data-knight-status]");
-  const controls = document.querySelector<HTMLElement>(
-    "[data-knight-controls]",
-  );
   const hint = document.querySelector<HTMLElement>("[data-knight-hint]");
-  const resetButton = document.querySelector<HTMLButtonElement>(
-    "[data-knight-reset]",
-  );
 
-  if (root && canvas && fallback && status && controls && resetButton) {
+  if (root && canvas && fallback && status) {
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -83,7 +65,7 @@ import { HERO, SITE } from "@config";
       canvas.hidden = true;
       fallback.removeAttribute("hidden");
       fallback.style.opacity = "1";
-      controls.hidden = true;
+      if (hint) hint.hidden = true;
       if (message) {
         status.hidden = false;
         status.textContent = message;
@@ -95,12 +77,12 @@ import { HERO, SITE } from "@config";
     const showCanvas = () => {
       fallback.style.opacity = "0";
       canvas.hidden = false;
-      controls.hidden = false;
       status.hidden = true;
-      if (reducedMotion && hint) {
-        hint.textContent = "Use arrow keys or drag to rotate";
-      } else if (hint) {
-        hint.textContent = "Drag to rotate · auto-spins when idle";
+      if (hint) {
+        hint.hidden = false;
+        hint.textContent = reducedMotion
+          ? "Drag or use arrow keys to rotate"
+          : "Drag to rotate";
       }
     };
 
@@ -123,11 +105,6 @@ import { HERO, SITE } from "@config";
       .catch(() => {
         showFallback("Sculpture unavailable — static view shown.");
       });
-
-    resetButton.addEventListener("click", () => {
-      handles?.reset();
-      canvas.focus();
-    });
 
     window.addEventListener(
       "pagehide",
