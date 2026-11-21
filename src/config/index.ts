@@ -74,7 +74,7 @@ export const HERO_TILES: HeroTile[] = [
 ];
 
 export const ABOUT = {
-  lead: "I live in Southern California. The days I like best have a game, a film, or a book that is much older than I am.",
+  lead: "I live in Southern California. The days I like best have something to build, a good film, and a book that is much older than I am. Usually the build runs long, the film is one I have seen before, and the book is about some empire that got it wrong before it got it right.",
   detail:
     "I write software for the fun of seeing an idea work, and I use AI while I build. The rest of the day I try to keep in proportion.",
 };
