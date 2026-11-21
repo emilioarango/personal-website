@@ -1,11 +1,4 @@
-import type {
-  HeroTile,
-  Interest,
-  NavLink,
-  Role,
-  SkillGroup,
-  WorkItem,
-} from "../types";
+import type { HeroTile, NavLink, Role, SkillGroup, WorkItem } from "../types";
 
 /**
  * Personal site content for emilioarango.com.
@@ -41,7 +34,6 @@ export const SITE = {
 
 export const NAV: NavLink[] = [
   { text: "Overview", href: "/", section: "overview" },
-  { text: "Interests", href: "/#interests", section: "interests" },
   { text: "About", href: "/#about", section: "about" },
   { text: "Projects", href: "/#projects", section: "projects" },
   { text: "Homelab", href: "/homelab" },
@@ -84,8 +76,6 @@ export const HERO_TILES: HeroTile[] = [
     value: "Chess",
     detail: "Plus code, film, and history.",
     icon: "crown",
-    href: "#interests",
-    linkLabel: "Interests",
   },
 ];
 
@@ -94,34 +84,6 @@ export const ABOUT = {
   detail:
     "I write software for the fun of seeing an idea work, and I use AI while I build. The rest of the day I try to keep in proportion.",
 };
-
-export const INTERESTS: Interest[] = [
-  {
-    name: "Chess",
-    summary: "A game I sit down and play.",
-    image: "/interests/chess.webp",
-    alt: "A wooden chess knight lit from the side.",
-  },
-  {
-    name: "AI and coding",
-    summary: "Writing software, and using AI while I build.",
-    image: "/interests/code.webp",
-    alt: "A dark screen of code.",
-  },
-  {
-    name: "Film",
-    summary: "Getting lost in a good movie.",
-    image: "/interests/film.webp",
-    alt: "A movie projector in low light.",
-  },
-  {
-    name: "History",
-    summary:
-      "The long view, and what the last few millennia still have to say.",
-    image: "/interests/history.webp",
-    alt: "Michelangelo’s David, seen from below.",
-  },
-];
 
 /** Append another object to show another card. Nothing is rendered for an empty list slot. */
 export const PROJECTS: WorkItem[] = [
