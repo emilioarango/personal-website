@@ -1,5 +1,6 @@
 ---
 import HomelabDiagram from "@components/HomelabDiagram.astro";
+import Icon from "@components/Icon.astro";
 import Layout from "@layouts/Layout.astro";
 import {
   HOMELAB_ARCHITECTURE,
@@ -13,39 +14,58 @@ import {
   HOMELAB_STATS,
   ROADMAP_STATUS_LABEL,
 } from "../data/homelab";
+
+const STATUS_PILL = {
+  done: "pill--ok",
+  "in-progress": "pill--info",
+  planned: "",
+} as const;
+
+const STAT_ICONS = ["box", "activity", "archive", "heart", "clock"] as const;
 ---
 
 <Layout title={HOMELAB_META.title} description={HOMELAB_META.description}>
   <article class="homelab">
     <header class="hero homelab-hero">
       <div class="wrap">
-        <p class="kicker">{HOMELAB_HERO.kicker}</p>
-        <h1>{HOMELAB_HERO.title}</h1>
-        <p class="lede">{HOMELAB_HERO.subtitle}</p>
-      </div>
-    </header>
-
-    <section class="section homelab-stats-section" aria-label="At a glance">
-      <div class="wrap">
-        <ul class="homelab-stats">
+        <div class="banner">
+          <p class="kicker">{HOMELAB_HERO.kicker}</p>
+          <h1>{HOMELAB_HERO.title}</h1>
+          <p class="banner-line">{HOMELAB_HERO.subtitle}</p>
+        </div>
+        <ul class="tile-grid tile-grid--five" aria-label="At a glance">
           {
-            HOMELAB_STATS.map((stat) => (
-              <li class="card homelab-stat">
-                <span class="homelab-stat-value">{stat.value}</span>{" "}
-                <span class="homelab-stat-label">{stat.label}</span>
+            HOMELAB_STATS.map((stat, i) => (
+              <li class="card tile">
+                <p class="tile-label">
+                  <Icon name={STAT_ICONS[i % STAT_ICONS.length]} />
+                  <span class="tile-status">
+                    <span aria-hidden="true">✓</span> OK
+                  </span>
+                </p>
+                <p
+                  class={
+                    stat.value.length > 8
+                      ? "tile-value tile-value--text"
+                      : "tile-value"
+                  }
+                >
+                  {stat.value}
+                </p>
+                <p class="tile-detail">{stat.label}</p>
               </li>
             ))
           }
         </ul>
       </div>
-    </section>
+    </header>
 
     <section class="section" aria-labelledby="homelab-architecture">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="homelab-architecture">Architecture</h2>
-        </div>
-        <figure class="card homelab-figure">
+        <figure class="card panel homelab-figure">
+          <div class="panel-head">
+            <h2 id="homelab-architecture">Architecture</h2>
+          </div>
           <HomelabDiagram variant="full" />
           <figcaption class="sr-only">
             {HOMELAB_ARCHITECTURE.caption}
@@ -56,10 +76,10 @@ import {
 
     <section class="section" aria-labelledby="homelab-stack">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="homelab-stack">Stack</h2>
-        </div>
-        <div class="card homelab-table-card">
+        <div class="card panel homelab-table-card">
+          <div class="panel-head">
+            <h2 id="homelab-stack">Stack</h2>
+          </div>
           <table class="homelab-table">
             <thead>
               <tr>
@@ -88,59 +108,69 @@ import {
 
     <section class="section" aria-labelledby="homelab-decisions">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="homelab-decisions">Decisions &amp; tradeoffs</h2>
+        <div class="card panel">
+          <div class="panel-head">
+            <h2 id="homelab-decisions">Decisions &amp; tradeoffs</h2>
+          </div>
+          <ol class="homelab-decisions">
+            {
+              HOMELAB_DECISIONS.map((d) => (
+                <li>
+                  <h3>{d.title}</h3>
+                  <p>{d.body}</p>
+                </li>
+              ))
+            }
+          </ol>
         </div>
-        <ol class="homelab-decisions">
-          {
-            HOMELAB_DECISIONS.map((d) => (
-              <li class="card">
-                <h3>{d.title}</h3>
-                <p>{d.body}</p>
-              </li>
-            ))
-          }
-        </ol>
       </div>
     </section>
 
     <section class="section" aria-labelledby="homelab-incident">
       <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">Incident</p>
-          <h2 id="homelab-incident">{HOMELAB_INCIDENT.title}</h2>
+        <div class="card panel homelab-incident">
+          <div class="panel-head">
+            <h2 id="homelab-incident">
+              <span class="pill pill--warn">Incident</span>
+              {HOMELAB_INCIDENT.title}
+            </h2>
+          </div>
+          <dl>
+            {
+              HOMELAB_INCIDENT.fields.map((f) => (
+                <div>
+                  <dt>{f.label}</dt>
+                  <dd>{f.text}</dd>
+                </div>
+              ))
+            }
+          </dl>
         </div>
-        <dl class="card homelab-incident">
-          {
-            HOMELAB_INCIDENT.fields.map((f) => (
-              <div>
-                <dt>{f.label}</dt>
-                <dd>{f.text}</dd>
-              </div>
-            ))
-          }
-        </dl>
       </div>
     </section>
 
     <section class="section" aria-labelledby="homelab-roadmap">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="homelab-roadmap">Roadmap</h2>
+        <div class="card panel">
+          <div class="panel-head">
+            <h2 id="homelab-roadmap">Roadmap</h2>
+          </div>
+          <ul class="row-list">
+            {
+              HOMELAB_ROADMAP.map((item) => (
+                <li class="row">
+                  <span class={`pill ${STATUS_PILL[item.status]}`}>
+                    {ROADMAP_STATUS_LABEL[item.status]}
+                  </span>
+                  <div class="row-copy">
+                    <h3>{item.name}</h3>
+                    {item.detail && <p>{item.detail}</p>}
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
         </div>
-        <ul class="homelab-roadmap">
-          {
-            HOMELAB_ROADMAP.map((item) => (
-              <li class={`card homelab-roadmap-item is-${item.status}`}>
-                <span class={`homelab-status is-${item.status}`}>
-                  {ROADMAP_STATUS_LABEL[item.status]}
-                </span>
-                <h3>{item.name}</h3>
-                {item.detail && <p>{item.detail}</p>}
-              </li>
-            ))
-          }
-        </ul>
       </div>
     </section>
 

@@ -1,4 +1,4 @@
-import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
+import type { HeroTile, NavLink, Role, SkillGroup, WorkItem } from "../types";
 
 /**
  * Personal site content for emilioarango.com.
@@ -33,9 +33,11 @@ export const SITE = {
 };
 
 export const NAV: NavLink[] = [
-  { text: "Interests", href: "#interests" },
-  { text: "About", href: "#about" },
-  { text: "Projects", href: "#projects" },
+  { text: "Overview", href: "/", section: "overview" },
+  { text: "About", href: "/#about", section: "about" },
+  { text: "Projects", href: "/#projects", section: "projects" },
+  { text: "Homelab", href: "/homelab" },
+  { text: "Resume", href: "/resume" },
 ];
 
 export const HERO = {
@@ -43,39 +45,45 @@ export const HERO = {
   line: "I play chess, write code, watch films, and read history.",
 };
 
+/** Overview tiles under the hero, styled like the homelab control room. */
+export const HERO_TILES: HeroTile[] = [
+  {
+    label: "Based in",
+    value: "SoCal",
+    detail: "Southern California.",
+    icon: "pin",
+  },
+  {
+    label: "Day job",
+    value: "IT",
+    unit: "identity and endpoints",
+    detail: "Entra ID, Intune, Jamf, and AI automation.",
+    icon: "shield",
+    href: "/resume",
+    linkLabel: "Resume",
+  },
+  {
+    label: "Homelab",
+    value: "14",
+    unit: "containers",
+    detail: "A 2018 Mac mini, run like production.",
+    icon: "box",
+    href: "/homelab",
+    linkLabel: "Case study",
+  },
+  {
+    label: "Off the clock",
+    value: "Chess",
+    detail: "Plus code, film, and history.",
+    icon: "crown",
+  },
+];
+
 export const ABOUT = {
   lead: "I live in Southern California. The days I like best have a game, a film, or a book that is much older than I am.",
   detail:
     "I write software for the fun of seeing an idea work, and I use AI while I build. The rest of the day I try to keep in proportion.",
 };
-
-export const INTERESTS: Interest[] = [
-  {
-    name: "Chess",
-    summary: "A game I sit down and play.",
-    image: "/interests/chess.webp",
-    alt: "A wooden chess knight lit from the side.",
-  },
-  {
-    name: "AI and coding",
-    summary: "Writing software, and using AI while I build.",
-    image: "/interests/code.webp",
-    alt: "A dark screen of code.",
-  },
-  {
-    name: "Film",
-    summary: "Getting lost in a good movie.",
-    image: "/interests/film.webp",
-    alt: "A movie projector in low light.",
-  },
-  {
-    name: "History",
-    summary:
-      "The long view, and what the last few millennia still have to say.",
-    image: "/interests/history.webp",
-    alt: "Michelangelo’s David, seen from below.",
-  },
-];
 
 /** Append another object to show another card. Nothing is rendered for an empty list slot. */
 export const PROJECTS: WorkItem[] = [
