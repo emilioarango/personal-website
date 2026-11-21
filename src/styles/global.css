@@ -245,6 +245,9 @@
   }
 
   .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     color: var(--color-ink);
     font-size: 1.3rem;
     font-weight: 700;
@@ -256,8 +259,15 @@
     text-decoration: none;
   }
 
+  .brand-mark {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
+  }
+
   .brand-meta {
     display: none;
+    align-self: center;
     color: var(--color-muted);
     font-size: 0.78rem;
   }
