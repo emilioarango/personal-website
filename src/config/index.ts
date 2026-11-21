@@ -1,4 +1,11 @@
-import type { Interest, NavLink, Role, SkillGroup, WorkItem } from "../types";
+import type {
+  HeroTile,
+  Interest,
+  NavLink,
+  Role,
+  SkillGroup,
+  WorkItem,
+} from "../types";
 
 /**
  * Personal site content for emilioarango.com.
@@ -33,15 +40,54 @@ export const SITE = {
 };
 
 export const NAV: NavLink[] = [
-  { text: "Interests", href: "#interests" },
-  { text: "About", href: "#about" },
-  { text: "Projects", href: "#projects" },
+  { text: "Overview", href: "/", section: "overview" },
+  { text: "Interests", href: "/#interests", section: "interests" },
+  { text: "About", href: "/#about", section: "about" },
+  { text: "Projects", href: "/#projects", section: "projects" },
+  { text: "Homelab", href: "/homelab" },
+  { text: "Resume", href: "/resume" },
 ];
 
 export const HERO = {
   kicker: "Southern California",
   line: "I play chess, write code, watch films, and read history.",
 };
+
+/** Overview tiles under the hero, styled like the homelab control room. */
+export const HERO_TILES: HeroTile[] = [
+  {
+    label: "Based in",
+    value: "SoCal",
+    detail: "Southern California.",
+    icon: "pin",
+  },
+  {
+    label: "Day job",
+    value: "IT",
+    unit: "identity and endpoints",
+    detail: "Entra ID, Intune, Jamf, and AI automation.",
+    icon: "shield",
+    href: "/resume",
+    linkLabel: "Resume",
+  },
+  {
+    label: "Homelab",
+    value: "14",
+    unit: "containers",
+    detail: "A 2018 Mac mini, run like production.",
+    icon: "box",
+    href: "/homelab",
+    linkLabel: "Case study",
+  },
+  {
+    label: "Off the clock",
+    value: "Chess",
+    detail: "Plus code, film, and history.",
+    icon: "crown",
+    href: "#interests",
+    linkLabel: "Interests",
+  },
+];
 
 export const ABOUT = {
   lead: "I live in Southern California. The days I like best have a game, a film, or a book that is much older than I am.",

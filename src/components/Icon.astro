@@ -1,0 +1,48 @@
+---
+/**
+ * Small stroke icons (24×24, 1.75 stroke) for tiles and panel headers.
+ * Decorative only: always paired with a visible text label.
+ */
+export type IconName =
+  | "pin"
+  | "shield"
+  | "box"
+  | "crown"
+  | "server"
+  | "activity"
+  | "archive"
+  | "clock"
+  | "heart";
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+
+const { name, class: className = "icon" } = Astro.props;
+
+const paths: Record<IconName, string> = {
+  pin: "M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z M12 12.2a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z",
+  shield: "M12 3 5 6v5.5c0 4.4 3 8.2 7 9.5 4-1.3 7-5.1 7-9.5V6l-7-3Z",
+  box: "M21 8 12 3 3 8v8l9 5 9-5V8Z M3 8l9 5 9-5 M12 13v8",
+  crown: "M4 18h16 M5 18 3.5 8l5 3.5L12 5l3.5 6.5 5-3.5L19 18",
+  server: "M4 4h16v6H4z M4 14h16v6H4z M8 7h.01 M8 17h.01",
+  activity: "M3 12h4l3-8 4 16 3-8h4",
+  archive: "M3 4h18v4H3z M5 8v12h14V8 M10 12h4",
+  clock: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z M12 7v5l3 2",
+  heart: "M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z",
+};
+---
+
+<svg
+  class={className}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d={paths[name]}></path>
+</svg>

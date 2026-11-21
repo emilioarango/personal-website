@@ -5,14 +5,17 @@ import { EDUCATION, EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
 
 <Layout title={RESUME.title} description={RESUME.description}>
   <article class="resume wrap">
-    <header class="resume-intro">
+    <header class="banner resume-intro">
       <p class="kicker">{SITE.name}</p>
       <h1>{RESUME.headline}</h1>
-      <p class="lede">{RESUME.summary}</p>
+      <p class="banner-line">{RESUME.summary}</p>
     </header>
 
-    <section class="resume-block" aria-labelledby="resume-experience">
-      <div class="section-head">
+    <section
+      class="card panel resume-block"
+      aria-labelledby="resume-experience"
+    >
+      <div class="panel-head">
         <h2 id="resume-experience">Experience</h2>
       </div>
       <ol class="timeline">
@@ -41,8 +44,8 @@ import { EDUCATION, EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
       </ol>
     </section>
 
-    <section class="resume-block" aria-labelledby="resume-skills">
-      <div class="section-head">
+    <section class="card panel resume-block" aria-labelledby="resume-skills">
+      <div class="panel-head">
         <h2 id="resume-skills">Skills</h2>
       </div>
       <div class="skill-groups">
@@ -61,8 +64,8 @@ import { EDUCATION, EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
       </div>
     </section>
 
-    <section class="resume-block" aria-labelledby="resume-education">
-      <div class="section-head">
+    <section class="card panel resume-block" aria-labelledby="resume-education">
+      <div class="panel-head">
         <h2 id="resume-education">Education & Certifications</h2>
       </div>
       <ul class="credential-list">
@@ -70,7 +73,7 @@ import { EDUCATION, EXPERIENCE, RESUME, SITE, SKILLS, SOCIAL } from "@config";
       </ul>
     </section>
 
-    <section class="resume-cta" aria-labelledby="resume-cta">
+    <section class="card panel resume-cta" aria-labelledby="resume-cta">
       <h2 id="resume-cta">Full resume</h2>
       <p>{RESUME.cta}</p>
       <a class="btn btn-primary" href={`mailto:${SOCIAL.email}`}>Email me</a>
