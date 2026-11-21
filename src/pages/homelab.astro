@@ -1,0 +1,153 @@
+---
+import HomelabDiagram from "@components/HomelabDiagram.astro";
+import Layout from "@layouts/Layout.astro";
+import {
+  HOMELAB_ARCHITECTURE,
+  HOMELAB_DECISIONS,
+  HOMELAB_FOOTER_LINE,
+  HOMELAB_HERO,
+  HOMELAB_INCIDENT,
+  HOMELAB_META,
+  HOMELAB_ROADMAP,
+  HOMELAB_STACK,
+  HOMELAB_STATS,
+  ROADMAP_STATUS_LABEL,
+} from "../data/homelab";
+---
+
+<Layout title={HOMELAB_META.title} description={HOMELAB_META.description}>
+  <article class="homelab">
+    <header class="hero homelab-hero">
+      <div class="wrap">
+        <p class="kicker">{HOMELAB_HERO.kicker}</p>
+        <h1>{HOMELAB_HERO.title}</h1>
+        <p class="lede">{HOMELAB_HERO.subtitle}</p>
+      </div>
+    </header>
+
+    <section class="section homelab-stats-section" aria-label="At a glance">
+      <div class="wrap">
+        <ul class="homelab-stats">
+          {
+            HOMELAB_STATS.map((stat) => (
+              <li class="card homelab-stat">
+                <span class="homelab-stat-value">{stat.value}</span>{" "}
+                <span class="homelab-stat-label">{stat.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="homelab-architecture">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="homelab-architecture">Architecture</h2>
+        </div>
+        <figure class="card homelab-figure">
+          <HomelabDiagram variant="full" />
+          <figcaption class="sr-only">
+            {HOMELAB_ARCHITECTURE.caption}
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="homelab-stack">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="homelab-stack">Stack</h2>
+        </div>
+        <div class="card homelab-table-card">
+          <table class="homelab-table">
+            <thead>
+              <tr>
+                <th scope="col">Layer</th>
+                <th scope="col">Tool</th>
+                <th scope="col">Why</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                HOMELAB_STACK.map((row) => (
+                  <tr>
+                    <th scope="row" data-label="Layer">
+                      {row.layer}
+                    </th>
+                    <td data-label="Tool">{row.tool}</td>
+                    <td data-label="Why">{row.why}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="homelab-decisions">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="homelab-decisions">Decisions &amp; tradeoffs</h2>
+        </div>
+        <ol class="homelab-decisions">
+          {
+            HOMELAB_DECISIONS.map((d) => (
+              <li class="card">
+                <h3>{d.title}</h3>
+                <p>{d.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="homelab-incident">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Incident</p>
+          <h2 id="homelab-incident">{HOMELAB_INCIDENT.title}</h2>
+        </div>
+        <dl class="card homelab-incident">
+          {
+            HOMELAB_INCIDENT.fields.map((f) => (
+              <div>
+                <dt>{f.label}</dt>
+                <dd>{f.text}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="homelab-roadmap">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="homelab-roadmap">Roadmap</h2>
+        </div>
+        <ul class="homelab-roadmap">
+          {
+            HOMELAB_ROADMAP.map((item) => (
+              <li class={`card homelab-roadmap-item is-${item.status}`}>
+                <span class={`homelab-status is-${item.status}`}>
+                  {ROADMAP_STATUS_LABEL[item.status]}
+                </span>
+                <h3>{item.name}</h3>
+                {item.detail && <p>{item.detail}</p>}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="section homelab-closing" aria-label="Note">
+      <div class="wrap">
+        <p>{HOMELAB_FOOTER_LINE}</p>
+      </div>
+    </section>
+  </article>
+</Layout>
