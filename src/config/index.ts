@@ -17,19 +17,13 @@ export const SITE = {
   name: "Emilio Arango",
   title: "Emilio Arango",
   description:
-    "Emilio Arango, in Southern California. Chess, code, film, and history.",
+    "Emilio Arango, in Southern California. AI, code, film, and history.",
   url: "https://emilioarango.com",
   lang: "en",
   locale: "en_US",
   ogImage: "/og-image.png",
-  ogImageAlt: "Emilio Arango. Chess, code, film, and history.",
-  knowsAbout: [
-    "Chess",
-    "Artificial intelligence",
-    "Programming",
-    "Film",
-    "History",
-  ],
+  ogImageAlt: "Emilio Arango. AI, code, film, and history.",
+  knowsAbout: ["Artificial intelligence", "Programming", "Film", "History"],
 };
 
 export const NAV: NavLink[] = [
@@ -42,7 +36,7 @@ export const NAV: NavLink[] = [
 
 export const HERO = {
   kicker: "Southern California",
-  line: "I play chess, write code, watch films, and read history.",
+  line: "I build AI agents, write code, watch films, and read history.",
 };
 
 /** Overview tiles under the hero, styled like the homelab control room. */
@@ -72,10 +66,10 @@ export const HERO_TILES: HeroTile[] = [
     linkLabel: "Case study",
   },
   {
-    label: "Off the clock",
-    value: "Chess",
-    detail: "Plus code, film, and history.",
-    icon: "crown",
+    label: "Building",
+    value: "AI agents",
+    detail: "MCP servers, automation, and the homelab.",
+    icon: "spark",
   },
 ];
 

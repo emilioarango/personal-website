@@ -1,7 +1,6 @@
 ---
 import { HERO, NAV, SITE } from "@config";
 import { BUILD } from "../lib/build";
-import Logo from "./Logo.astro";
 
 const path =
   Astro.url.pathname === "/" ? "/" : Astro.url.pathname.replace(/\/$/, "");
@@ -20,7 +19,7 @@ const stamp = BUILD.commit
 <header class="site-header">
   <div class="wrap header-top">
     <div class="brand-block">
-      <a class="brand" href="/"><Logo />{SITE.name}</a>
+      <a class="brand" href="/">{SITE.name}</a>
       <span class="brand-meta">{stamp}</span>
       <span class="brand-sub">{HERO.kicker}</span>
     </div>
