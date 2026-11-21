@@ -10,7 +10,7 @@ export interface HeroTile {
   value: string;
   unit?: string;
   detail: string;
-  icon: "pin" | "shield" | "box" | "crown";
+  icon: "pin" | "shield" | "box" | "spark";
   href?: string;
   linkLabel?: string;
 }

@@ -245,9 +245,6 @@
   }
 
   .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
     color: var(--color-ink);
     font-size: 1.3rem;
     font-weight: 700;
@@ -257,12 +254,6 @@
 
   .brand:hover {
     text-decoration: none;
-  }
-
-  .brand-mark {
-    width: 1.75rem;
-    height: 1.75rem;
-    flex: none;
   }
 
   .brand-meta {
