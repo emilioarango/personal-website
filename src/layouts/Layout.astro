@@ -125,8 +125,6 @@ const jsonLd = JSON.stringify({
     <link rel="me" href={SOCIAL.github} />
 
     <script is:inline type="application/ld+json" set:html={jsonLd} />
-    <Analytics />
-    <SpeedInsights />
   </head>
   <body>
     <a class="skip" href="#content">Skip to content</a>
@@ -135,5 +133,12 @@ const jsonLd = JSON.stringify({
       <slot />
     </main>
     <Footer />
+    {
+      /* Keep these in <body>: they render custom elements, which end <head>
+         early and would push Astro's CSP <meta> into <body>, where browsers
+         ignore it. */
+    }
+    <Analytics />
+    <SpeedInsights />
   </body>
 </html>
