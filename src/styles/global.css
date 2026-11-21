@@ -378,6 +378,10 @@
   }
 
   .hero {
+    /* The medallion glow (.hero-art::before) is wider than the art and
+       reaches past the viewport at ~1100–1350px; clip it so the page never
+       scrolls sideways. `clip` (not `hidden`) adds no scroll container. */
+    overflow-x: clip;
     padding-top: 2.4rem;
     padding-bottom: 1.4rem;
     background:
