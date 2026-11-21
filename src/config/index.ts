@@ -23,12 +23,7 @@ export const SITE = {
   locale: "en_US",
   ogImage: "/og-image.png",
   ogImageAlt: "Emilio Arango. AI, code, film, and history.",
-  knowsAbout: [
-    "Artificial intelligence",
-    "Programming",
-    "Film",
-    "History",
-  ],
+  knowsAbout: ["Artificial intelligence", "Programming", "Film", "History"],
 };
 
 export const NAV: NavLink[] = [
