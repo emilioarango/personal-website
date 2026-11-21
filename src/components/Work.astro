@@ -1,5 +1,7 @@
 ---
 import { PROJECTS } from "@config";
+import { HOMELAB_CARD } from "../data/homelab";
+import HomelabDiagram from "./HomelabDiagram.astro";
 import Outbound from "./Outbound.astro";
 ---
 
@@ -8,6 +10,25 @@ import Outbound from "./Outbound.astro";
     <div class="section-head">
       <h2 id="projects-title">Projects</h2>
     </div>
+    <article class="card project-card project-featured">
+      <div class="project-featured-copy">
+        <ul class="project-tags" aria-label="Tags">
+          {HOMELAB_CARD.tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+        <h3>{HOMELAB_CARD.title}</h3>
+        <p>{HOMELAB_CARD.summary}</p>
+        <p class="project-featured-stats">{HOMELAB_CARD.stats}</p>
+        <div class="work-links">
+          <a class="text-link project-featured-link" href={HOMELAB_CARD.href}>
+            {HOMELAB_CARD.linkLabel}
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+      <div class="project-featured-art" aria-hidden="true">
+        <HomelabDiagram variant="compact" />
+      </div>
+    </article>
     <div class="project-grid">
       {
         PROJECTS.map((item) => (
