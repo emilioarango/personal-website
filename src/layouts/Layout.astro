@@ -9,9 +9,14 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title = SITE.title, description = SITE.description } = Astro.props;
+const {
+  title = SITE.title,
+  description = SITE.description,
+  noindex = false,
+} = Astro.props;
 
 const pathname =
   Astro.url.pathname === "/" ? "/" : Astro.url.pathname.replace(/\/$/, "");
@@ -68,7 +73,7 @@ const jsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.name} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex" : "index, follow"} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
