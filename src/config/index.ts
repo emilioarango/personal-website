@@ -122,7 +122,7 @@ export const EXPERIENCE: Role[] = [
         text: "Lead helpdesk operations and serve as the escalation point for Tier 1–3 issues across the organization.",
       },
       {
-        text: "Built a production AI agent, plus Python and MCP automation.",
+        text: "Built production IT automation with Python scripts and MCP servers.",
       },
     ],
   },
