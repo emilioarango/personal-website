@@ -29,13 +29,13 @@ const stamp = BUILD.commit
         <time id="clock-time"></time>
       </p>
       <div class="seg" role="group" aria-label="Theme" id="theme-seg">
-        <button type="button" data-theme-choice="auto" aria-pressed="true">
+        <button type="button" data-theme-choice="auto" aria-pressed="false">
           Auto
         </button>
         <button type="button" data-theme-choice="light" aria-pressed="false">
           Light
         </button>
-        <button type="button" data-theme-choice="dark" aria-pressed="false">
+        <button type="button" data-theme-choice="dark" aria-pressed="true">
           Dark
         </button>
       </div>
@@ -105,8 +105,8 @@ const stamp = BUILD.commit
       const choice = (b.dataset.themeChoice as Choice) ?? "auto";
       paint(choice);
       try {
-        if (choice === "auto") localStorage.removeItem("theme");
-        else localStorage.setItem("theme", choice);
+        // "auto" is stored explicitly: an empty store means the dark default.
+        localStorage.setItem("theme", choice);
       } catch {
         /* Storage can be blocked. The choice still holds for this visit. */
       }
