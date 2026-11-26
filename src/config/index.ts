@@ -36,7 +36,7 @@ export const NAV: NavLink[] = [
 
 export const HERO = {
   kicker: "Southern California",
-  line: "I build AI agents, write code, watch films, and read history.",
+  line: "I build automations, write code, watch films, and read history.",
 };
 
 /** Overview tiles under the hero, styled like the homelab control room. */
@@ -67,8 +67,8 @@ export const HERO_TILES: HeroTile[] = [
   },
   {
     label: "Building",
-    value: "AI agents",
-    detail: "MCP servers, automation, and the homelab.",
+    value: "Automation",
+    detail: "MCP servers, scripts, and the homelab.",
     icon: "spark",
   },
 ];
@@ -160,7 +160,7 @@ export const RESUME = {
   title: "Resume — Emilio Arango",
   description:
     "A short overview of Emilio Arango’s work in identity, endpoints, and AI automation.",
-  headline: "Systems Engineer",
+  headline: "Systems Administrator",
   summary:
     "I run identity and endpoint for a multi-site organization. I build AI agents and automation to cut repetitive IT work.",
   cta: "Email me for the full resume.",

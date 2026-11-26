@@ -27,7 +27,13 @@ import Outbound from "./Outbound.astro";
               <Icon name={tile.icon} />
               {tile.label}
             </p>
-            <p class="tile-value">
+            <p
+              class={
+                tile.value.length > 8
+                  ? "tile-value tile-value--text"
+                  : "tile-value"
+              }
+            >
               {tile.value}
               {tile.unit && <span class="tile-unit">{tile.unit}</span>}
             </p>
