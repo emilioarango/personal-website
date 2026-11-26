@@ -48,17 +48,17 @@ const jsonLd = JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f5f5f7" />
+    <meta name="theme-color" content="#1c1c1e" />
     <meta name="color-scheme" content="light dark" />
     <script is:inline>
-      // Pre-paint theme. "auto" (or nothing stored) leaves data-theme unset so
-      // the prefers-color-scheme block in global.css decides. Keep the colors
-      // in sync with Header.astro.
+      // Pre-paint theme. Dark is the default when nothing is stored. A stored
+      // "auto" leaves data-theme unset so the prefers-color-scheme block in
+      // global.css decides. Keep the colors in sync with Header.astro.
       (function () {
         try {
           var q = new URLSearchParams(location.search).get("theme");
           var stored = localStorage.getItem("theme");
-          var pick = q === "light" || q === "dark" ? q : stored;
+          var pick = q === "light" || q === "dark" ? q : stored || "dark";
           var root = document.documentElement;
           if (pick === "light" || pick === "dark") root.dataset.theme = pick;
           var dark =

@@ -162,6 +162,6 @@ export const RESUME = {
     "A short overview of Emilio Arango’s work in identity, endpoints, and AI automation.",
   headline: "Systems Administrator",
   summary:
-    "I run identity and endpoint for a multi-site organization. I build AI agents and automation to cut repetitive IT work.",
+    "I run identity and endpoint for a multi-site organization. I build automations and scripts to cut repetitive IT work.",
   cta: "Email me for the full resume.",
 };
